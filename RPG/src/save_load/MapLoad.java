@@ -1,4 +1,4 @@
-package file;
+package save_load;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class MapLoad {
-    File file = new File("RPG/datafile/map1.csv");
+    File file = new File("RPG/gamedata/map/map1.csv");
     public int[][] LoadMap(int index) {
         int map[][] = new int [6][6];
         try (BufferedReader br = new BufferedReader(new FileReader("RPG/datafile/map1.csv"))) {
