@@ -10,7 +10,6 @@ public class Title extends JPanel{
     private final Font font = new Font("Serif", Font.BOLD, 28);
     private final Font font_n = new Font("HGPGothicM", Font.PLAIN, 15);
     private int y = 50;
-    private int v = 1;
 
     Load_panel lp = new Load_panel();
     public Title(){
@@ -35,10 +34,10 @@ public class Title extends JPanel{
         g.setColor(Color.WHITE);
         g.drawRoundRect(140,210,200,200,70,70);
         g.setColor(Color.WHITE);
-        g.drawString("",155,160);
-        g.drawString("",180,280);
-        g.drawString("",190,330);
-        g.drawString("",180,375);
+        g.drawString("GAME",155,160);
+        g.drawString("START",180,280);
+        g.drawString("LOAD",190,330);
+        g.drawString("QUIT",180,375);
         g.setColor(cyan);
 
         g.fillRect(150,195+y,180,50);

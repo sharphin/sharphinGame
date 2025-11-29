@@ -1,5 +1,4 @@
 package panel;
-import static panel.Charctor_status.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -11,7 +10,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.Charset;
 
-public class Communicate extends Thread{ 
+public class Talk extends Thread{ 
     private final int COL_MAX = 20;
     
     private final int LETTER_MAX = 60;
@@ -56,7 +55,7 @@ public class Communicate extends Thread{
 
     static boolean battle_begin, talk_finish = true;
     public int flgs, enemy_num;
-    public Communicate() {
+    public Talk() {
         th.start();
     }
     public void paint_message(Graphics g,Font font) {
@@ -83,7 +82,7 @@ public class Communicate extends Thread{
                 g.drawString(buy_items[i]+ "  " +item_price[i] +"�~",315,125+(i*40));
             }
     }
-    public void communicate_flg(int floor_num, int object_num,boolean a) {
+    public void communicate_flg(int object_num,boolean a) {
         if(flgs == 201 || !a) {
             letter_reset();
             flg_reset();
@@ -178,8 +177,6 @@ public class Communicate extends Thread{
             else flg_reset();
             if(flgs == 81) {
                 flgs = 201;
-                list.add("");
-                main_panel.CCharacter.array_trans_form(4, 19, 2, 100);
             }
             letter_reset();
         }
@@ -189,21 +186,6 @@ public class Communicate extends Thread{
         if(key == KeyEvent.VK_DOWN)    dire = 4;
         
         if(key == KeyEvent.VK_ENTER) {
-            System.out.println("my_money: "+my_money);
-            if(my_money >= item_price[v-1]) {
-                input_splited_serif(1);
-                int index = Items.duplicate_check(buy_items[v-1]);
-                if(list.size() >= 10)  input_splited_serif(3);
-                if(list.size() < 10 && index == -1) {
-                    list.add(buy_items[v-1]);
-                } else if(index != -1) {
-                    quantity[index]++;
-                }
-                System.out.println(list);
-                my_money = my_money-item_price[v-1];
-            } else {
-                input_splited_serif(2);
-            }
             letter_reset();
         }
         if(dire == 3 && v > 1) v--;
@@ -247,7 +229,7 @@ public class Communicate extends Thread{
         try{ Thread.sleep(210);
         } catch(InterruptedException e) {}
    }
-    private void load_dialogue(String file_path) {//������������Ί���
+    private void load_dialogue(String file_path) {
         Path path = Paths.get(file_path);
         Path path1 = Paths.get("dialogue/serif/charc_name.txt");
         Charset charset = Charset.forName("shift-JIS");

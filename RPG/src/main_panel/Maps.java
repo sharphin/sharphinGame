@@ -2,7 +2,6 @@ package main_panel;
 
 import java.awt.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -35,17 +34,17 @@ public class Maps extends JPanel{
 
         return map;
     }
-    public final void paint_map(Graphics g, int sx, int sy, int floor_num) {
-        int x1=1, y1=1, x2 = 0;
-        for(int i = 1; i < map.length; i++) {
-            y1 = ((i-1) << 5)+sy;
+    public final void paint_map(Graphics g, int sx, int sy) {
+        int x1=1, y1=1;
+        for(int i = 0; i < map.length; i++) {
+            y1 = (i << 5)+sy;
             for(int j = 0; j < map[i].length; j++) {
                 x1 = (j << 5)+sx;
                 switch(map[i][j]){
                     case 1 -> g.setColor(Color.BLACK);
                     default -> g.setColor(Color.WHITE);
                 } 
-                g.fillRect(j*tile,i*tile,tile,tile);
+                g.fillRect(x1, y1, tile, tile);
             }
         }
     }

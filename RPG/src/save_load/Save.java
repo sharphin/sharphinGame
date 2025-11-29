@@ -27,8 +27,8 @@ public class Save{
     private static List<String>items = new ArrayList<>(10);
     private static String equip[] = new String[2];
 
-    public static Save save_coords(int x, int y, int floor_num) {
-        return new Save(x, y,floor_num);
+    public static Save save_coords(int x, int y) {
+        return new Save(x, y);
     }
     public static Save save_info(List<String>items,int item_quantity[],String equip[]) {
         return new Save(items,item_quantity, equip);
@@ -36,8 +36,8 @@ public class Save{
     public static Save save_status(int hp,int mp,int my_money,int offe, int defe) {
         return new Save(hp,mp,my_money,offe,defe);
     }
-    private Save(int x, int y,int floor_num){ 
-        Save.coords = floor_num+(y << 2)+(x << 12);
+    private Save(int x, int y){ 
+        Save.coords = (y << 2)+(x << 12);
     }
     private Save(int hp,int mp,int my_money,int offe_power,int defe_power) {
         long hhp = hp;
@@ -68,7 +68,6 @@ public class Save{
         panel.add(input_name);
         panel.add(save_bt);
         panel.add(cancel_bt);
-
     }
     public void date() {
         year =  calender.get(Calendar.YEAR);

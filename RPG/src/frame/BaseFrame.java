@@ -19,7 +19,7 @@ public class BaseFrame extends JFrame implements KeyListener{
         return frame;
     }
     private BaseFrame() {
-        add(ti);
+        super.add(ti);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(300,100,GameUtil.FRAME_X, GameUtil.FRAME_Y);
         setTitle("Game");
@@ -31,11 +31,12 @@ public class BaseFrame extends JFrame implements KeyListener{
         frame_generator().getContentPane().removeAll();	
         frame_generator().add(panel);
         if(v != 2) panel.requestFocus();
+        repaint();
     }
     public void keyPressed(KeyEvent e) {
         int dire = 0;
         int key = e.getKeyCode();
-        System.out.println("rtr");
+
         if(key == KeyEvent.VK_UP)      dire = 3;
         if(key == KeyEvent.VK_DOWN)    dire = 4;
         if(Load_panel.load_panel_open) {
@@ -45,7 +46,7 @@ public class BaseFrame extends JFrame implements KeyListener{
             if(dire == 3 && v > 1) v--;
             if(dire == 4 && v < 3) v++;
         
-            int y = 50 * v;
+            ti.aaa(v);
             if(key == KeyEvent.VK_ENTER) {
                 if(v == 3) {
                     System.exit(0);
@@ -53,7 +54,7 @@ public class BaseFrame extends JFrame implements KeyListener{
                     Load_panel.load_panel_open = true;
                     v = 1;
                 } else {
-                    panel_change(new main_panel.CCharacter(85, 125, 0, true, GameUtil.PANEL_X, GameUtil.PANEL_Y),v);
+                    panel_change(new main_panel.CCharacter(85, 125, GameUtil.PANEL_Y, GameUtil.PANEL_X),v);
                 }
             } 
         }
