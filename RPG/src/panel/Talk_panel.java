@@ -10,7 +10,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.nio.charset.Charset;
 
-public class Talk extends Thread{ 
+public class Talk_panel extends Thread{ 
     private final int COL_MAX = 20;
     
     private final int LETTER_MAX = 60;
@@ -55,7 +55,7 @@ public class Talk extends Thread{
 
     static boolean battle_begin, talk_finish = true;
     public int flgs, enemy_num;
-    public Talk() {
+    public Talk_panel() {
         th.start();
     }
     public void paint_message(Graphics g,Font font) {

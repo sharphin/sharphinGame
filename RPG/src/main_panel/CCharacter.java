@@ -7,26 +7,22 @@ import util.GameUtil;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
+
+import logic.Game_states;
 public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int dire, direction;
     private int x, y;
 
     private boolean front_leg_left;
-    private final int width, height;
-    private int alpha = 255;
-    private int next_serif;
-    private final Font font = new Font("HGPGothicM", Font.PLAIN, 15);
+    private final int width = GameUtil.PANEL_X, height = GameUtil.PANEL_Y;
     
-
     Maps maps = new Maps();
-    Talk cm = new Talk(); 
-
-    public CCharacter(int x, int y,int height, int width) {
+    Talk_panel cm = new Talk_panel();
+    Pose_paint pp = new Pose_paint(); 
+    Menu_paint mp = new Menu_paint();
+    public CCharacter(int x, int y) {
         this.x = x;
         this.y = y;
-        this.width = width; 
-        this.height = height;
-
         setSize(width, height);
         addKeyListener(this);
         setFocusable(true);
@@ -59,12 +55,17 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
         g.setColor(Color.BLACK);
         g.fillRect(xx, yy, GameUtil.TILE, GameUtil.TILE);
+        if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
+            pp.paint_pose(g2);
+        } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
+            mp.paint_items(g2);
+        }
     }
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
         if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;    
         if(maps.map_coords(x, y) >= 1 &&
-           maps.map_coords(x, y) <= 69) return false;     
+           maps.map_coords(x, y) <= 6) return false;     
         return true;
     }
     private void char_move() {
@@ -93,7 +94,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     if(can_move(fx,fy) && can_move(fx1,fy))  y += speed;
                     break; 
         }
-        Save.save_coords(x,y);
     }
     private void floor_change(int xx, int yy) {
         if(maps.map_coords(xx,yy) == 71) {
@@ -120,23 +120,26 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     }
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if(key == KeyEvent.VK_ENTER) {
-            if(next_serif >= 4) {
-                next_serif++;
+        if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
+            pp.controll(e, key,x,y);
+        } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
+            mp.controll(key);
+        } else if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) {
+            if(key == KeyEvent.VK_ESCAPE) {
+                Game_states.updateControll_state(GameUtil.POSE);
             }
-        }
-        int xx = x >> 5;
-        int yy = y >> 5;
+            if(key == KeyEvent.VK_1) {
+                Game_states.updateControll_state(GameUtil.MENU);
+            }
+            if(key == KeyEvent.VK_ENTER) {
 
-        int object_num = maps.map_coords(xx,yy);
-
-        if(key == KeyEvent.VK_LEFT)    dire = 1;
-        if(key == KeyEvent.VK_RIGHT)   dire = 2;
-        if(key == KeyEvent.VK_UP)      dire = 3;
-        if(key == KeyEvent.VK_DOWN)    dire = 4;
-        if(key == KeyEvent.VK_SPACE && cm.flgs == 0) {
-            floor_change(xx,yy);
-            if(cm.battle_start()) cm.communicate_flg(object_num,false); 
+            }
+            if(key == KeyEvent.VK_LEFT)    dire = 1;
+            if(key == KeyEvent.VK_RIGHT)   dire = 2;
+            if(key == KeyEvent.VK_UP)      dire = 3;
+            if(key == KeyEvent.VK_DOWN)    dire = 4;
+            if(key == KeyEvent.VK_SPACE && cm.flgs == 0) {
+            }
         }
     } 
     public void keyReleased(KeyEvent e) {
@@ -147,7 +150,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     public void run() {
         while(true) {
             char_move();
-            if(next_serif > 4 && alpha > 1) alpha -= 2;
             repaint();
             try{
                 Thread.sleep(14);
