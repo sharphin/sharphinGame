@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import frame.BaseFrame;
 import logic.Game_states;
+import main_panel.CCharacter;
 public class CharaCreate_panel extends JPanel implements KeyListener{
 
     private final int width = GameUtil.PANEL_X, height = GameUtil.PANEL_Y;
@@ -128,6 +129,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
                 ERROR = "DON'T EMPTY";
             } else {
                 new Game_states(name.toString());
+                BaseFrame.frame_generator().panel_change(new main_panel.CCharacter(85, 125),1);
             }
         }
         switch(key) {
