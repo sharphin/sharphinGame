@@ -91,8 +91,6 @@ public class Save {
 			byte[] sha256Byte = sha256.digest(slot.getBytes());
 			HexFormat hex = HexFormat.of().withLowerCase();
 			hexString = hex.formatHex(sha256Byte);
-			System.out.println("SHA256");
-			System.out.println(hexString);
 		} catch (NoSuchAlgorithmException e) {
 			
 		}

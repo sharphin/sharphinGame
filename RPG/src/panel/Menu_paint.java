@@ -7,7 +7,6 @@ import java.awt.*;
 import logic.Game_states;
 
 public class Menu_paint{
-    private int x,y = 50;
     public boolean item_check, enter;
 
     Color black = new Color(0, 0, 0, 150);
@@ -33,6 +32,7 @@ public class Menu_paint{
 
         if(key == KeyEvent.VK_UP)      dire = 3;
         if(key == KeyEvent.VK_DOWN)    dire = 4;
+        if(dire == 1)
         if(key == KeyEvent.VK_ENTER) {
 
         } else {

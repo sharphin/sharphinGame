@@ -1,20 +1,27 @@
 package main_panel;
 import panel.*;
-
+import util.FontUtil;
 import util.GameUtil;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JPanel;
 
 import logic.Game_states;
 public class CCharacter extends JPanel implements KeyListener,Runnable{
-    private int dire, direction;
+    private int dire;
+    //private int direction;
     private int x, y;
 
     private boolean front_leg_left;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
+    private LocalDateTime nowTime;
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss");
+    Font font;
     Maps maps = new Maps();
     Talk_panel cm = new Talk_panel();
     Pose_paint pp = new Pose_paint(); 
@@ -25,39 +32,38 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         setSize(width, height);
         addKeyListener(this);
         setFocusable(true);
-
+        nowTime = LocalDateTime.now();
         Thread th = new Thread(this);
         th.start(); 
         Charactor_walk char_walk = new Charactor_walk(); 
         char_walk.start();
         maps.loadMap(1);
+        FontUtil fl = new FontUtil();
+        font = fl.setFontSize_Mplus1Code(20f);
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                            RenderingHints.VALUE_ANTIALIAS_ON); 
         maps.paint_map(g, scroll_x(), scroll_y());
         int xx = x+scroll_x();
         int yy = y+scroll_y();
-        int y1 = 120;
-        int x1 = 0;
-        if(dire != 0) direction = dire;
-        switch(direction) {
-            case 1:  y1 = 40;   break;
-            case 2:  y1 = 0;    break;
-            case 3:  y1 = 80;   break;
-            case 4:  y1 = 120;  break; 
-        }
+        //int y1 = 120;
+        //int x1 = 0;
+        //if(dire != 0) direction = dire;
+        //switch(direction) {
+        //    case 1:  y1 = 40;   break;
+        //    case 2:  y1 = 0;    break;
+        //    case 3:  y1 = 80;   break;
+        //    case 4:  y1 = 120;  break;
+        //}
         g.setColor(Color.BLACK);
         g.fillRect(xx, yy, GameUtil.TILE, GameUtil.TILE);
         if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
-            pp.paint_pose(g2);
+            pp.paint_pose(g);
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
-            mp.paint_items(g2);
+            mp.paint_items(g);
         }
+        g.setFont(font);
+        g.drawString(nowTime.format(dateTimeFormatter),10, 30);
     }
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
@@ -140,6 +146,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             repaint();
             try{
                 Thread.sleep(14);
+                nowTime = LocalDateTime.now();
             } catch(InterruptedException e) {}
         }
     }

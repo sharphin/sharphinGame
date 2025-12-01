@@ -31,7 +31,7 @@ public class Load_paint{
         for(int i = 0; i < save_slot_length;i++) {
             StringBuilder sb = new StringBuilder();
             String sss[] = save_slot[i].split(",");
-            sb.append(sss[0]).append(sss[1]);
+            sb.append(sss[0]).append(",").append(sss[1]);
             g.drawString(sb.toString(), 300, (i+1)*50);
         }
         g.setColor(Color.WHITE);

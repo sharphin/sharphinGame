@@ -5,17 +5,18 @@ import java.awt.*;
 import logic.Game_states;
 import save_load.Load;
 import save_load.Save;
+import util.FontUtil;
 import util.GameUtil;
 
 public class Save_paint {
-    Font font = new Font("Arial", Font.BOLD, 20);
+    Font font;
     Color black = new Color(0, 0, 0, 150);
     private int y,v = 0;
     private String save_slot[] = new String[GameUtil.MAX_SAVE_SLOT];
-
     public Save_paint() {
         setSave_slot();
-
+        FontUtil fl = new FontUtil();
+        font = fl.setFontSize_Mplus1Code(20f);
     }
 
     public void paint_save(Graphics g) {
@@ -23,8 +24,11 @@ public class Save_paint {
         g.fillRect(0, 0, GameUtil.PANEL_X, GameUtil.PANEL_Y);
         g.setColor(Color.WHITE);
         g.setFont(font);
-        for(int i = 0; i < GameUtil.MAX_SAVE_SLOT;i++) {
-            g.drawString(save_slot[i], 300, (i+1)*50);
+        for(int i = 0; i < save_slot_length();i++) {
+            StringBuilder sb = new StringBuilder();
+            String sss[] = save_slot[i].split(",");
+            sb.append(sss[0]).append(",").append(sss[1]);
+            g.drawString(sb.toString(), 300, (i+1)*50);
         }
         g.setColor(Color.WHITE);
         g.drawRect(300, 20+y, 300, 50);
@@ -51,7 +55,7 @@ public class Save_paint {
         int i;
         for(i = 0; i < save_slot.length; i++) {
             String tmp[] = save_slot[i].split(",");
-            if(tmp[0].equals("")) return i-1;
+            if(tmp[0].equals("")) return i;
         }
         return 8;
     }

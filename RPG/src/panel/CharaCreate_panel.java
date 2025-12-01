@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 
 import frame.BaseFrame;
 import logic.Game_states;
-import main_panel.CCharacter;
 public class CharaCreate_panel extends JPanel implements KeyListener{
 
     private final int width = GameUtil.PANEL_X, height = GameUtil.PANEL_Y;
@@ -117,12 +116,14 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
         g.drawString("M", 406, 420);
         g.drawString("\\/", 541, 420);
         g.drawString(ERROR,500, 200);
-        g.drawString(name.toString(), 20, 237);
+        for(int i = 0; i < name.length(); i++) {
+            g.drawString(name.charAt(i)+"", (i*10)+20, 237);
+        }
+        g.drawLine((cursor_i*10)+20, 220, (cursor_i*10)+20, 240);
     }
     public void keyPressed(KeyEvent e) {
         key = e.getKeyCode();
         ERROR = "";
-        System.out.println(key);
         if(key == KeyEvent.VK_ESCAPE) BaseFrame.frame_generator().back_title(new Title());
         if(key == KeyEvent.VK_ENTER) {
             if(name.toString().isEmpty()) {
@@ -133,50 +134,62 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
             }
         }
         switch(key) {
-            //case 127 -> ;
-            case 90 -> name.append("Z");
-            case 89 -> name.append("Y");
-            case 88 -> name.append("X");
-            case 87 -> name.append("W");
-            case 86 -> name.append("V");
-            case 85 -> name.append("U");
-            case 84 -> name.append("T");
-            case 83 -> name.append("S");
-            case 82 -> name.append("R");
-            case 81 -> name.append("Q");
-            case 80 -> name.append("P");
-            case 79 -> name.append("O");
-            case 78 -> name.append("N");
-            case 77 -> name.append("M");
-            case 76 -> name.append("L");
-            case 75 -> name.append("K");
-            case 74 -> name.append("J");
-            case 73 -> name.append("I");
-            case 72 -> name.append("H");
-            case 71 -> name.append("G");
-            case 70 -> name.append("F");
-            case 69 -> name.append("E");
-            case 68 -> name.append("D");
-            case 67 -> name.append("C");
-            case 66 -> name.append("B");
-            case 65 -> name.append("A");
-            case 57 -> name.append(9);
-            case 56 -> name.append(8);
-            case 55 -> name.append(7);
-            case 54 -> name.append(6);
-            case 53 -> name.append(5);
-            case 52 -> name.append(4);
-            case 51 -> name.append(3);
-            case 50 -> name.append(2);
-            case 49 -> name.append(1);
-            case 48 -> name.append(0);
-            //case 40 -> 
-            //case 39 -> 
-            //case 38 -> 
-            //case 37 -> 
-            case 32 -> name.append(" ");
+            case 127 -> name_delete(cursor_i);
+            case 90 -> name_type('Z');
+            case 89 -> name_type('Y');
+            case 88 -> name_type('X');
+            case 87 -> name_type('W');
+            case 86 -> name_type('V');
+            case 85 -> name_type('U');
+            case 84 -> name_type('T');
+            case 83 -> name_type('S');
+            case 82 -> name_type('R');
+            case 81 -> name_type('Q');
+            case 80 -> name_type('P');
+            case 79 -> name_type('O');
+            case 78 -> name_type('N');
+            case 77 -> name_type('M');
+            case 76 -> name_type('L');
+            case 75 -> name_type('K');
+            case 74 -> name_type('J');
+            case 73 -> name_type('I');
+            case 72 -> name_type('H');
+            case 71 -> name_type('G');
+            case 70 -> name_type('F');
+            case 69 -> name_type('E');
+            case 68 -> name_type('D');
+            case 67 -> name_type('C');
+            case 66 -> name_type('B');
+            case 65 -> name_type('A');
+            case 57 -> name_type('9');
+            case 56 -> name_type('8');
+            case 55 -> name_type('7');
+            case 54 -> name_type('6');
+            case 53 -> name_type('5');
+            case 52 -> name_type('4');
+            case 51 -> name_type('3');
+            case 50 -> name_type('2');
+            case 49 -> name_type('1');
+            case 48 -> name_type('0');
+            case 39 -> cursor_i++;
+            case 37 -> cursor_i--;
+            case 32 -> name_type(' ');
+            case 8  -> name_backspace(cursor_i);
         }
         repaint();
+    }
+    private void name_type(char token) {
+        name.append(token);
+        cursor_i++;
+    }
+    private void name_backspace(int i) {
+        if(i <= 0 || name.length() <= 0) return;
+        name.deleteCharAt(i-1);
+        cursor_i--;
+    }
+    private void name_delete(int i) {
+        if(i <= 0 || i >= name.length()) return;
+            name.deleteCharAt(i);
     }
     public void keyReleased(KeyEvent e) {
         key = 0;
@@ -192,7 +205,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
                                {81,87,69,82,84,89,85,73,79,80,38,-1}};
         xcoords3 = new int[][]{{98,143,188,233,278,323,368,413,458,503,548},
                                {65,83,68,70,71,72,74,75,76,37,39}};
-        xcoords4 = new int[][]{{123,168,213,258,303,348,393,438,483,528},
-                               {90,88,67,86,66,78,77,-1,-1,40}};
+        xcoords4 = new int[][]{{123,168,213,258,303,348,393,438,483,528,645},
+                               {90,88,67,86,66,78,77,-1,-1,40,-1}};
     }
 }
