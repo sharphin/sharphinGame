@@ -6,15 +6,19 @@ import java.awt.*;
 import frame.BaseFrame;
 import logic.Game_states;
 import save_load.Save;
+import util.FontUtil;
 import util.GameUtil;
 public class Pose_paint{
     private int y = 0, v = 0;
     public boolean item_check, enter;
-    Font font = new Font("Arial", Font.BOLD, 20);
+    Font font;
+    Save save;
     Color black = new Color(0, 0, 0, 150);
     Save_paint sp = new Save_paint();
-    Save save;
-    public Pose_paint() {}
+    public Pose_paint() {
+        FontUtil fl = new FontUtil();
+        font = fl.setFontSize_Mplus1Code(30f);
+    }
 
     public void paint_pose(Graphics g) {
         g.setColor(black);

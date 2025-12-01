@@ -9,8 +9,9 @@ public class Title extends JPanel{
     Image title= Toolkit.getDefaultToolkit().getImage("RPG/gamedata/image/title.png");
     private int y = 50;
 
-    Load_paint lp = new Load_paint();
+    Load_paint lp;
     public Title(){
+        lp = new Load_paint();
         setSize(GameUtil.PANEL_X, GameUtil.PANEL_Y);
         setBackground(Color.BLACK);
     }

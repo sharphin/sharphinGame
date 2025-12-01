@@ -1,4 +1,5 @@
 package panel;
+import util.FontUtil;
 import util.GameUtil;
 
 import java.awt.event.*;
@@ -12,7 +13,10 @@ public class Menu_paint{
     Color black = new Color(0, 0, 0, 150);
     Font font = new Font("Arial", Font.BOLD, 20);
 
-    public Menu_paint() {}
+    public Menu_paint() {
+        FontUtil fl = new FontUtil();
+        font = fl.setFontSize_Mplus1Code(30f);
+    }
 
     public void paint_items(Graphics g) {
         g.setColor(black);

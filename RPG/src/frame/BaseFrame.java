@@ -6,13 +6,13 @@ import javax.swing.JPanel;
 import logic.Game_states;
 
 import java.awt.event.*;
+
 import panel.Load_paint;
 import panel.Title;
 import util.GameUtil;
 
 public class BaseFrame extends JFrame implements KeyListener{
-    Title ti = new Title();
-    Load_paint lp = new Load_paint();
+    Title ti;
     Character charc;
     private int v = 1;
     private static BaseFrame frame = new BaseFrame();
@@ -21,7 +21,7 @@ public class BaseFrame extends JFrame implements KeyListener{
         return frame;
     }
     private BaseFrame() {
-        super.add(ti);
+        super.add(ti = new Title());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(300,100,GameUtil.FRAME_X, GameUtil.FRAME_Y);
         setTitle("Game");
@@ -62,11 +62,10 @@ public class BaseFrame extends JFrame implements KeyListener{
                     Load_paint.load_panel_open = true;
                     v = 1;
                 } else {
-
                     new Game_states("sharphin");
-                    panel_change(new main_panel.CCharacter(85, 125),v);
+                    panel_change(new panel.CharaCreate_panel(),v);
                 }
-            } 
+            }
         }
         repaint();
     } 

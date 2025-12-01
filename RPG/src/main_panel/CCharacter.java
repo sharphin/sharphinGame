@@ -1,7 +1,6 @@
 package main_panel;
 import panel.*;
 
-import save_load.*;
 import util.GameUtil;
 
 import java.awt.*;
@@ -14,7 +13,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int x, y;
 
     private boolean front_leg_left;
-    private final int width = GameUtil.PANEL_X, height = GameUtil.PANEL_Y;
+    private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
     Maps maps = new Maps();
     Talk_panel cm = new Talk_panel();
@@ -40,7 +39,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                             RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON); 
-
         maps.paint_map(g, scroll_x(), scroll_y());
         int xx = x+scroll_x();
         int yy = y+scroll_y();
@@ -94,17 +92,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     if(can_move(fx,fy) && can_move(fx1,fy))  y += speed;
                     break; 
         }
-    }
-    private void floor_change(int xx, int yy) {
-        if(maps.map_coords(xx,yy) == 71) {
-            x = 530;
-            y = 80;  direction = 3;
-            direction = 4;
-        } else if(maps.map_coords(xx,yy) == 70) {
-            x = 592;
-            y = 80;  direction = 3;
-            direction = 4;
-        }    
     }
     private int scroll_x() {
         int map_width = maps.map_x_length() << 5;

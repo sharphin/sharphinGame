@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.format.DateTimeFormatter;
 import java.util.HexFormat;
 
 import logic.Game_states;
@@ -24,7 +23,6 @@ public class Save {
     }
     public void write(int saveslot, String save_slot[]) {
         File f = new File("RPG/savedata/saveData.txt");
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String mf = "RPG/savedata/"+save_slot_SHA_256("RPG/savedata/"+saveslot);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(f,false))) {
             for(int i = 0; i < save_slot.length; i++) {
@@ -91,8 +89,6 @@ public class Save {
         try {
 			MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
 			byte[] sha256Byte = sha256.digest(slot.getBytes());
-			
-			//Java17以降からしか使用出来ない
 			HexFormat hex = HexFormat.of().withLowerCase();
 			hexString = hex.formatHex(sha256Byte);
 			System.out.println("SHA256");

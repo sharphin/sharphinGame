@@ -54,7 +54,7 @@ public class Maps{
                     case 15: x2 = 448;   break;
                     case 16: x2 = 480;   break;
                 }
-                g.drawImage(mapImage, x1, y1, x1+32, y1+32,x2, 0, x2+32, 32, null);
+                g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
             }
         }
     }
@@ -67,10 +67,12 @@ public class Maps{
     public int map_y_length() {
         return map.length;
     }
-    public void map_swap(int x ,int y, int og) {
+    public void object_swap(int x ,int y, int og) {
         map[y][x] = og;
     }
     public int[][] getMap() {
         return map;
+    }
+    public void map_change(int xx, int yy) {
     }
 }
