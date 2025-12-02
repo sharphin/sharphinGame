@@ -12,6 +12,7 @@ public class GameUtil {
     public static final int DASH = 8;
     public static final int MAX_ITEM = 8;
     public static final int MAX_SAVE_SLOT = 8;
+    public static final int MAX_ALL_ITEMS = 255;
     
     public static final int MAX_HP = 2500;
     public static final int MAX_HUNGER_LEVEL = 1000;

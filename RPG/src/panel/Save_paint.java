@@ -39,8 +39,8 @@ public class Save_paint {
         }
         if(key == KeyEvent.VK_UP)      v--;
         if(key == KeyEvent.VK_DOWN)    v++;
-        if(v < 0) v = save_slot.length+1;
-        if(v > save_slot_length()) v = 0;
+        if(v < 0) v = save_slot_length()-1;
+        if(v > save_slot_length()-1) v = 0;
         if(key == KeyEvent.VK_ENTER) {
             save.write(v, save_slot);
             setSave_slot();

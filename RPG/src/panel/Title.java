@@ -2,18 +2,19 @@ package panel;
 import java.awt.*;
 import javax.swing.JPanel;
 
+import util.FontUtil;
 import util.GameUtil;
 
 public class Title extends JPanel{
-
-    Image title= Toolkit.getDefaultToolkit().getImage("RPG/gamedata/image/title.png");
     private int y = 60;
-
-    Load_paint lp;
+    private Font font;
+    private Load_paint lp;
     public Title(){
         lp = new Load_paint();
         setSize(GameUtil.PANEL_X, GameUtil.PANEL_Y);
         setBackground(Color.BLACK);
+        FontUtil fl = new FontUtil();
+        font = fl.setFontSize_Mplus1Code(30f);
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -21,10 +22,12 @@ public class Title extends JPanel{
             lp.paint_load(g);
             return;
         }
-        g.drawImage(title, 0,0,this);
         g.setColor(Color.WHITE);
-
-        g.fillRect(250,235+y,180,10);
+        g.setFont(font);
+        g.drawString("NEW GAME", 280, 280);
+        g.drawString("LOAD", 310, 340);
+        g.drawString("EXIT", 310, 400);
+        g.fillRect(250,235+y,180,6);
     }
     public void yyy(int p) {
        y = 60 * p;

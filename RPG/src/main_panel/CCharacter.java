@@ -15,7 +15,7 @@ import logic.Game_states;
 public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int dire;
     //private int direction;
-    private int x, y;
+    private int x, y, speed = GameUtil.WALK;
 
     private boolean front_leg_left;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
@@ -35,7 +35,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         setFocusable(true);
         this.clock = new Game_CLock(clock);
         Thread th = new Thread(this);
-        th.start(); 
+        th.start();
         Charactor_walk char_walk = new Charactor_walk(); 
         char_walk.start();
         maps.loadMap(1);
@@ -60,6 +60,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         g.setFont(font);
         g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         g.fillRect(xx, yy, GameUtil.TILE, GameUtil.TILE);
+        g.drawString("所持金:"+Game_states.getMoney(),500,30);
         if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
             ip.paint_inventory(g);
         }
@@ -77,7 +78,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         return true;
     }
     private void char_move() {
-        int speed = GameUtil.WALK;
         int tile = GameUtil.TILE;
         int fx = 0, fx1 = 0, fy = 0, fy1 = 0;
         switch(dire) {
@@ -134,18 +134,24 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             } else {
                 if(key == KeyEvent.VK_0) Game_states.updateControll_state(Game_states.getControll_state()+GameUtil.INVENTORY);
             }
-            if(key == KeyEvent.VK_ENTER) {}
+            if(key == KeyEvent.VK_E)       speed = GameUtil.DASH;
             if(key == KeyEvent.VK_LEFT)    dire = 1;
             if(key == KeyEvent.VK_RIGHT)   dire = 2;
             if(key == KeyEvent.VK_UP)      dire = 3;
             if(key == KeyEvent.VK_DOWN)    dire = 4;
             if(key == KeyEvent.VK_SPACE) {}
+            if(key == KeyEvent.VK_ENTER) {}
             
         }
         repaint();
     } 
     public void keyReleased(KeyEvent e) {
-        dire = 0;
+        int key = e.getKeyCode();
+        if(key == KeyEvent.VK_E)   {
+            speed = GameUtil.WALK;
+        } else {
+            dire = 0;
+        }
     }
 
     public void keyTyped(KeyEvent e) {}

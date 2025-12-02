@@ -32,10 +32,10 @@ public class Load_paint{
             StringBuilder sb = new StringBuilder();
             String sss[] = save_slot[i].split(",");
             sb.append(sss[0]).append(",").append(sss[1]);
-            g.drawString(sb.toString(), 300, (i+1)*50);
+            g.drawString(sb.toString(), 310, (i+1)*50);
         }
         g.setColor(Color.WHITE);
-        g.drawRect(300, 20+y, 300, 50);
+        g.drawRect(300, 20+y, 350, 50);
     }
     public void controll(int key) {
         if(key == KeyEvent.VK_ESCAPE) {

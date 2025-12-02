@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.HexFormat;
 
 import logic.Game_states;
@@ -93,10 +92,8 @@ public class Save {
     }
     public long encryption(int itemsInfo[]) {
         long encrypted = itemsInfo[0];
-        System.out.println(Arrays.toString(itemsInfo));
         for(int i = 1,shift = 8; i< itemsInfo.length;shift+=8,i++) {
             long num = (long)itemsInfo[i]<<shift;
-            System.out.println(Long.toBinaryString(num)+" "+shift);
             encrypted += num;
         }
         System.out.println("");
