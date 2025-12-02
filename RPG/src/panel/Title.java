@@ -7,7 +7,7 @@ import util.GameUtil;
 public class Title extends JPanel{
 
     Image title= Toolkit.getDefaultToolkit().getImage("RPG/gamedata/image/title.png");
-    private int y = 50;
+    private int y = 60;
 
     Load_paint lp;
     public Title(){

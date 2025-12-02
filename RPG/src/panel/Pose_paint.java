@@ -25,18 +25,18 @@ public class Pose_paint{
         g.fillRect(0, 0, GameUtil.PANEL_X, GameUtil.PANEL_Y);
         g.setColor(Color.WHITE);
         g.setFont(font);
-        g.drawString("SAVE", 80, 50);
+        g.drawString("SAVE", 40, 50);
 
-        g.drawString("BACK TITLE", 80, 100);
+        g.drawString("BACK TITLE", 40, 100);
         g.setColor(Color.WHITE);
-        g.drawRect(70, 20+y, 150, 50);
+        g.fillRect(30, 65+y, 170, 2);
         if((Game_states.getControll_state() & GameUtil.SAVE) == GameUtil.SAVE) {
             sp.paint_save(g);
         }
     }
-    public void controll(KeyEvent e, int key,int xx, int yy) {
+    public void controll(int key,int xx, int yy) {
         if(key == KeyEvent.VK_ESCAPE) {
-            Game_states.updateControll_state(1);
+            Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.POSE);
         }
         if((Game_states.getControll_state() & GameUtil.SAVE) == GameUtil.SAVE) {
             if(save != null) sp.controll(key, save);
@@ -50,9 +50,11 @@ public class Pose_paint{
                     save = new Save(xx, yy);
                     Game_states.updateControll_state(GameUtil.POSE + GameUtil.SAVE);
                 }
-                if(v == 1) BaseFrame.frame_generator().back_title(new Title());
+                if(v == 1) {
+                    Game_states.updateControll_state(GameUtil.GAME_EXIT);
+                    BaseFrame.frame_generator().back_title(new Title());
+                }
             }
-            System.out.println(v);
             y = 50*v;
         }
     }

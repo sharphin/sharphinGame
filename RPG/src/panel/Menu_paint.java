@@ -26,8 +26,8 @@ public class Menu_paint{
     }
     public void controll(int key) {
         int dire = 0;
-        if(key == KeyEvent.VK_1) {
-            Game_states.updateControll_state(GameUtil.PLAY);
+        if(key == KeyEvent.VK_CONTROL) {
+            Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.MENU);
         }
 
         if(key == KeyEvent.VK_UP)      dire = 3;
@@ -44,8 +44,5 @@ public class Menu_paint{
     }
     static final int duplicate_check(String str) {
         return -1;
-    }
-    public void item_open() {
-        item_check = !item_check;
     }
 }

@@ -1,15 +1,16 @@
 package main_panel;
 import panel.*;
 import util.FontUtil;
+import util.FormatUtil;
 import util.GameUtil;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.JPanel;
 
+import logic.Game_CLock;
 import logic.Game_states;
 public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int dire;
@@ -19,20 +20,20 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private boolean front_leg_left;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
-    private LocalDateTime nowTime;
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss");
+    private Game_CLock clock;
     Font font;
     Maps maps = new Maps();
     Talk_panel cm = new Talk_panel();
     Pose_paint pp = new Pose_paint(); 
     Menu_paint mp = new Menu_paint();
-    public CCharacter(int x, int y) {
+    Inventory_paint ip = new Inventory_paint();
+    public CCharacter(int x, int y, LocalDateTime clock) {
         this.x = x;
         this.y = y;
         setSize(width, height);
         addKeyListener(this);
         setFocusable(true);
-        nowTime = LocalDateTime.now();
+        this.clock = new Game_CLock(clock);
         Thread th = new Thread(this);
         th.start(); 
         Charactor_walk char_walk = new Charactor_walk(); 
@@ -56,14 +57,17 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         //    case 4:  y1 = 120;  break;
         //}
         g.setColor(Color.BLACK);
+        g.setFont(font);
+        g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         g.fillRect(xx, yy, GameUtil.TILE, GameUtil.TILE);
+        if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
+            ip.paint_inventory(g);
+        }
         if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
             pp.paint_pose(g);
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
             mp.paint_items(g);
         }
-        g.setFont(font);
-        g.drawString(nowTime.format(dateTimeFormatter),10, 30);
     }
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
@@ -73,7 +77,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         return true;
     }
     private void char_move() {
-        int speed = GameUtil.SPEED;
+        int speed = GameUtil.WALK;
         int tile = GameUtil.TILE;
         int fx = 0, fx1 = 0, fy = 0, fy1 = 0;
         switch(dire) {
@@ -113,27 +117,32 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     }
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+
         if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
-            pp.controll(e, key,x,y);
+            pp.controll(key,x,y);
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
             mp.controll(key);
         } else if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) {
             if(key == KeyEvent.VK_ESCAPE) {
-                Game_states.updateControll_state(GameUtil.POSE);
+                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.POSE);
             }
-            if(key == KeyEvent.VK_1) {
-                Game_states.updateControll_state(GameUtil.MENU);
+            if(key == KeyEvent.VK_CONTROL) {
+                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.MENU);
             }
-            if(key == KeyEvent.VK_ENTER) {
-
+            if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
+                ip.controll(key);
+            } else {
+                if(key == KeyEvent.VK_0) Game_states.updateControll_state(Game_states.getControll_state()+GameUtil.INVENTORY);
             }
+            if(key == KeyEvent.VK_ENTER) {}
             if(key == KeyEvent.VK_LEFT)    dire = 1;
             if(key == KeyEvent.VK_RIGHT)   dire = 2;
             if(key == KeyEvent.VK_UP)      dire = 3;
             if(key == KeyEvent.VK_DOWN)    dire = 4;
-            if(key == KeyEvent.VK_SPACE && cm.flgs == 0) {
-            }
+            if(key == KeyEvent.VK_SPACE) {}
+            
         }
+        repaint();
     } 
     public void keyReleased(KeyEvent e) {
         dire = 0;
@@ -141,18 +150,17 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
 
     public void keyTyped(KeyEvent e) {}
     public void run() {
-        while(true) {
+        while(Game_states.getControll_state() != GameUtil.GAME_EXIT) {
             char_move();
             repaint();
             try{
                 Thread.sleep(14);
-                nowTime = LocalDateTime.now();
             } catch(InterruptedException e) {}
         }
     }
     private class Charactor_walk extends Thread {
         public void run() {
-            while(true) {
+            while(Game_states.getControll_state() != GameUtil.GAME_EXIT) {
                 if(dire != 0) front_leg_left = !front_leg_left;
                 try{
                     Thread.sleep(300);

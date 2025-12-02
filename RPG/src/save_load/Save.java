@@ -9,11 +9,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HexFormat;
 
 import logic.Game_states;
 import main_panel.Maps;
-import util.GameUtil;
+import util.FormatUtil;
 
 public class Save {
     private int x,y;
@@ -30,7 +31,7 @@ public class Save {
                 if(saveslot == i) {
                     StringBuilder sb =new StringBuilder();
                     sb.append(Game_states.getName()).append(",");
-                    sb.append(Game_states.getTODAY()).append(",");
+                    sb.append(Game_states.getTODAY().format(FormatUtil.format1)).append(",");
                     sb.append(x).append(",");
                     sb.append(y).append(",");
                     sb.append(Game_states.getHP()).append(",");
@@ -40,13 +41,7 @@ public class Save {
                     sb.append(Game_states.getBranch_state()).append(",");
                     sb.append(Game_states.getControll_state()).append(",");
                     sb.append(mf).append(",");
-                    for(int j = 0; j < GameUtil.MAX_ITEM; j++) {
-                        if(i+1 < Game_states.getAllItem().size()) {
-                            sb.append(Game_states.getItem(j)).append(",");
-                        } else {
-                            sb.append(",");
-                        }
-                    }
+                    sb.append(encryption(Game_states.getAllItem()));
                     write_str = sb.toString();
                 }
                 bw.write(write_str);
@@ -95,5 +90,16 @@ public class Save {
 			
 		}
         return hexString;
+    }
+    public long encryption(int itemsInfo[]) {
+        long encrypted = itemsInfo[0];
+        System.out.println(Arrays.toString(itemsInfo));
+        for(int i = 1,shift = 8; i< itemsInfo.length;shift+=8,i++) {
+            long num = (long)itemsInfo[i]<<shift;
+            System.out.println(Long.toBinaryString(num)+" "+shift);
+            encrypted += num;
+        }
+        System.out.println("");
+        return encrypted;
     }
 }

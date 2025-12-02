@@ -50,7 +50,7 @@ public class Load_paint{
             String str[] = save_slot[v].split(",");
             int x = Integer.parseInt(str[2]); 
             int y = Integer.parseInt(str[3]); 
-            BaseFrame.frame_generator().panel_change(new main_panel.CCharacter(x, y),v);
+            BaseFrame.frame_generator().panel_change(new main_panel.CCharacter(x, y, Game_states.getTODAY()),v);
             load_panel_open = false;
         }
         y = 50*v;

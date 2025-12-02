@@ -31,7 +31,7 @@ public class Save_paint {
             g.drawString(sb.toString(), 300, (i+1)*50);
         }
         g.setColor(Color.WHITE);
-        g.drawRect(300, 20+y, 300, 50);
+        g.fillRect(300, 65+y, 340, 3);
     }
     public void controll(int key,Save save) {
         if(key == KeyEvent.VK_ESCAPE) {
@@ -40,7 +40,7 @@ public class Save_paint {
         if(key == KeyEvent.VK_UP)      v--;
         if(key == KeyEvent.VK_DOWN)    v++;
         if(v < 0) v = save_slot.length+1;
-        if(v > save_slot_length()+1) v = 0;
+        if(v > save_slot_length()) v = 0;
         if(key == KeyEvent.VK_ENTER) {
             save.write(v, save_slot);
             setSave_slot();

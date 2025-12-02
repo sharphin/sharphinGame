@@ -130,7 +130,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
                 ERROR = "DON'T EMPTY";
             } else {
                 new Game_states(name.toString());
-                BaseFrame.frame_generator().panel_change(new main_panel.CCharacter(85, 125),1);
+                BaseFrame.frame_generator().panel_change(new main_panel.CCharacter(85, 125,Game_states.getTODAY()),1);
             }
         }
         switch(key) {
@@ -171,8 +171,8 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
             case 50 -> name_type('2');
             case 49 -> name_type('1');
             case 48 -> name_type('0');
-            case 39 -> cursor_i++;
-            case 37 -> cursor_i--;
+            case 39 -> cursor_inc();
+            case 37 -> cursor_dec();
             case 32 -> name_type(' ');
             case 8  -> name_backspace(cursor_i);
         }
@@ -188,14 +188,18 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
         cursor_i--;
     }
     private void name_delete(int i) {
-        if(i <= 0 || i >= name.length()) return;
+        if(i >= name.length()) return;
             name.deleteCharAt(i);
     }
     public void keyReleased(KeyEvent e) {
         key = 0;
         repaint();
     }
-
+    private void cursor_inc() {
+        if(cursor_i < name.length()) cursor_i++;
+    }
+    private void cursor_dec() {
+        if(cursor_i > 0) cursor_i--;    }
     public void keyTyped(KeyEvent e) {}
 
     private void coords_init() {
