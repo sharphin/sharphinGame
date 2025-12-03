@@ -9,7 +9,7 @@ public class GameUtil {
     public static final int MAP_X_LEN = 32;
     public static final int MAP_Y_LEN = 32;
     public static final int WALK = 4;
-    public static final int DASH = 8;
+    public static final int DASH = 6;
     public static final int MAX_ITEM = 8;
     public static final int MAX_SAVE_SLOT = 8;
     public static final int MAX_ALL_ITEMS = 255;
@@ -17,10 +17,9 @@ public class GameUtil {
     public static final int MAX_HP = 2500;
     public static final int MAX_HUNGER_LEVEL = 1000;
     public static final int MAX_MONEY = 1000000;
-    public static final int MAX_LUCK = 25;
+    public static final int MAX_LUCK = 250;
     public static final int MAX_MENTAL = 500;
     public static final int MAX_HEALTH = 500;
-    public static final int MAX_IQ = 1000000;
     public static final int MAX_STAMINA = 1000;
     public static final int MAX_LIKELABILITY = 1000;
     public static final long MAX_DEBT = Long.MAX_VALUE;

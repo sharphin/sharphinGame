@@ -24,7 +24,8 @@ public class Save_paint {
         g.fillRect(0, 0, GameUtil.PANEL_X, GameUtil.PANEL_Y);
         g.setColor(Color.WHITE);
         g.setFont(font);
-        for(int i = 0; i < save_slot_length();i++) {
+        for(int i = 0; i < GameUtil.MAX_SAVE_SLOT;i++) {
+            if(save_slot[i] == null || save_slot[i].equals("")) continue;
             StringBuilder sb = new StringBuilder();
             String sss[] = save_slot[i].split(",");
             sb.append(sss[0]).append(",").append(sss[1]);
@@ -39,8 +40,11 @@ public class Save_paint {
         }
         if(key == KeyEvent.VK_UP)      v--;
         if(key == KeyEvent.VK_DOWN)    v++;
-        if(v < 0) v = save_slot_length()-1;
-        if(v > save_slot_length()-1) v = 0;
+        if(v < 0) {
+            v = GameUtil.MAX_SAVE_SLOT-1;
+        } else if(v > GameUtil.MAX_SAVE_SLOT-1) {
+            v = 0;
+        }
         if(key == KeyEvent.VK_ENTER) {
             save.write(v, save_slot);
             setSave_slot();
@@ -50,13 +54,5 @@ public class Save_paint {
     private void setSave_slot() {
         Load load = new Load();
         save_slot = load.read();
-    }
-    private int save_slot_length() {
-        int i;
-        for(i = 0; i < save_slot.length; i++) {
-            String tmp[] = save_slot[i].split(",");
-            if(tmp[0].equals("")) return i;
-        }
-        return 8;
     }
 }

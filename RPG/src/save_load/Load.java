@@ -2,37 +2,30 @@ package save_load;
 
 import java.io.*;
 import util.GameUtil;
-public class Load{
+public class Load {
     public Load() {}
     public String[] read() {
-        String save_slot[] = {"","","","","","","",""};
-        try (BufferedReader br = new BufferedReader(new FileReader("RPG/savedata/saveData.txt"))) {
-            int index = 0;
+        String save_slot[] = new String[GameUtil.MAX_SAVE_SLOT];
+        try (BufferedReader br = new BufferedReader(new FileReader("RPG/savedata/saveData.dat"))) {
             String data;
-            while ((data = br.readLine()) != null) {
-                if(data.equals("")) break;
-
-                save_slot[index] = data;
-                index++;
+            for(int i = 0; i < GameUtil.MAX_SAVE_SLOT;i++) {
+                data = br.readLine();
+                if(data == null) continue;
+                save_slot[i] = data;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return save_slot;
     }
-    public String gameLoad(int index) {
-        String save_slot[] = {"","","","","","","",""};
-        try (BufferedReader br = new BufferedReader(new FileReader("RPG/savedata/saveData.txt"))) {
-            int i = 0;
-            String data;
-            while ((data = br.readLine()) != null) {
-                save_slot[i] = data;
-                i++;
-            }
+    public String gameStatesLoad(String filepath) {
+        String data = "";
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+            data = br.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return save_slot[index];
+        return data;
     }
     public int[] items_decryption(long itemsInfo) {
         int arr[] = new int[GameUtil.MAX_ITEM];

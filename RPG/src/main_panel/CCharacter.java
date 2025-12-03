@@ -158,7 +158,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     public void run() {
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT) {
             char_move();
-            repaint();
+            if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY)repaint();
             try{
                 Thread.sleep(14);
             } catch(InterruptedException e) {}

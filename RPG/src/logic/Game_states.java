@@ -11,6 +11,14 @@ public class Game_states {
     private static int hunger_level;
     private static int money;
     private static int bank_money;
+    private static int luck;
+    private static int mental;
+    private static int health;
+    private static int stamina;
+    private static int likeAbility;
+    private static long debt;
+    private static long loan;
+
     private static int items[];
     private static LocalDateTime today;
     private static int branch_state;
@@ -22,6 +30,13 @@ public class Game_states {
         hp = 2500;
         hunger_level = 500;
         money = 10000;
+        luck = 120;
+        mental = 500;
+        health = 500;
+        stamina = 1000;
+        likeAbility = 1000;
+        debt = 0;
+        loan = 0;
         bank_money = 200000;
         items = new int[8];
         today = LocalDateTime.now();
@@ -29,9 +44,8 @@ public class Game_states {
         controll_state = 1;
         map_data_path = "RPG/gamedata/map_data";
     }
-    public Game_states(int index) {
-        Load load = new Load();
-        String str[] = load.gameLoad(index).split(",");
+    public Game_states(int index, Load load) {
+        String str[] = load.gameStatesLoad("index").split(",");
         name = str[0];
         today = LocalDateTime.parse(str[1],FormatUtil.format1);
         hp = Integer.parseInt(str[4]);
@@ -109,5 +123,47 @@ public class Game_states {
     }
     public static String getMapDataPath() {
         return map_data_path;
+    }
+    public static int getLick() {
+        return luck;
+    }
+    static void updateLuck(int newLuck) {
+        luck = newLuck > GameUtil.MAX_LUCK ? GameUtil.MAX_LUCK : newLuck;
+    }
+    public static int getMental() {
+        return mental;
+    }
+    static void updateMental(int newMental) {
+        mental = newMental > GameUtil.MAX_MENTAL ? GameUtil.MAX_MENTAL : newMental;
+    }
+    public static int getHealth() {
+        return health;
+    }
+    static void updateHealth(int newMHealth) {
+        health = newMHealth > GameUtil.MAX_HEALTH ? GameUtil.MAX_HEALTH : newMHealth;
+    }
+    public static int getStamina() {
+        return stamina;
+    }
+    static void updateStamina(int newStamina) {
+        stamina = newStamina > GameUtil.MAX_STAMINA ? GameUtil.MAX_STAMINA : newStamina;
+    }
+    public static int getLikeAbility() {
+        return likeAbility;
+    }
+    static void updateLikeAbility(int newLikeAbility) {
+        stamina = newLikeAbility > GameUtil.MAX_LIKELABILITY ? GameUtil.MAX_LIKELABILITY : newLikeAbility;
+    }
+    public static long getDebt() {
+        return debt;
+    }
+    static void updateDebt(int newDebt) {
+        debt = newDebt > GameUtil.MAX_DEBT ? GameUtil.MAX_DEBT : newDebt;
+    }
+    public static long getLoan() {
+        return loan;
+    }
+    static void updateLoan(int newLoan) {
+        loan = newLoan > GameUtil.MAX_LOAN ? GameUtil.MAX_LOAN : newLoan;
     }
 }
