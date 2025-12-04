@@ -17,6 +17,7 @@ public class Item {
         //ファイルから読み込むか検討
         return switch(item_dict[index]) {
             case 1 -> "バスケットボール";
+            case 2 -> "OPHONE";
             default -> "???";
         };
     }
