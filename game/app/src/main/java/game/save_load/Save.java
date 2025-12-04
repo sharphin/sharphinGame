@@ -14,34 +14,30 @@ import java.util.HexFormat;
 
 import game.logic.Game_states;
 import game.main_panel.Maps;
-import game.util.FormatUtil;
 
 public class Save {
-    private int x,y;
-    public Save(int x, int y){
+    private int x,y, map_number;
+    private long play_time;
+    public Save(int x, int y, int map_number, long play_time){
         this.x = x;
         this.y = y;
+        this.map_number = map_number;
+        this.play_time = play_time;
     }
     public void write(int saveslot, String save_slot[]) {
-        File f = new File("RPG/savedata/saveData.dat");
-        String dir = "RPG/savedata/"+save_slot_SHA_256("RPG/savedata/"+saveslot);
+        File f = new File("savedata/saveData.dat");
+        String dir = "savedata/"+save_slot_SHA_256("/savedata/"+saveslot);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(f,false))) {
             for(int i = 0; i < save_slot.length; i++) {
                 String write_str = save_slot[i];
                 if(saveslot == i) {
                     StringBuilder sb = new StringBuilder();
                     sb.append(Game_states.getName()).append(",");
-                    sb.append(Game_states.getTODAY().format(FormatUtil.format1)).append(",");
+                    sb.append(play_time).append(",");
                     sb.append(x).append(",");
                     sb.append(y).append(",");
-                    sb.append(Game_states.getHP()).append(",");
-                    sb.append(Game_states.getHunger_level()).append(",");
-                    sb.append(Game_states.getMoney()).append(",");
-                    sb.append(Game_states.getBank_money()).append(",");
-                    sb.append(Game_states.getBranch_state()).append(",");
-                    sb.append(Game_states.getControll_state()).append(",");
+                    sb.append(map_number).append(",");
                     sb.append(dir).append(",");
-                    sb.append(encryption(Game_states.getAllItem()));
                     write_str = sb.toString();
                 }
                 if(write_str != null) bw.write(write_str);
@@ -75,7 +71,6 @@ public class Save {
         mkfile(filepath);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filepath),false))) {
             StringBuilder sb = new StringBuilder();
-            sb.append(Game_states.getName()).append(",");
             sb.append(Game_states.getTODAY().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))).append(",");
             sb.append(Game_states.getHP()).append(",");
             sb.append(Game_states.getHunger_level()).append(",");

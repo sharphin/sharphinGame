@@ -134,7 +134,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
                 ERROR = "DON'T EMPTY";
             } else {
                 new Game_states(name.toString());
-                BaseFrame.frame_generator().panel_change(new CCharacter(85, 125,Game_states.getTODAY()),1);
+                BaseFrame.frame_generator().panel_change(new CCharacter(85, 125,1,(long)0,Game_states.getTODAY()),1);
             }
         }
         switch(key) {

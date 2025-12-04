@@ -7,20 +7,29 @@ import game.util.GameUtil;
 public class Game_CLock implements Runnable{
 
     private static LocalDateTime clock;
-    public Game_CLock(LocalDateTime time) {
+    private static long playtime;
+    public Game_CLock(LocalDateTime time,long play_time) {
         clock = time;
+        playtime = play_time;
         Thread th = new Thread(this);
         th.start();
     }
     public void run() {
         while (Game_states.getControll_state() != GameUtil.GAME_EXIT) {
-            if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) clock = clock.plusSeconds(1);
+            if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) {
+                clock = clock.plusSeconds(1);
+                playtime++;
+            }
             try {
                 Thread.sleep(1000);
             } catch(InterruptedException e) {}
         }
+        System.out.println("stop");
     }
     public LocalDateTime getNowTime() {
         return clock;
+    }
+    public long getPlayTime() {
+        return playtime;
     }
 }

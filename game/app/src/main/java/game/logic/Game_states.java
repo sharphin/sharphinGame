@@ -1,8 +1,8 @@
 package game.logic;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import game.save_load.Load;
-import game.util.FormatUtil;
 import game.util.GameUtil;
 
 public class Game_states {
@@ -44,18 +44,18 @@ public class Game_states {
         controll_state = 1;
         map_data_path = "gamedata/map_data";
     }
-    public Game_states(int index, Load load) {
-        String str[] = load.gameStatesLoad("index").split(",");
-        name = str[0];
-        today = LocalDateTime.parse(str[1],FormatUtil.format1);
-        hp = Integer.parseInt(str[4]);
-        hunger_level = Integer.parseInt(str[5]);
-        money = Integer.parseInt(str[6]);
-        bank_money = Integer.parseInt(str[7]);
-        branch_state = Integer.parseInt(str[8]);
+    public Game_states(String loadname, String filepath, Load load) {
+        String str[] = load.gameStatesLoad(filepath).split(",");
+        name = loadname;
+        today = LocalDateTime.parse(str[0],DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        hp = Integer.parseInt(str[1]);
+        hunger_level = Integer.parseInt(str[2]);
+        money = Integer.parseInt(str[3]);
+        bank_money = Integer.parseInt(str[4]);
+        branch_state = Integer.parseInt(str[5]);
         controll_state = 1;
-        map_data_path = str[10];
-        items = load.items_decryption(Long.parseLong(str[11]));
+        map_data_path = filepath;
+        items = load.items_decryption(Long.parseLong(str[7]));
     }
     public static String getName(){
         return name;

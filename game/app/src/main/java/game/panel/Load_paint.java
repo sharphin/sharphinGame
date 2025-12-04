@@ -53,19 +53,22 @@ public class Load_paint{
             if(v > GameUtil.MAX_SAVE_SLOT-1) v = 0;
         }
         if(key == KeyEvent.VK_ENTER) {
-            new Game_states(v,load);
             String str[] = save_slot[v].split(",");
             if(str.length <= 1) return;
+            new Game_states(str[0], str[5],load);
+            if(str.length <= 1) return;
             int x = Integer.parseInt(str[2]); 
-            int y = Integer.parseInt(str[3]); 
-            BaseFrame.frame_generator().panel_change(new CCharacter(x, y, Game_states.getTODAY()),v);
+            int y = Integer.parseInt(str[3]);
+            int map_number = Integer.parseInt(str[1]);
+            long play_time = Long.parseLong(str[4]);
+            BaseFrame.frame_generator().panel_change(new CCharacter(x, y, map_number,play_time,Game_states.getTODAY()),v);
             load_panel_open = false;
         }
         y = 50*v;
     }
 
     private void setSave_slot() {
-        Load load = new Load();
+        load = new Load();
         save_slot = load.read();
     }
 }

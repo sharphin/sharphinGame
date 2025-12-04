@@ -37,7 +37,7 @@ public class Pose_paint{
             sp.paint_save(g);
         }
     }
-    public void controll(int key,int xx, int yy) {
+    public void controll(int key,int xx, int yy, int map_number, long play_time) {
         if(key == KeyEvent.VK_ESCAPE) {
             Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.POSE);
         }
@@ -50,7 +50,7 @@ public class Pose_paint{
             if(v > 1) v = 0;
             if(key == KeyEvent.VK_ENTER) {
                 if(v == 0) {
-                    save = new Save(xx, yy);
+                    save = new Save(xx, yy, map_number,play_time);
                     Game_states.updateControll_state(GameUtil.POSE + GameUtil.SAVE);
                 }
                 if(v == 1) {

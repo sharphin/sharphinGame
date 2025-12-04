@@ -13,11 +13,13 @@ import game.util.GameUtil;
 public class Maps{
     private Image mapImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/map.png");
     private int tile = GameUtil.TILE;
+    private int map_number;
     private static int map[][];
 
     public Maps() {}
 
     public int[][] loadMap(int index) {
+        map_number = index;
         map = new int [GameUtil.MAP_Y_LEN][GameUtil.MAP_X_LEN];
         try (BufferedReader br = new BufferedReader(new FileReader(Game_states.getMapDataPath()+"/map1.csv"))) {
             for(int i = 0; i < map.length;i++) {
@@ -59,6 +61,9 @@ public class Maps{
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
             }
         }
+    }
+    public int map_number() {
+        return map_number;
     }
     public int map_coords(int x ,int y) {
         return map[y][x];

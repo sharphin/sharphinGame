@@ -24,7 +24,7 @@ public class Load {
     }
     public String gameStatesLoad(String filepath) {
         String data = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filepath+"/states.csv"))) {
             data = br.readLine();
         } catch (IOException e) {
             e.printStackTrace();

@@ -22,7 +22,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int dire;
     //private int direction;
     private int x, y, speed = GameUtil.WALK;
-
     private boolean front_leg_left;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
@@ -33,18 +32,19 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Pose_paint pp = new Pose_paint(); 
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
-    public CCharacter(int x, int y, LocalDateTime clock) {
+    public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock) {
         this.x = x;
         this.y = y;
+        this.
         setSize(width, height);
         addKeyListener(this);
         setFocusable(true);
-        this.clock = new Game_CLock(clock);
+        this.clock = new Game_CLock(clock,play_time);
         Thread th = new Thread(this);
         th.start();
         Charactor_walk char_walk = new Charactor_walk(); 
         char_walk.start();
-        maps.loadMap(1);
+        maps.loadMap(map_number);
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
     }
@@ -125,7 +125,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         int key = e.getKeyCode();
 
         if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
-            pp.controll(key,x,y);
+            pp.controll(key,x,y, maps.map_number(),clock.getPlayTime());
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
             mp.controll(key);
         } else if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) {
