@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import game.frame.BaseFrame;
 import game.logic.Game_states;
 import game.save_load.Save;
 import game.util.FontUtil;
@@ -55,7 +54,6 @@ public class Pose_paint{
                 }
                 if(v == 1) {
                     Game_states.updateControll_state(GameUtil.GAME_EXIT);
-                    BaseFrame.frame_generator().back_title(new Title());
                 }
             }
             y = 50*v;

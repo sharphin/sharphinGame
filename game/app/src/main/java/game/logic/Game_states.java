@@ -54,7 +54,7 @@ public class Game_states {
         bank_money = Integer.parseInt(str[4]);
         branch_state = Integer.parseInt(str[5]);
         controll_state = 1;
-        map_data_path = filepath;
+        map_data_path = new StringBuilder().append("savedata/").append(filepath).toString();
         items = load.items_decryption(Long.parseLong(str[7]));
     }
     public static String getName(){

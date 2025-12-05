@@ -3,7 +3,6 @@
  */
 package game;
 
-
 import game.frame.BaseFrame;
 import game.util.FontUtil;
 public class App {

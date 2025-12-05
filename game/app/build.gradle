@@ -34,11 +34,9 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 jlink {
-    // Java 25 ではデフォルトで適切な modules を検討してくれる
-    addExtraDependencies("java.management")
 
     launcher {
-        name = 'MyApp'
+        name = 'Game'
         jvmArgs = [
             // 必要ならここへ
             '--enable-preview'

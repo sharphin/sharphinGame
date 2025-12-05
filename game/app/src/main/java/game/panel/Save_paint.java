@@ -32,7 +32,7 @@ public class Save_paint {
             if(save_slot[i] == null || save_slot[i].equals("")) continue;
             StringBuilder sb = new StringBuilder();
             String sss[] = save_slot[i].split(",");
-            sb.append(sss[0]).append(",").append(sss[1]);
+            sb.append(sss[0]).append(",").append(parseTime(Long.parseLong(sss[1])));
             g.drawString(sb.toString(), 300, (i+1)*50);
         }
         g.setColor(Color.WHITE);
@@ -58,5 +58,11 @@ public class Save_paint {
     private void setSave_slot() {
         Load load = new Load();
         save_slot = load.read();
+    }
+    private String parseTime(long second) {
+        second = second % 60;
+        int minute  = (int)second/60;
+        int hour = minute/60;
+        return hour+"時間 "+minute+"分 "+second+"秒";
     }
 }

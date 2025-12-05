@@ -11,6 +11,7 @@ import game.logic.Game_states;
 import game.util.GameUtil;
 
 public class Maps{
+    private String[] map_list = {"/map1.csv",""};
     private Image mapImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/map.png");
     private int tile = GameUtil.TILE;
     private int map_number;
@@ -21,7 +22,7 @@ public class Maps{
     public int[][] loadMap(int index) {
         map_number = index;
         map = new int [GameUtil.MAP_Y_LEN][GameUtil.MAP_X_LEN];
-        try (BufferedReader br = new BufferedReader(new FileReader(Game_states.getMapDataPath()+"/map1.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(mapPathBuilder(Game_states.getMapDataPath(),index)))) {
             for(int i = 0; i < map.length;i++) {
                 String data = br.readLine();
                 String split_data[] = data.split(",");
@@ -81,5 +82,9 @@ public class Maps{
         return map;
     }
     public void map_change(int xx, int yy) {
+    }
+    private String mapPathBuilder(String dir, int i) {
+        StringBuilder sb = new StringBuilder();
+        return sb.append(dir).append(map_list[i]).toString();
     }
 }

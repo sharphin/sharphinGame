@@ -14,6 +14,7 @@ import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
 import game.panel.Pose_paint;
 import game.panel.Talk_panel;
+import game.panel.sub_panel.Debug_paint;
 import game.util.FontUtil;
 import game.util.FormatUtil;
 import game.util.GameUtil;
@@ -32,6 +33,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Pose_paint pp = new Pose_paint(); 
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
+    Debug_paint dp = new Debug_paint();
     public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock) {
         this.x = x;
         this.y = y;
@@ -74,6 +76,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             pp.paint_pose(g);
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
             mp.paint_items(g);
+        }
+        if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG){
+            dp.paint_debug(g,x,y);
         }
     }
     private boolean can_move(int x, int y) {
@@ -147,7 +152,13 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(key == KeyEvent.VK_DOWN)    dire = 4;
             if(key == KeyEvent.VK_SPACE) {}
             if(key == KeyEvent.VK_ENTER) {}
-            
+            if(key == KeyEvent.VK_BACK_QUOTE) {
+                if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG) {
+                    Game_states.updateControll_state(Game_states.getControll_state() & ~GameUtil.DEBUG);
+                } else {
+                    Game_states.updateControll_state(Game_states.getControll_state()+GameUtil.DEBUG);
+                }
+            }
         }
         repaint();
     } 

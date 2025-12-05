@@ -18,13 +18,15 @@ public class Load {
                 save_slot[i] = data;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
         return save_slot;
     }
     public String gameStatesLoad(String filepath) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("savedata/").append(filepath).append("/states.csv");
         String data = "";
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath+"/states.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(sb.toString()))) {
             data = br.readLine();
         } catch (IOException e) {
             e.printStackTrace();

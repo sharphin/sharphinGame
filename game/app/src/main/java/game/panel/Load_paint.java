@@ -31,11 +31,18 @@ public class Load_paint{
         g.fillRect(0, 0, GameUtil.PANEL_X, GameUtil.PANEL_Y);
         g.setColor(Color.WHITE);
         g.setFont(font);
+        if(save_slot == null) {
+            g.drawString("LOAD ERROR", 110, 50);
+            return;
+        }
         for(int i = 0; i < save_slot.length;i++) {
-            if(save_slot[i] == null || save_slot[i].equals("")) continue;
+            if(save_slot[i] == null || save_slot[i].equals("")) {
+                g.drawString("EMPTY", 310, (i+1)*50);
+                continue;
+            }
             StringBuilder sb = new StringBuilder();
             String sss[] = save_slot[i].split(",");
-            sb.append(sss[0]).append(",").append(sss[1]);
+            sb.append(sss[0]).append(",").append(parseTime(Long.parseLong(sss[1])));
             g.drawString(sb.toString(), 310, (i+1)*50);
         }
         g.setColor(Color.WHITE);
@@ -59,8 +66,8 @@ public class Load_paint{
             if(str.length <= 1) return;
             int x = Integer.parseInt(str[2]); 
             int y = Integer.parseInt(str[3]);
-            int map_number = Integer.parseInt(str[1]);
-            long play_time = Long.parseLong(str[4]);
+            int map_number = Integer.parseInt(str[4]);
+            long play_time = Long.parseLong(str[1]);
             BaseFrame.frame_generator().panel_change(new CCharacter(x, y, map_number,play_time,Game_states.getTODAY()),v);
             load_panel_open = false;
         }
@@ -70,5 +77,11 @@ public class Load_paint{
     private void setSave_slot() {
         load = new Load();
         save_slot = load.read();
+    }
+    private String parseTime(long second) {
+        second = second % 60;
+        int minute  = (int)second/60;
+        int hour = minute/60;
+        return hour+"時間 "+minute+"分 "+second+"秒";
     }
 }

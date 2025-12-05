@@ -2,6 +2,8 @@ package game.logic;
 
 import java.time.LocalDateTime;
 
+import game.frame.BaseFrame;
+import game.panel.Title;
 import game.util.GameUtil;
 
 public class Game_CLock implements Runnable{
@@ -25,6 +27,7 @@ public class Game_CLock implements Runnable{
             } catch(InterruptedException e) {}
         }
         System.out.println("stop");
+        BaseFrame.frame_generator().back_title(new Title());
     }
     public LocalDateTime getNowTime() {
         return clock;
