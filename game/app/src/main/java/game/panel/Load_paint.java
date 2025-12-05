@@ -60,14 +60,14 @@ public class Load_paint{
             if(v > GameUtil.MAX_SAVE_SLOT-1) v = 0;
         }
         if(key == KeyEvent.VK_ENTER) {
-            String str[] = save_slot[v].split(",");
-            if(str.length <= 1) return;
-            new Game_states(str[0], str[5],load);
-            if(str.length <= 1) return;
-            int x = Integer.parseInt(str[2]); 
-            int y = Integer.parseInt(str[3]);
-            int map_number = Integer.parseInt(str[4]);
-            long play_time = Long.parseLong(str[1]);
+            String stc[] = save_slot[v].split(",");
+            if(stc.length <= 1) return;
+            new Game_states(stc[0], stc[3],load);
+            int xymap[] = load.coords_decrypt(Long.parseLong(stc[2]));
+            int x = xymap[0];
+            int y = xymap[1];
+            int map_number = xymap[2];
+            long play_time = Long.parseLong(stc[1]);
             BaseFrame.frame_generator().panel_change(new CCharacter(x, y, map_number,play_time,Game_states.getTODAY()),v);
             load_panel_open = false;
         }

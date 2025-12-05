@@ -12,9 +12,9 @@ public class Game_states {
     private static int money;
     private static int bank_money;
     private static int luck;
-    private static int mental;
-    private static int health;
-    private static int stamina;
+    private static int mental;//
+    private static int health;//
+    private static int stamina;//
     private static int likeAbility;
     private static long debt;
     private static long loan;
@@ -124,7 +124,7 @@ public class Game_states {
     public static String getMapDataPath() {
         return map_data_path;
     }
-    public static int getLick() {
+    public static int getLuck() {
         return luck;
     }
     static void updateLuck(int newLuck) {

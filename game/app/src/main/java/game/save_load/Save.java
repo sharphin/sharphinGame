@@ -26,7 +26,7 @@ public class Save {
     }
     public void write(int saveslot, String save_slot[]) {
         File f = new File("savedata/saveData.dat");
-        String dir = "savedata/"+save_slot_SHA_256("/savedata/"+saveslot);
+        String dir = save_slot_SHA_256("/savedata/"+saveslot);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(f,false))) {
             for(int i = 0; i < save_slot.length; i++) {
                 String write_str = save_slot[i];
@@ -34,9 +34,7 @@ public class Save {
                     StringBuilder sb = new StringBuilder();
                     sb.append(Game_states.getName()).append(",");
                     sb.append(play_time).append(",");
-                    sb.append(x).append(",");
-                    sb.append(y).append(",");
-                    sb.append(map_number).append(",");
+                    sb.append(coords_encrypt(x, y, map_number)).append(",");
                     sb.append(dir).append(",");
                     write_str = sb.toString();
                 }
@@ -78,6 +76,13 @@ public class Save {
             sb.append(Game_states.getBank_money()).append(",");
             sb.append(Game_states.getBranch_state()).append(",");
             sb.append(Game_states.getControll_state()).append(",");
+            sb.append(Game_states.getLuck()).append(",");
+            sb.append(Game_states.getMental()).append(",");
+            sb.append(Game_states.getHealth()).append(",");
+            sb.append(Game_states.getStamina()).append(",");
+            sb.append(Game_states.getMental()).append(",");
+            sb.append(Game_states.getDebt()).append(",");
+            sb.append(Game_states.getLoan()).append(",");
             sb.append(encryption(Game_states.getAllItem()));
             bw.write(sb.toString());
             bw.newLine();
@@ -113,5 +118,11 @@ public class Save {
             encrypted += num;
         }
         return encrypted;
+    }
+    public long coords_encrypt(int x, int y, int map) {
+        long ffff = (long)x<<19;
+        ffff = ffff+(long)y<<19;
+        ffff = ffff+(long)map;
+        return ffff;
     }
 }

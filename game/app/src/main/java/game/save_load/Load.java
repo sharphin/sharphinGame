@@ -42,4 +42,8 @@ public class Load {
         }
         return arr;
     }
+    public int[] coords_decrypt(long cryp) {
+        int tmp[] = {(int)(cryp>>38),(int)(cryp>>19) & 524287,(int)(cryp & 127)};
+        return tmp;
+    }
 }

@@ -78,7 +78,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             mp.paint_items(g);
         }
         if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG){
-            dp.paint_debug(g,x,y);
+            dp.paint_debug(g,x,y,maps.map_number());
         }
     }
     private boolean can_move(int x, int y) {
