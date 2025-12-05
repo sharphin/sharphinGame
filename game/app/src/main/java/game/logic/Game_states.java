@@ -1,8 +1,8 @@
 package game.logic;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 
-import game.save_load.Load;
 import game.util.GameUtil;
 
 public class Game_states {
@@ -12,9 +12,9 @@ public class Game_states {
     private static int money;
     private static int bank_money;
     private static int luck;
-    private static int mental;//
-    private static int health;//
-    private static int stamina;//
+    private static int mental;
+    private static int health;
+    private static int stamina;
     private static int likeAbility;
     private static long debt;
     private static long loan;
@@ -31,12 +31,12 @@ public class Game_states {
         hunger_level = 500;
         money = 10000;
         luck = 120;
-        mental = 500;
+        mental = 400;
         health = 500;
         stamina = 1000;
         likeAbility = 1000;
-        debt = 0;
-        loan = 0;
+        debt = 100;
+        loan = 200;
         bank_money = 200000;
         items = new int[8];
         today = LocalDateTime.now();
@@ -44,18 +44,23 @@ public class Game_states {
         controll_state = 1;
         map_data_path = "gamedata/map_data";
     }
-    public Game_states(String loadname, String filepath, Load load) {
-        String str[] = load.gameStatesLoad(filepath).split(",");
+    public Game_states(String loadname,String filepath, int[] intadata, long[] longdata, int[]item_list) {
         name = loadname;
-        today = LocalDateTime.parse(str[0],DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        hp = Integer.parseInt(str[1]);
-        hunger_level = Integer.parseInt(str[2]);
-        money = Integer.parseInt(str[3]);
-        bank_money = Integer.parseInt(str[4]);
-        branch_state = Integer.parseInt(str[5]);
+        today = unixTimeToLocalDateTime(longdata[0]);
+        hp = intadata[0];
+        hunger_level = intadata[1];
+        money = intadata[2];
+        bank_money = intadata[3];
+        branch_state = intadata[4];
+        luck = intadata[5];
+        mental = intadata[6];
+        health = intadata[7];
+        stamina = intadata[8];
+        debt = longdata[1];
+        loan = longdata[2];
+        items = item_list;
         controll_state = 1;
         map_data_path = new StringBuilder().append("savedata/").append(filepath).toString();
-        items = load.items_decryption(Long.parseLong(str[7]));
     }
     public static String getName(){
         return name;
@@ -165,5 +170,8 @@ public class Game_states {
     }
     static void updateLoan(int newLoan) {
         loan = newLoan > GameUtil.MAX_LOAN ? GameUtil.MAX_LOAN : newLoan;
+    }
+    private LocalDateTime unixTimeToLocalDateTime(long unixtime) {
+        return LocalDateTime.ofInstant(Instant.ofEpochSecond(unixtime), ZoneId.systemDefault());
     }
 }

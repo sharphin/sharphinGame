@@ -20,6 +20,7 @@ public class Load_paint{
 
     Font font;
     Load load;
+    private String error = "";
     public Load_paint() {
         setSave_slot();
         FontUtil fl = new FontUtil();
@@ -35,6 +36,7 @@ public class Load_paint{
             g.drawString("LOAD ERROR", 110, 50);
             return;
         }
+        g.drawString(error, 110, 50);
         for(int i = 0; i < save_slot.length;i++) {
             if(save_slot[i] == null || save_slot[i].equals("")) {
                 g.drawString("EMPTY", 310, (i+1)*50);
@@ -49,6 +51,7 @@ public class Load_paint{
         g.drawRect(300, 20+y, 350, 50);
     }
     public void controll(int key) {
+        error = "";
         if(key == KeyEvent.VK_ESCAPE) {
             load_panel_open = false;
         }
@@ -60,10 +63,14 @@ public class Load_paint{
             if(v > GameUtil.MAX_SAVE_SLOT-1) v = 0;
         }
         if(key == KeyEvent.VK_ENTER) {
+            if(save_slot[v] == null || save_slot[v].equals("")) return;
             String stc[] = save_slot[v].split(",");
             if(stc.length <= 1) return;
-            new Game_states(stc[0], stc[3],load);
-            int xymap[] = load.coords_decrypt(Long.parseLong(stc[2]));
+            int xymap[] = load.coords_decrypt(Long.parseLong(stc[2]),Long.parseLong(stc[4]));
+            if(!load.gameStatesLoad(stc[0] ,stc[3]) || xymap[0] == -1) {
+                error = "!BROKEN DATA!";
+                return;
+            }
             int x = xymap[0];
             int y = xymap[1];
             int map_number = xymap[2];
