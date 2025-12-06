@@ -24,10 +24,10 @@ public class Inventory_paint {
             int cx = 0,cy = 0;
             g.setColor(new Color(255,255,255,150));
             g.fillRect((i*50)+150, 400, 50, 50);
-            switch(Game_states.getItem(i)) {
+            switch(Game_states.getInventory(i)) {
                 case 0: cx = 0; cy = 0; break;
             }
-            if(Game_states.getItem(i) != 0) g.drawImage(itemImage, (i*50)+159, 409, (i*50)+191, 441, cx, cy, cx+32, cy+32, null);
+            if(Game_states.getInventory(i) != 0) g.drawImage(itemImage, (i*50)+159, 409, (i*50)+191, 441, cx, cy, cx+32, cy+32, null);
             g.setColor(Color.BLACK);
             g.drawRect((i*50)+150, 400, 50, 50);
 

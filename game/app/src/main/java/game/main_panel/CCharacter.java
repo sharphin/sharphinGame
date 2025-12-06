@@ -84,8 +84,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
         if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;    
-        if(maps.map_coords(x, y) >= 1 &&
-           maps.map_coords(x, y) <= 6) return false;     
+        if(maps.map_coords(x, y) >= 1) return false;     
         return true;
     }
     private void char_move() {

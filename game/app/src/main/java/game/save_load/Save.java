@@ -83,7 +83,29 @@ public class Save {
             sb.append(Game_states.getStamina()).append(",");
             sb.append(Game_states.getDebt()).append(",");
             sb.append(Game_states.getLoan()).append(",");
-            sb.append(encryption(Game_states.getAllItem())).append(",");
+            sb.append(encryption(Game_states.getAllInventory())).append(",");
+            bw.write(sb.toString());
+            sb.delete(0, sb.length());
+            bw.newLine();
+            sb.append(Game_states.getAllItemDictionary()[0]).append(",");
+            sb.append(Game_states.getAllItemDictionary()[1]).append(",");
+            sb.append(Game_states.getAllItemDictionary()[2]).append(",");
+            sb.append(Game_states.getAllItemDictionary()[3]).append(",");
+            bw.write(sb.toString());
+            sb.delete(0, sb.length());
+            bw.newLine();
+            for(int tmp: Game_states.getAllItemStrage()) {
+                sb.append(tmp).append(",");
+            }
+            bw.write(sb.toString());
+            bw.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+        filepath = dir+"/mask.csv";
+        mkfile(filepath);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filepath),false))) {
+            StringBuilder sb = new StringBuilder();
             sb.append(makeDataProtect(Game_states.getTODAY().atZone(ZoneId.systemDefault()).toEpochSecond())).append(",");
             sb.append(makeDataProtect(Game_states.getHP())).append(",");
             sb.append(makeDataProtect(Game_states.getHunger_level())).append(",");
@@ -96,9 +118,21 @@ public class Save {
             sb.append(makeDataProtect(Game_states.getStamina())).append(",");
             sb.append(makeDataProtect(Game_states.getDebt())).append(",");
             sb.append(makeDataProtect(Game_states.getLoan())).append(",");
-            sb.append(makeDataProtect(encryption(Game_states.getAllItem())));
+            sb.append(makeDataProtect(encryption(Game_states.getAllInventory())));
             bw.write(sb.toString());
+            sb.delete(0, sb.length());
             bw.newLine();
+            sb.append(makeDataProtect(Game_states.getAllItemDictionary()[0])).append(",");
+            sb.append(makeDataProtect(Game_states.getAllItemDictionary()[1])).append(",");
+            sb.append(makeDataProtect(Game_states.getAllItemDictionary()[2])).append(",");
+            sb.append(makeDataProtect(Game_states.getAllItemDictionary()[3])).append(",");
+            bw.write(sb.toString());
+            sb.delete(0, sb.length());
+            bw.newLine();
+            for(int tmp: Game_states.getAllItemStrage()) {
+                sb.append(makeDataProtect(tmp)).append(",");
+            }
+            bw.write(sb.toString());
             bw.close();
         } catch (IOException e) {
             System.out.println(e);
@@ -119,13 +153,13 @@ public class Save {
     private String save_slot_SHA_256(String slot) {
         String hexString = "";
         try {
-			MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-			byte[] sha256Byte = sha256.digest(slot.getBytes());
-			HexFormat hex = HexFormat.of().withLowerCase();
-			hexString = hex.formatHex(sha256Byte);
-		} catch (NoSuchAlgorithmException e) {
-			
-		}
+            MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+            byte[] sha256Byte = sha256.digest(slot.getBytes());
+            HexFormat hex = HexFormat.of().withLowerCase();
+            hexString = hex.formatHex(sha256Byte);
+        } catch (NoSuchAlgorithmException e) {
+            
+        }
         return hexString;
     }
     public long encryption(int itemsInfo[]) {
@@ -144,10 +178,10 @@ public class Save {
     }
     private int makeDataProtect(int num) {
         int mask = -1498760516;
-        return num ^ mask;
+        return Integer.reverse(num ^ mask);
     }
     private long makeDataProtect(long num) {
         long mask = 35741560992348860l;
-        return num ^ mask;
+        return Long.reverse(num ^ mask);
     }
 }

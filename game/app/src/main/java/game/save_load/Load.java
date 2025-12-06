@@ -26,35 +26,59 @@ public class Load {
     public boolean gameStatesLoad(String name,String filepath) {
         StringBuilder sb = new StringBuilder();
         sb.append("savedata/").append(filepath).append("/states.csv");
-        String data[] = new String[0];
+        String data[][] = new String[3][];
         try (BufferedReader br = new BufferedReader(new FileReader(sb.toString()))) {
-            data = br.readLine().split(",");
+            data[0] = br.readLine().split(",");
+            data[1] = br.readLine().split(",");
+            data[2] = br.readLine().split(",");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        sb = new StringBuilder();
+        sb.append("savedata/").append(filepath).append("/mask.csv");
+        String data_mask[][] = new String[3][];
+        try (BufferedReader br = new BufferedReader(new FileReader(sb.toString()))) {
+            data_mask[0] = br.readLine().split(",");
+            data_mask[1] = br.readLine().split(",");
+            data_mask[2] = br.readLine().split(",");
         } catch (IOException e) {
             e.printStackTrace();
         }
         int intdataList[] = new int[9];
+        int itemStrage[] = new int[GameUtil.MAX_ALL_ITEMS];
         long longdataList[] = new long[3];
-        longdataList[0] = Long.parseLong(data[0]);
-        intdataList[0] = Integer.parseInt(data[1]);
-        intdataList[1] = Integer.parseInt(data[2]);
-        intdataList[2] = Integer.parseInt(data[3]);
-        intdataList[3] = Integer.parseInt(data[4]);
-        intdataList[4] = Integer.parseInt(data[5]);
-        intdataList[5] = Integer.parseInt(data[6]);
-        intdataList[6] = Integer.parseInt(data[7]);
-        intdataList[7] = Integer.parseInt(data[8]);
-        intdataList[8] = Integer.parseInt(data[9]);
-        longdataList[1] = Long.parseLong(data[10]);
-        longdataList[2] = Long.parseLong(data[11]);
+        long got_item_flags[] = new long[4];
+        longdataList[0] = Long.parseLong(data[0][0]);
+        intdataList[0] = Integer.parseInt(data[0][1]);
+        intdataList[1] = Integer.parseInt(data[0][2]);
+        intdataList[2] = Integer.parseInt(data[0][3]);
+        intdataList[3] = Integer.parseInt(data[0][4]);
+        intdataList[4] = Integer.parseInt(data[0][5]);
+        intdataList[5] = Integer.parseInt(data[0][6]);
+        intdataList[6] = Integer.parseInt(data[0][7]);
+        intdataList[7] = Integer.parseInt(data[0][8]);
+        intdataList[8] = Integer.parseInt(data[0][9]);
+        longdataList[1] = Long.parseLong(data[0][10]);
+        longdataList[2] = Long.parseLong(data[0][11]);
         for(int i = 0; i < intdataList.length; i++) {
-            if(cheating(intdataList[i], Integer.parseInt(data[i+14]))) return false;
+            if(cheating(intdataList[i], Integer.parseInt(data_mask[0][i+1]))) return false;
         }
-        if(cheating(longdataList[0], Long.parseLong(data[13]))) return false;
-        if(cheating(longdataList[1], Long.parseLong(data[23]))) return false;
-        if(cheating(longdataList[2], Long.parseLong(data[24]))) return false;
-        int item_list[] = items_decryption(Long.parseLong(data[12]),Long.parseLong(data[25]));
-
-        new Game_states(name, filepath, intdataList, longdataList, item_list);
+        if(cheating(longdataList[0], Long.parseLong(data_mask[0][0]))) return false;
+        if(cheating(longdataList[1], Long.parseLong(data_mask[0][10]))) return false;
+        if(cheating(longdataList[2], Long.parseLong(data_mask[0][11]))) return false;
+        int item_list[] = items_decryption(Long.parseLong(data[0][12]),Long.parseLong(data_mask[0][12]));
+        if(item_list[0] == -1) return false;
+        for(int i = 0; i < got_item_flags.length; i++) {
+            long tmp = Long.parseLong(data[1][i]);
+            if(cheating(tmp, Long.parseLong(data_mask[1][i]))) return false;
+            got_item_flags[i] = tmp;
+        }
+        for(int i = 0; i < GameUtil.MAX_ALL_ITEMS; i++) {
+            int tmp = Integer.parseInt(data[2][i]);
+            if(cheating(tmp, Integer.parseInt(data_mask[2][i]))) return false;
+            itemStrage[i] = tmp;
+        }
+        new Game_states(name, filepath, intdataList, longdataList, item_list, got_item_flags,itemStrage);
         return true;
     }
     public int[] items_decryption(long itemsInfo,long pad) {
@@ -74,12 +98,12 @@ public class Load {
     }
     private boolean cheating(int num, int pad) {
         int mask = -1498760516;
-        if((num ^ mask) != pad) return true;
+        if(Integer.reverse(num ^ mask) != pad) return true;
         return false;
     }
     private boolean cheating(long num, long pad) {
         long mask = 35741560992348860l;
-        if((num ^ mask) != pad) return true;
+        if(Long.reverse(num ^ mask) != pad) return true;
         return false;
     }
 }

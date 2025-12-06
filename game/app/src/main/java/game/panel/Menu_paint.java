@@ -23,7 +23,6 @@ public class Menu_paint{
         font1 = fl.setFontSize_Mplus1Code(30f);
         font2 = fl.setFontSize_Mplus1Code(20f);
     }
-
     public void paint_items(Graphics g) {
         g.setColor(black);
         g.fillRect(0, 0, GameUtil.PANEL_X, GameUtil.PANEL_Y);

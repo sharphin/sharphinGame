@@ -42,22 +42,22 @@ public class Maps{
             for(int j = 0; j < map[i].length; j++) {
                 x1 = (j << 5)+sx;
                 switch(map[i][j]){
-                    case 1:  x2 = 0;     break;
-                    case 2:  x2 = 32;    break;
-                    case 3:  x2 = 64;    break;
-                    case 4:  x2 = 96;    break;
-                    case 5:  x2 = 128;   break;
-                    case 6:  x2 = 160;   break;
-                    case 7:  x2 = 192;   break;
-                    case 8:  x2 = 224;   break;
-                    case 9:  x2 = 256;   break;
-                    case 10: x2 = 288;   break;
-                    case 11: x2 = 320;   break;
-                    case 12: x2 = 352;   break;
-                    case 13: x2 = 384;   break;
-                    case 14: x2 = 416;   break;
-                    case 15: x2 = 448;   break;
-                    case 16: x2 = 480;   break;
+                    case 0:  x2 = 0;     break;
+                    case 1:  x2 = 32;    break;
+                    case 2:  x2 = 64;    break;
+                    case 3:  x2 = 96;    break;
+                    case 4:  x2 = 128;   break;
+                    case 5:  x2 = 160;   break;
+                    case 6:  x2 = 192;   break;
+                    case 7:  x2 = 224;   break;
+                    case 8:  x2 = 256;   break;
+                    case 9:  x2 = 288;   break;
+                    case 10: x2 = 320;   break;
+                    case 11: x2 = 352;   break;
+                    case 12: x2 = 384;   break;
+                    case 13: x2 = 416;   break;
+                    case 14: x2 = 448;   break;
+                    case 15: x2 = 480;   break;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
             }

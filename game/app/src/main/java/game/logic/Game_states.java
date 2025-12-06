@@ -16,15 +16,16 @@ public class Game_states {
     private static int health;
     private static int stamina;
     private static int likeAbility;
-    private static long debt;
-    private static long loan;
-
-    private static int items[];
-    private static LocalDateTime today;
     private static int branch_state;
     private static int controll_state = 1;
+    private static int inventory[];
+    private static int item_strage[];
+    //private static int like_abirity[];
+    private static long debt;
+    private static long loan;
+    private static long item_dictionary[];
     private static String map_data_path;
-
+    private static LocalDateTime today;
     public Game_states(String newname) {
         name = newname;
         hp = 2500;
@@ -38,13 +39,16 @@ public class Game_states {
         debt = 100;
         loan = 200;
         bank_money = 200000;
-        items = new int[8];
+        inventory = new int[8];
+        //like_abirity = new int[64];
+        item_strage = new int[255];
+        item_dictionary = new long[4];
         today = LocalDateTime.now();
         branch_state = 0;
         controll_state = 1;
         map_data_path = "gamedata/map_data";
     }
-    public Game_states(String loadname,String filepath, int[] intadata, long[] longdata, int[]item_list) {
+    public Game_states(String loadname,String filepath, int[] intadata, long[] longdata, int loadinventory[], long itemDict[], int itemStrage[]) {
         name = loadname;
         today = unixTimeToLocalDateTime(longdata[0]);
         hp = intadata[0];
@@ -58,33 +62,62 @@ public class Game_states {
         stamina = intadata[8];
         debt = longdata[1];
         loan = longdata[2];
-        items = item_list;
+        inventory = loadinventory;
+        item_dictionary = itemDict;
+        item_strage = itemStrage;
         controll_state = 1;
         map_data_path = new StringBuilder().append("savedata/").append(filepath).toString();
     }
     public static String getName(){
         return name;
     }
-    public static int[] getAllItem() {
-        return items;
+    public static int[] getAllInventory() {
+        return inventory;
     }
-    public static int getItem(int index) {
+    public static int getInventory(int index) {
         if(index >= GameUtil.MAX_ITEM) return -1;
-        return items[index];
+        return inventory[index];
     }
-    static int addItem(int item, int index) {
+    static void updateItemDictionary(int i) {
+        int area = i>>6;
+        int shift = i-(area<<6);
+        if(i >= GameUtil.MAX_ALL_ITEMS) return;
+        item_dictionary[area] = item_dictionary[area] | (long)(1<<shift);
+    }
+    public static long[] getAllItemDictionary() {
+        return item_dictionary;
+    }
+    public static int searchItemDictionary(int i) {
+        int area = i>>6;
+        int shift = i-(area<<6);
+        if(i >= GameUtil.MAX_ALL_ITEMS) return -2;
+        if(Long.bitCount(item_dictionary[area] & (long)(1<<shift)) == 0) return -1;
+        return i;
+    }
+    static void updateItemStrage(int index) {
+        if(index >= GameUtil.MAX_ALL_ITEMS) return;
+        item_strage[index]++;
+    }
+    public static int[] getAllItemStrage() {
+        return item_strage;
+    }
+    public static int getItemStrage(int index) {
+        if(index >= GameUtil.MAX_ALL_ITEMS) return -1;
+        return item_strage[index];
+    }
+    static int addInventory(int item, int index) {
         int result = 0;
         if(index >= GameUtil.MAX_ITEM  || index < 0) return -1;
-        if(items[index] != 0) result = items[index];
-        items[index] = item;
+        if(inventory[index] != 0) result = inventory[index];
+        inventory[index] = item;
         return result;
     }
-    static int itemSwap(int index1, int index2) {
+    static int inventoryswap(int index1, int index2) {
         if(index1 >= GameUtil.MAX_ITEM  || index1 < 0) return -1;
         if(index2 >= GameUtil.MAX_ITEM  || index2 < 0) return -1;
-        int temp = items[index1];
-        items[index1] = items[index2];
-        items[index2] = temp;
+        int temp = inventory[index1];
+        inventory[index1] = inventory[index2];
+        inventory[index2] = temp;
         return 0;
     }
     public static int getHP() {
