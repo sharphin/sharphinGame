@@ -11,6 +11,7 @@ import game.util.GameUtil;
 public class Title extends JPanel{
     private int y = 60;
     private Font font;
+    private Font font2;
     private Load_paint lp;
     public Title(){
         lp = new Load_paint();
@@ -18,6 +19,7 @@ public class Title extends JPanel{
         setBackground(Color.BLACK);
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(30f);
+        font2 = fl.setFontSize_Mplus1Code(50f);
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -26,6 +28,8 @@ public class Title extends JPanel{
             return;
         }
         g.setColor(Color.WHITE);
+        g.setFont(font2);
+        g.drawString("芸無", 290, 200);
         g.setFont(font);
         g.drawString("NEW GAME", 280, 280);
         g.drawString("LOAD", 310, 340);

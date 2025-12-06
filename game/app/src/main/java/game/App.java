@@ -7,10 +7,9 @@ import game.frame.BaseFrame;
 import game.util.FontUtil;
 public class App {
     public String getGreeting() {
-        return "Hello World!";
+        return "WELCOME TO GAME!";
     }
     public static void main(String[] args) {
-        
         System.out.println(new App().getGreeting());
         FontUtil font = new FontUtil();
         font.initMplus1Code();

@@ -46,26 +46,29 @@ public class Save {
         } catch (IOException e) {
             System.out.println(e);
         }
+        String filepath;
         dir = filepathBuilder("savedata/",dir);
-        String filepath = filepathBuilder(dir,"/map1.csv");
         File mapf = new File(dir);
         mapf.mkdirs();
-        mkfile(filepath);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filepath),false))) {
-            Maps maps = new Maps();
-            int map[][] = maps.getMap();
-            for(int i = 0; i < map.length; i++) {
-                StringBuilder sb = new StringBuilder();
-                for(int j = 0; j < map[0].length-1; j++) {
-                    sb.append(map[i][j]).append(",");
+        Maps maps = new Maps();
+        for(int ii = 0; ii < maps.readMapKinds();ii++)  {
+            filepath = filepathBuilder(dir,maps.map_file_name(ii));
+            mkfile(filepath);
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filepath),false))) {
+                int map[][] = maps.getMap(ii);
+                for(int i = 0; i < map.length; i++) {
+                    StringBuilder sb = new StringBuilder();
+                    for(int j = 0; j < map[0].length-1; j++) {
+                        sb.append(map[i][j]).append(",");
+                    }
+                    sb.append(map[i][map[0].length-1]);
+                    bw.write(sb.toString());
+                    bw.newLine();
                 }
-                sb.append(map[i][map[0].length-1]);
-                bw.write(sb.toString());
-                bw.newLine();
+                bw.close();
+            } catch (IOException e) {
+                System.out.println(e);
             }
-            bw.close();
-        } catch (IOException e) {
-            System.out.println(e);
         }
         filepath = dir+"/states.csv";
         mkfile(filepath);

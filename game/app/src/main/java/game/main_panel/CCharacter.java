@@ -37,7 +37,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock) {
         this.x = x;
         this.y = y;
-        this.
         setSize(width, height);
         addKeyListener(this);
         setFocusable(true);
@@ -53,8 +52,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         maps.paint_map(g, scroll_x(), scroll_y());
-        int xx = x+scroll_x();
-        int yy = y+scroll_y();
+        int xx = x+scroll_x()-32;
+        int yy = y+scroll_y()-32;
         //int y1 = 120;
         //int x1 = 0;
         //if(dire != 0) direction = dire;
@@ -84,8 +83,18 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
         if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;    
-        if(maps.map_coords(x, y) >= 1) return false;     
+        if(hit_tile(x, y) >= 1) return false;     
         return true;
+    }
+    private int hit_tile(int x, int y) {
+        int ontile = maps.map_tile(x, y);
+        if(ontile == 17) map_move(1);
+        return ontile;
+    }
+    private void map_move(int map_id) {
+        maps.updateActiveMapNum(map_id);
+        x=500;
+        y=300;
     }
     private void char_move() {
         int tile = GameUtil.TILE;
@@ -114,13 +123,13 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
     }
     private int scroll_x() {
-        int map_width = maps.map_x_length() << 5;
+        int map_width = maps.map_x_length()-1 << 5;
         if(x >= map_width-(width >> 1))  return width - map_width;
         if(x <= width >> 1) return 0;
         return (width >> 1) - x;
     }
     private int scroll_y() {
-        int map_height = maps.map_y_length() << 5;
+        int map_height = maps.map_y_length()-1 << 5;
         if(y >= map_height-(height >> 1)) return height - map_height;
         if(y <= height >> 1) return 0;
         return (height >> 1) - y;

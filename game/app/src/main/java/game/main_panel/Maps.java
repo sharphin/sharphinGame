@@ -11,17 +11,23 @@ import game.logic.Game_states;
 import game.util.GameUtil;
 
 public class Maps{
-    private String[] map_list = {"/map1.csv",""};
+    private String[] map_list = {"/map1.csv","/map2.csv"};
     private Image mapImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/map.png");
     private int tile = GameUtil.TILE;
-    private int map_number;
-    private static int map[][];
+    private int active_map_num;
+    private static int map[][][];
 
+    
     public Maps() {}
 
-    public int[][] loadMap(int index) {
-        map_number = index;
-        map = new int [GameUtil.MAP_Y_LEN][GameUtil.MAP_X_LEN];
+    public void loadMap(int index) {
+        active_map_num = index;
+        map = new int [map_list.length][GameUtil.MAP_Y_LEN][GameUtil.MAP_X_LEN];
+        for(int i = 0; i < map.length;i++) {
+            map[i] = mapread(map[i],i);
+        }
+    }
+    private int[][] mapread(int map[][],int index) {
         try (BufferedReader br = new BufferedReader(new FileReader(mapPathBuilder(Game_states.getMapDataPath(),index)))) {
             for(int i = 0; i < map.length;i++) {
                 String data = br.readLine();
@@ -37,11 +43,11 @@ public class Maps{
     }
     public final void paint_map(Graphics g, int sx, int sy) {
         int x1=1, y1=1,x2 = 0, y2 = 0;
-        for(int i = 0; i < map.length; i++) {
-            y1 = (i << 5)+sy;
-            for(int j = 0; j < map[i].length; j++) {
-                x1 = (j << 5)+sx;
-                switch(map[i][j]){
+        for(int i = 0; i < map[active_map_num].length; i++) {
+            y1 = (i << 5)+sy-32;
+            for(int j = 0; j < map[active_map_num][i].length; j++) {
+                x1 = (j << 5)+sx-32;
+                switch(map[active_map_num][i][j]){
                     case 0:  x2 = 0;     break;
                     case 1:  x2 = 32;    break;
                     case 2:  x2 = 64;    break;
@@ -58,28 +64,39 @@ public class Maps{
                     case 13: x2 = 416;   break;
                     case 14: x2 = 448;   break;
                     case 15: x2 = 480;   break;
+                    case 16: x2 = 512;   break;
+                    case 17: x2 = 544;   break;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
             }
         }
     }
+    public String map_file_name(int i) {
+        return map_list[i];
+    }
+    public void updateActiveMapNum(int index) {
+        active_map_num = index;
+    }
     public int map_number() {
-        return map_number;
+        return active_map_num;
     }
-    public int map_coords(int x ,int y) {
-        return map[y][x];
+    public int map_tile(int x ,int y) {
+        return map[active_map_num][y][x];
     }
-    public int map_x_length() {
-        return map[0].length;
-    }
-    public int map_y_length() {
+    public int readMapKinds() {
         return map.length;
     }
-    public void object_swap(int x ,int y, int og) {
-        map[y][x] = og;
+    public int map_x_length() {
+        return map[active_map_num][0].length;
     }
-    public int[][] getMap() {
-        return map;
+    public int map_y_length() {
+        return map[active_map_num].length;
+    }
+    public void object_swap(int x ,int y, int og) {
+        map[active_map_num][y][x] = og;
+    }
+    public int[][] getMap(int i) {
+        return map[i];
     }
     public void map_change(int xx, int yy) {
     }

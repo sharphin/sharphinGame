@@ -6,8 +6,9 @@ public class GameUtil {
     public static final int FRAME_Y = 539;
     public static final int PANEL_X = 700;
     public static final int PANEL_Y = 500;
-    public static final int MAP_X_LEN = 32;
-    public static final int MAP_Y_LEN = 32;
+    public static final int MAP_X_LEN = 33;
+    public static final int MAP_Y_LEN = 33;
+    public static final int MAX_MAP_KIND = 64;
     public static final int WALK = 4;
     public static final int DASH = 6;
     public static final int MAX_ITEM = 8;

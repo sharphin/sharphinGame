@@ -57,7 +57,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
         g.drawRect(465, 440, 63, 40);
         g.drawRect(533, 440, 40, 40);
         g.drawRect(573, 395, 67, 40);
-
+        g.drawString("WHAT'S YOUR NAME ?", 20, 200);
         for(int i = 0; i < xcoords1[0].length; i++) {
             g.drawRect(xcoords1[0][i], 260, 40, 40);
             if(key == xcoords1[1][i]) g.fillRect(xcoords1[0][i], 260, 40, 40);
@@ -183,7 +183,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
         repaint();
     }
     private void name_type(char token) {
-        name.append(token);
+        name.insert(cursor_i, token);
         cursor_i++;
     }
     private void name_backspace(int i) {
@@ -203,7 +203,8 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
         if(cursor_i < name.length()) cursor_i++;
     }
     private void cursor_dec() {
-        if(cursor_i > 0) cursor_i--;    }
+        if(cursor_i > 0) cursor_i--;
+    }
     public void keyTyped(KeyEvent e) {}
 
     private void coords_init() {
