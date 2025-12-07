@@ -59,10 +59,10 @@ public class Save_paint {
         Load load = new Load();
         save_slot = load.read();
     }
-    private String parseTime(long second) {
-        second = second % 60;
-        int minute  = (int)second/60;
-        int hour = minute/60;
+    private static String parseTime(long num) {
+        int second = (int)num % 60;
+        int minute  = (int)num/60;
+        int hour = (int)(num/60)/60;
         return hour+"時間 "+minute+"分 "+second+"秒";
     }
 }

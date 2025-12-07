@@ -11,13 +11,13 @@ import game.logic.Game_states;
 import game.util.GameUtil;
 
 public class Maps{
-    private String[] map_list = {"/map1.csv","/map2.csv"};
+    private String[] map_list = {"/map0.csv","/map1.csv","/map2.csv","/map3.csv","/map4.csv","/map5.csv"};
     private Image mapImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/map.png");
     private int tile = GameUtil.TILE;
     private int active_map_num;
     private static int map[][][];
-
-    
+    private int map_move_key = 8192;
+    //private int map_paint_mask = 0b1000000000000;
     public Maps() {}
 
     public void loadMap(int index) {
@@ -65,7 +65,7 @@ public class Maps{
                     case 14: x2 = 448;   break;
                     case 15: x2 = 480;   break;
                     case 16: x2 = 512;   break;
-                    case 17: x2 = 544;   break;
+                    default: x2 = 544;   break;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
             }
@@ -98,7 +98,8 @@ public class Maps{
     public int[][] getMap(int i) {
         return map[i];
     }
-    public void map_change(int xx, int yy) {
+    public int getMapMoveKey() {
+        return map_move_key;
     }
     private String mapPathBuilder(String dir, int i) {
         StringBuilder sb = new StringBuilder();

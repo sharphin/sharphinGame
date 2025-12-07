@@ -10,7 +10,7 @@ public class Game_states {
     private static int hp;
     private static int hunger_level;
     private static int money;
-    private static int bank_money;
+    private static long bank_money;
     private static int luck;
     private static int mental;
     private static int health;
@@ -38,11 +38,11 @@ public class Game_states {
         likeAbility = 1000;
         debt = 100;
         loan = 200;
-        bank_money = 200000;
+        bank_money = init_bank_money(newname);
         inventory = new int[8];
         //like_abirity = new int[64];
         item_strage = new int[255];
-        item_dictionary = new long[4];
+        item_dictionary = init_item_dict(newname);
         today = LocalDateTime.now();
         branch_state = 0;
         controll_state = 1;
@@ -138,13 +138,13 @@ public class Game_states {
     static void updateHMoney(int new_money) {
         money = new_money;
     }
-    public static int getBank_money() {
+    public static long getBank_money() {
         return bank_money;
     }
     static void updateBank_money(int new_bank_money) {
         bank_money = new_bank_money;
     }
-    public static LocalDateTime getTODAY() {
+    public static LocalDateTime getTodayTime() {
         return today;
     }
     public static int getBranch_state() {
@@ -206,5 +206,22 @@ public class Game_states {
     }
     private LocalDateTime unixTimeToLocalDateTime(long unixtime) {
         return LocalDateTime.ofInstant(Instant.ofEpochSecond(unixtime), ZoneId.systemDefault());
+    }
+    private long[] init_item_dict(String name) {
+        long [] tmp = new long[4];
+        if(name.equals("COMPLETE")) {
+            tmp[0] = Long.MAX_VALUE;
+            tmp[1] = Long.MAX_VALUE;
+            tmp[2] = Long.MAX_VALUE;
+            tmp[3] = Long.MAX_VALUE;
+        } 
+        return tmp;
+    }
+    private long init_bank_money(String name) {
+        return switch(name) {
+            case "RICH" -> Long.MAX_VALUE;
+            case "POOR" -> 10000;
+            default -> 200000;
+        };
     }
 }

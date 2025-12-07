@@ -65,8 +65,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         //}
         g.setColor(Color.BLACK);
         g.setFont(font);
-        g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         g.fillRect(xx, yy, GameUtil.TILE, GameUtil.TILE);
+        g.setColor(Color.WHITE);
+        g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         g.drawString("所持金:"+Game_states.getMoney(),500,30);
         if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
             ip.paint_inventory(g);
@@ -88,13 +89,18 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     }
     private int hit_tile(int x, int y) {
         int ontile = maps.map_tile(x, y);
-        if(ontile == 17) map_move(1);
+        if(ontile >= maps.getMapMoveKey()) {
+            map_move(ontile-maps.getMapMoveKey(),x,y);
+            System.out.println(ontile-maps.getMapMoveKey());
+        }
         return ontile;
     }
-    private void map_move(int map_id) {
+    private void map_move(int map_id, int x, int y) {
         maps.updateActiveMapNum(map_id);
-        x=500;
-        y=300;
+        if(x <= 0) this.x = 32*32;
+        if(y <= 0) this.y = 32*32;
+        if(x >= 33) this.x = 32;
+        if(y >= 33) this.y = 32;
     }
     private void char_move() {
         int tile = GameUtil.TILE;
@@ -123,13 +129,13 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
     }
     private int scroll_x() {
-        int map_width = maps.map_x_length()-1 << 5;
+        int map_width = maps.map_x_length()-2 << 5;
         if(x >= map_width-(width >> 1))  return width - map_width;
         if(x <= width >> 1) return 0;
         return (width >> 1) - x;
     }
     private int scroll_y() {
-        int map_height = maps.map_y_length()-1 << 5;
+        int map_height = maps.map_y_length()-2 << 5;
         if(y >= map_height-(height >> 1)) return height - map_height;
         if(y <= height >> 1) return 0;
         return (height >> 1) - y;
@@ -185,7 +191,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             char_move();
             if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY)repaint();
             try{
-                Thread.sleep(14);
+                Thread.sleep(15);
             } catch(InterruptedException e) {}
         }
     }

@@ -74,7 +74,7 @@ public class Save {
         mkfile(filepath);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filepath),false))) {
             StringBuilder sb = new StringBuilder();
-            sb.append(Game_states.getTODAY().atZone(ZoneId.systemDefault()).toEpochSecond()).append(",");
+            sb.append(Game_states.getTodayTime().atZone(ZoneId.systemDefault()).toEpochSecond()).append(",");
             sb.append(Game_states.getHP()).append(",");
             sb.append(Game_states.getHunger_level()).append(",");
             sb.append(Game_states.getMoney()).append(",");
@@ -109,7 +109,7 @@ public class Save {
         mkfile(filepath);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(new File(filepath),false))) {
             StringBuilder sb = new StringBuilder();
-            sb.append(makeDataProtect(Game_states.getTODAY().atZone(ZoneId.systemDefault()).toEpochSecond())).append(",");
+            sb.append(makeDataProtect(Game_states.getTodayTime().atZone(ZoneId.systemDefault()).toEpochSecond())).append(",");
             sb.append(makeDataProtect(Game_states.getHP())).append(",");
             sb.append(makeDataProtect(Game_states.getHunger_level())).append(",");
             sb.append(makeDataProtect(Game_states.getMoney())).append(",");
