@@ -13,7 +13,7 @@ import game.logic.Game_states;
 import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
 import game.panel.Pose_paint;
-import game.panel.Talk_panel;
+import game.panel.Talk_paint;
 import game.panel.sub_panel.Debug_paint;
 import game.util.FontUtil;
 import game.util.FormatUtil;
@@ -29,7 +29,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private Game_CLock clock;
     Font font;
     Maps maps = new Maps();
-    Talk_panel cm = new Talk_panel();
+    Talk_paint tp = new Talk_paint();
     Pose_paint pp = new Pose_paint(); 
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
@@ -81,18 +81,27 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG){
             dp.paint_debug(g,x,y,maps.map_number());
         }
+        if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
+            tp.paint_message(g);
+        }
     }
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
         if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;    
-        if(hit_tile(x, y) >= 1) return false;     
+        if(hit_tile(x, y) >= 1) return false;
         return true;
     }
     private int hit_tile(int x, int y) {
         int ontile = maps.map_tile(x, y);
         if(ontile >= maps.getMapMoveKey()) {
-            map_move(ontile-maps.getMapMoveKey(),x,y);
-            System.out.println(ontile-maps.getMapMoveKey());
+            if(ontile <= 10000) {
+                map_move(ontile-maps.getMapMoveKey(),x,y);
+                System.out.println(ontile-maps.getMapMoveKey());
+            } else if(Game_states.getControll_state() != GameUtil.TALK) {
+                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+                System.out.println("鍵がかかっている");
+                repaint();
+            }
         }
         return ontile;
     }
@@ -174,6 +183,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     Game_states.updateControll_state(Game_states.getControll_state()+GameUtil.DEBUG);
                 }
             }
+        } else if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
+            tp.controll(key,0);
         }
         repaint();
     } 

@@ -1,5 +1,6 @@
 package game.main_panel;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -11,13 +12,15 @@ import game.logic.Game_states;
 import game.util.GameUtil;
 
 public class Maps{
-    private String[] map_list = {"/map0.csv","/map1.csv","/map2.csv","/map3.csv","/map4.csv","/map5.csv"};
+    private String[] map_list = {"/map0.csv","/map1.csv","/map2.csv","/map3.csv","/map4.csv","/map5.csv","/map6.csv"};
     private Image mapImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/map.png");
     private int tile = GameUtil.TILE;
     private int active_map_num;
     private static int map[][][];
     private int map_move_key = 8192;
+    //private int key_item_tile = 4096;
     //private int map_paint_mask = 0b1000000000000;
+    private int color_delta = 0;
     public Maps() {}
 
     public void loadMap(int index) {
@@ -47,6 +50,7 @@ public class Maps{
             y1 = (i << 5)+sy-32;
             for(int j = 0; j < map[active_map_num][i].length; j++) {
                 x1 = (j << 5)+sx-32;
+                if(map[active_map_num][i][j]>= 8192) continue;
                 switch(map[active_map_num][i][j]){
                     case 0:  x2 = 0;     break;
                     case 1:  x2 = 32;    break;
@@ -65,11 +69,14 @@ public class Maps{
                     case 14: x2 = 448;   break;
                     case 15: x2 = 480;   break;
                     case 16: x2 = 512;   break;
-                    default: x2 = 544;   break;
+                    default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
             }
         }
+        g.drawString(color_delta()+"", 40, 400);
+        g.setColor(new Color(255,255,255,color_delta()));
+        g.fillOval(300, 300, 5, 5);
     }
     public String map_file_name(int i) {
         return map_list[i];
@@ -104,5 +111,11 @@ public class Maps{
     private String mapPathBuilder(String dir, int i) {
         StringBuilder sb = new StringBuilder();
         return sb.append(dir).append(map_list[i]).toString();
+    }
+    private int color_delta() {
+        color_delta+=4;
+        if(color_delta>= 510) color_delta = 0;
+        int offset_color_delta = color_delta>=255 ? ~color_delta & 0b11111111: color_delta;
+        return offset_color_delta;
     }
 }

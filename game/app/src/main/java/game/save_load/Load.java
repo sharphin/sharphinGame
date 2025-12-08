@@ -44,7 +44,7 @@ public class Load {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int intdataList[] = new int[9];
+        int intdataList[] = new int[8];
         int itemStrage[] = new int[GameUtil.MAX_ALL_ITEMS];
         long longdataList[] = new long[4];
         long got_item_flags[] = new long[4];

@@ -38,7 +38,6 @@ public class Menu_paint{
         g.fillRect(672,scroll_y()+50,3,10);
         g.fillRect(670,39,7,10);
         g.fillRect(670,423,7,10);
-        System.out.println(scroll_y()+56);
     }
     public void controll(int key) {
         if(key == KeyEvent.VK_CONTROL) {

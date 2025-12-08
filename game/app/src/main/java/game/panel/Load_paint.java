@@ -44,7 +44,6 @@ public class Load_paint{
                 g.drawString("EMPTY", 310, (i+1)*50);
                 continue;
             }
-            StringBuilder sb = new StringBuilder();
             String sss[] = save_slot[i].split(",");
             g.setFont(font);
             g.drawString(sss[0], 310, (i+1)*50);
