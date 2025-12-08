@@ -17,6 +17,7 @@ public class Debug_paint {
     public void paint_debug(Graphics g, int x, int y, int map_num) {
         g.setColor(Color.WHITE);
         g.setFont(font);
+        g.drawString("money:"+Game_states.getMoney(),500,30);
         g.drawString("X: "+x,500,60);
         g.drawString("Y: "+y,570,60);
         g.drawString("map_num: "+map_num,500,90);

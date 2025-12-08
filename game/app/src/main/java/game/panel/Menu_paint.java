@@ -36,8 +36,9 @@ public class Menu_paint{
         }
         g.fillRect(400,(30*line)+75,250,3);
         g.fillRect(672,scroll_y()+50,3,10);
-        g.fillRect(670,45,7,10);
-        g.fillRect(670,435,7,10);
+        g.fillRect(670,39,7,10);
+        g.fillRect(670,423,7,10);
+        System.out.println(scroll_y()+56);
     }
     public void controll(int key) {
         if(key == KeyEvent.VK_CONTROL) {
@@ -53,11 +54,17 @@ public class Menu_paint{
             if(line < 12) {line++;}
             else {itemline++;}
         }
-        if(itemline < 0) itemline = GameUtil.MAX_ALL_ITEMS-13;
-        if(itemline > GameUtil.MAX_ALL_ITEMS-13) itemline = 0;
+        if(itemline < 0) {
+            itemline = GameUtil.MAX_ALL_ITEMS-13;
+            line = 12;
+        }
+        if(itemline > GameUtil.MAX_ALL_ITEMS-13) {
+            itemline = 0;
+            line = 0;
+        }
         if(key == KeyEvent.VK_ENTER) {}
     }
     private int scroll_y() {
-        return itemline/21;
+        return ((itemline+line)*30)/21;
     }
 }

@@ -54,14 +54,14 @@ public class Game_states {
         hp = intadata[0];
         hunger_level = intadata[1];
         money = intadata[2];
-        bank_money = intadata[3];
+        bank_money = longdata[1];
         branch_state = intadata[4];
         luck = intadata[5];
         mental = intadata[6];
         health = intadata[7];
         stamina = intadata[8];
-        debt = longdata[1];
-        loan = longdata[2];
+        debt = longdata[2];
+        loan = longdata[3];
         inventory = loadinventory;
         item_dictionary = itemDict;
         item_strage = itemStrage;

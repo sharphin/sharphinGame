@@ -78,12 +78,12 @@ public class Save {
             sb.append(Game_states.getHP()).append(",");
             sb.append(Game_states.getHunger_level()).append(",");
             sb.append(Game_states.getMoney()).append(",");
-            sb.append(Game_states.getBank_money()).append(",");
             sb.append(Game_states.getBranch_state()).append(",");
             sb.append(Game_states.getLuck()).append(",");
             sb.append(Game_states.getMental()).append(",");
             sb.append(Game_states.getHealth()).append(",");
             sb.append(Game_states.getStamina()).append(",");
+            sb.append(Game_states.getBank_money()).append(",");
             sb.append(Game_states.getDebt()).append(",");
             sb.append(Game_states.getLoan()).append(",");
             sb.append(encryption(Game_states.getAllInventory())).append(",");
@@ -113,12 +113,12 @@ public class Save {
             sb.append(makeDataProtect(Game_states.getHP())).append(",");
             sb.append(makeDataProtect(Game_states.getHunger_level())).append(",");
             sb.append(makeDataProtect(Game_states.getMoney())).append(",");
-            sb.append(makeDataProtect(Game_states.getBank_money())).append(",");
             sb.append(makeDataProtect(Game_states.getBranch_state())).append(",");
             sb.append(makeDataProtect(Game_states.getLuck())).append(",");
             sb.append(makeDataProtect(Game_states.getMental())).append(",");
             sb.append(makeDataProtect(Game_states.getHealth())).append(",");
             sb.append(makeDataProtect(Game_states.getStamina())).append(",");
+            sb.append(makeDataProtect(Game_states.getBank_money())).append(",");
             sb.append(makeDataProtect(Game_states.getDebt())).append(",");
             sb.append(makeDataProtect(Game_states.getLoan())).append(",");
             sb.append(makeDataProtect(encryption(Game_states.getAllInventory())));

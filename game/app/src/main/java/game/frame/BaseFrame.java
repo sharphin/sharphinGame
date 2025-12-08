@@ -25,7 +25,7 @@ public class BaseFrame extends JFrame implements KeyListener{
         super.add(ti = new Title());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(300,100,GameUtil.FRAME_X, GameUtil.FRAME_Y);
-        setTitle("Game");
+        setTitle("GAME");
         setVisible(true);
         setResizable(false);
         addKeyListener(this);

@@ -46,7 +46,7 @@ public class Load {
         }
         int intdataList[] = new int[9];
         int itemStrage[] = new int[GameUtil.MAX_ALL_ITEMS];
-        long longdataList[] = new long[3];
+        long longdataList[] = new long[4];
         long got_item_flags[] = new long[4];
         longdataList[0] = Long.parseLong(data[0][0]);
         intdataList[0] = Integer.parseInt(data[0][1]);
@@ -57,15 +57,16 @@ public class Load {
         intdataList[5] = Integer.parseInt(data[0][6]);
         intdataList[6] = Integer.parseInt(data[0][7]);
         intdataList[7] = Integer.parseInt(data[0][8]);
-        intdataList[8] = Integer.parseInt(data[0][9]);
-        longdataList[1] = Long.parseLong(data[0][10]);
-        longdataList[2] = Long.parseLong(data[0][11]);
+        longdataList[1] = Long.parseLong(data[0][9]);
+        longdataList[2] = Long.parseLong(data[0][10]);
+        longdataList[3] = Long.parseLong(data[0][11]);
         for(int i = 0; i < intdataList.length; i++) {
             if(cheating(intdataList[i], Integer.parseInt(data_mask[0][i+1]))) return false;
         }
         if(cheating(longdataList[0], Long.parseLong(data_mask[0][0]))) return false;
-        if(cheating(longdataList[1], Long.parseLong(data_mask[0][10]))) return false;
-        if(cheating(longdataList[2], Long.parseLong(data_mask[0][11]))) return false;
+        if(cheating(longdataList[1], Long.parseLong(data_mask[0][9]))) return false;
+        if(cheating(longdataList[2], Long.parseLong(data_mask[0][10]))) return false;
+        if(cheating(longdataList[3], Long.parseLong(data_mask[0][11]))) return false;
         int item_list[] = items_decryption(Long.parseLong(data[0][12]),Long.parseLong(data_mask[0][12]));
         if(item_list[0] == -1) return false;
         for(int i = 0; i < got_item_flags.length; i++) {

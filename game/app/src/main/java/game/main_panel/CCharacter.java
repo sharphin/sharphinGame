@@ -51,6 +51,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, width, height);
         maps.paint_map(g, scroll_x(), scroll_y());
         int xx = x+scroll_x()-32;
         int yy = y+scroll_y()-32;
@@ -65,10 +67,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         //}
         g.setColor(Color.BLACK);
         g.setFont(font);
-        g.fillRect(xx, yy, GameUtil.TILE, GameUtil.TILE);
+        g.fillRect(xx, yy, GameUtil.TILE-4, GameUtil.TILE-4);
         g.setColor(Color.WHITE);
         g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
-        g.drawString("所持金:"+Game_states.getMoney(),500,30);
         if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
             ip.paint_inventory(g);
         }
@@ -97,13 +98,13 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     }
     private void map_move(int map_id, int x, int y) {
         maps.updateActiveMapNum(map_id);
-        if(x <= 0) this.x = 32*32;
-        if(y <= 0) this.y = 32*32;
-        if(x >= 33) this.x = 32;
-        if(y >= 33) this.y = 32;
+        if(x <= 0) this.x = GameUtil.TILE*33;
+        if(y <= 0) this.y = GameUtil.TILE*33;
+        if(x >= 33) this.x = 1;
+        if(y >= 33) this.y = 1;
     }
     private void char_move() {
-        int tile = GameUtil.TILE;
+        int tile = GameUtil.TILE-4;
         int fx = 0, fx1 = 0, fy = 0, fy1 = 0;
         switch(dire) {
             case 1: fx = (x - speed) >> 5;
@@ -129,15 +130,15 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
     }
     private int scroll_x() {
-        int map_width = maps.map_x_length()-2 << 5;
-        if(x >= map_width-(width >> 1))  return width - map_width;
-        if(x <= width >> 1) return 0;
+        //int map_width = maps.map_x_length()-2 << 5;
+        //if(x >= map_width-(width >> 1))  return width - map_width;
+        //if(x <= width >> 1) return 0;
         return (width >> 1) - x;
     }
     private int scroll_y() {
-        int map_height = maps.map_y_length()-2 << 5;
-        if(y >= map_height-(height >> 1)) return height - map_height;
-        if(y <= height >> 1) return 0;
+        //int map_height = maps.map_y_length()-2 << 5;
+        //if(y >= map_height-(height >> 1)) return height - map_height;
+        //if(y <= height >> 1) return 0;
         return (height >> 1) - y;
     }
     public void keyPressed(KeyEvent e) {

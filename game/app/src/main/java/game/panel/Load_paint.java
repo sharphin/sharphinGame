@@ -19,12 +19,14 @@ public class Load_paint{
     private String save_slot[] = new String[GameUtil.MAX_SAVE_SLOT];
 
     Font font;
+    Font font2;
     Load load;
     private String error = "";
     public Load_paint() {
         setSave_slot();
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
+        font2 = fl.setFontSize_Mplus1Code(15f);
     }
 
     public void paint_load(Graphics g) {
@@ -44,8 +46,10 @@ public class Load_paint{
             }
             StringBuilder sb = new StringBuilder();
             String sss[] = save_slot[i].split(",");
-            sb.append(sss[0]).append(",").append(parseTime(Long.parseLong(sss[1])));
-            g.drawString(sb.toString(), 310, (i+1)*50);
+            g.setFont(font);
+            g.drawString(sss[0], 310, (i+1)*50);
+            g.setFont(font2);
+            g.drawString(parseTime(Long.parseLong(sss[1])), 500, (i+1)*50);
         }
         g.setColor(Color.WHITE);
         g.drawRect(300, 20+y, 350, 50);
@@ -59,7 +63,7 @@ public class Load_paint{
         if(key == KeyEvent.VK_DOWN)    v++;
         if(v < 0) {
             v = GameUtil.MAX_SAVE_SLOT-1;
-        }else {
+        } else {
             if(v > GameUtil.MAX_SAVE_SLOT-1) v = 0;
         }
         if(key == KeyEvent.VK_ENTER) {
