@@ -70,7 +70,7 @@ public class Maps{
                     case 14: x2 = 448;   break;
                     case 15: x2 = 480;   break;
                     case 16: x2 = 512;   break;
-                    case 18: x2 = 576;   break;
+                    case 17: x2 = 544;   break;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
                 if(map[active_map_num][i][j] > -1) continue;
