@@ -14,5 +14,10 @@ public class App {
         FontUtil font = new FontUtil();
         font.initMplus1Code();
         BaseFrame.frame_generator();
+        int key_item_mask = 4096;
+        int key_item = 255;
+        int tile_num = 500;
+        int fff = (key_item<<13)+key_item_mask +tile_num;
+        System.out.println("zip "+~(fff)+" "+Integer.toBinaryString(fff));
     }
 }

@@ -17,8 +17,9 @@ public class Maps{
     private int tile = GameUtil.TILE;
     private int active_map_num;
     private static int map[][][];
-    private int map_move_key = 8192;
-    //private int key_item_tile = 4096;
+    private int map_move_key = 2097152;
+    private int key_item_mask = 4096;
+    
     //private int map_paint_mask = 0b1000000000000;
     private int color_delta = 0;
     public Maps() {}
@@ -51,7 +52,7 @@ public class Maps{
             for(int j = 0; j < map[active_map_num][i].length; j++) {
                 x1 = (j << 5)+sx-32;
                 if(map[active_map_num][i][j]>= 8192) continue;
-                switch(map[active_map_num][i][j]){
+                switch(map[active_map_num][i][j] & (key_item_mask-1)){
                     case 0:  x2 = 0;     break;
                     case 1:  x2 = 32;    break;
                     case 2:  x2 = 64;    break;
@@ -69,14 +70,26 @@ public class Maps{
                     case 14: x2 = 448;   break;
                     case 15: x2 = 480;   break;
                     case 16: x2 = 512;   break;
-                    default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
+                if(map[active_map_num][i][j] > -1) continue;
+                if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) continue;
+                g.setColor(new Color(255,255,255,color_delta()));
+                g.fillOval(x1, y1, 5, 5);
             }
         }
-        g.drawString(color_delta()+"", 40, 400);
-        g.setColor(new Color(255,255,255,color_delta()));
-        g.fillOval(300, 300, 5, 5);
+    }
+    public int take_key_item(int x, int y) {
+        int key_item = (~map[active_map_num][y][x] & 2093056)>>13;
+        map[active_map_num][y][x] = ~map[active_map_num][y][x] & key_item_mask-1;
+        return key_item;
+    }
+    public void door_open(int x, int y) {
+        map[active_map_num][y][x] = map[active_map_num][y][x]>>1;
+        System.out.println(map[active_map_num][y][x]);
+    }
+    public int take_mormal_item() {
+        return 0;
     }
     public String map_file_name(int i) {
         return map_list[i];
@@ -89,6 +102,9 @@ public class Maps{
     }
     public int map_tile(int x ,int y) {
         return map[active_map_num][y][x];
+    }
+    public void updataMapTile(int map_num,int x, int y) {
+        map[map_num][y][x] = 0;
     }
     public int readMapKinds() {
         return map.length;

@@ -4,21 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import game.logic.Game_states;
+import game.logic.Talk;
 import game.util.FontUtil;
 import game.util.GameUtil;
 
 public class Talk_paint {
     //private int talk_line;
     Font font1;
-    private String[] message_list = {"/message1.dat"};
-    private List<String> main_message = new ArrayList<String>();
+    private int message_line = 0;
     public Talk_paint() {
         FontUtil fl = new FontUtil();
         font1 = fl.setFontSize_Mplus1Code(20f);
@@ -29,25 +24,17 @@ public class Talk_paint {
         g.setColor(Color.WHITE);
         g.drawRoundRect(100, 370, 500, 130,5,5);
         g.setFont(font1);
-        if(!main_message.isEmpty()) g.drawString(main_message.get(0), 110, 400);
-    }
-    public void controll(int key, int message_id) {
-        messageread(message_id);
-        if(key == KeyEvent.VK_ENTER) {
-            Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.TALK);
+        if(Talk.getMainMessage() != null) {
+            g.drawString(Talk.getMainMessage()[message_line], 110, 400);
         }
+    }
+    public void controll(int key, int i,int message_id) {
+        if(key == KeyEvent.VK_ENTER) message_line++;
         if(key == KeyEvent.VK_UP) {}
         if(key == KeyEvent.VK_DOWN) {}
-    }
-    private void messageread(int index) {
-
-        try (BufferedReader br = new BufferedReader(new FileReader("gamedata/message_data"+message_list[index]))) {
-            String data;
-            while ((data = br.readLine()) != null) {
-                main_message.add(data);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(message_line >= Talk.getMainMessage().length) {
+            Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.TALK);
+            message_line = 0;
         }
     }
 }

@@ -39,13 +39,13 @@ public class Game_states {
         debt = 100;
         loan = 200;
         bank_money = init_bank_money(newname);
-        inventory = new int[8];
+        inventory = new int[]{-1,-1,-1,-1,-1,-1,-1,-1};
         //like_abirity = new int[64];
         item_strage = new int[255];
         item_dictionary = init_item_dict(newname);
         today = LocalDateTime.now();
         branch_state = 0;
-        controll_state = 1;
+        controll_state = 17;
         map_data_path = "gamedata/map_data";
     }
     public Game_states(String loadname,String filepath, int[] intadata, long[] longdata, int loadinventory[], long itemDict[], int itemStrage[]) {
@@ -65,7 +65,7 @@ public class Game_states {
         inventory = loadinventory;
         item_dictionary = itemDict;
         item_strage = itemStrage;
-        controll_state = 1;
+        controll_state = 17;
         map_data_path = new StringBuilder().append("savedata/").append(filepath).toString();
     }
     public static String getName(){
@@ -105,11 +105,18 @@ public class Game_states {
         if(index >= GameUtil.MAX_ALL_ITEMS) return -1;
         return item_strage[index];
     }
-    static int addInventory(int item, int index) {
+    //
+    static int addInventory(int item) {
         int result = 0;
-        if(index >= GameUtil.MAX_ITEM  || index < 0) return -1;
-        if(inventory[index] != 0) result = inventory[index];
-        inventory[index] = item;
+        int emptyi = -1;
+        for(int i = 0; i < inventory.length; i++) {
+            if(inventory[i] == -1) {
+                emptyi = i;
+                break;
+            }
+        }
+        if(emptyi == -1) return -1;
+        inventory[emptyi] = item;
         return result;
     }
     static int inventoryswap(int index1, int index2) {
@@ -118,6 +125,14 @@ public class Game_states {
         int temp = inventory[index1];
         inventory[index1] = inventory[index2];
         inventory[index2] = temp;
+        return 0;
+    }
+    static int inventoryremove(int index) {
+        if(index >= GameUtil.MAX_ITEM  || index < 0) return -1;
+        inventory[index] = -1;
+        for(int i = index; i< inventory.length; i++) {
+            inventory[index] = inventory[index+1];
+        }
         return 0;
     }
     public static int getHP() {

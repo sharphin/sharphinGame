@@ -9,12 +9,20 @@ public class Item {
     public Item() {
         item_dict[0] = 1;
     }
-
     public int[] getItem_dictionary() {
         return item_dict;
     }
+    public void setItemDictionary(int item) {
+        Game_states.updateItemDictionary(item);
+    }
+    public void setInventory(int item,int index) {
+        if(Game_states.searchItemDictionary(item)== -1)setItemDictionary(item);
+        Game_states.addInventory(item);
+    }
+    public void removeInventory(int index) {
+        Game_states.inventoryremove(index);
+    }
     public String item_name(int index) {
-        //ファイルから読み込むか検討
         return switch(Game_states.searchItemDictionary(index)) {
             case 0 -> "バスケットボール";
             case 1 -> "OPHONE";
@@ -23,7 +31,7 @@ public class Item {
             case 4 -> "コップ";
             case 5 -> "ギター";
             case 6 -> "箸";
-            case 7 -> "Aaaa";
+            case 7 -> "ROOMKEY";
             case 8 -> "Bxccc";
             case 9 -> "Cccc";
             case 10 -> "Dccc";
@@ -273,8 +281,5 @@ public class Item {
             case 254 -> "254";
             default -> "???";
         };
-    }
-    public String item_name2(int index) {
-        return index+"";
     }
 }

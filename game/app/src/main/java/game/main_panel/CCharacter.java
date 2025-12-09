@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import game.logic.Game_CLock;
 import game.logic.Game_states;
+import game.logic.Talk;
 import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
 import game.panel.Pose_paint;
@@ -23,6 +24,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int dire;
     //private int direction;
     private int x, y, speed = GameUtil.WALK;
+    private int ontile;
     private boolean front_leg_left;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
@@ -92,14 +94,13 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         return true;
     }
     private int hit_tile(int x, int y) {
-        int ontile = maps.map_tile(x, y);
+        ontile = maps.map_tile(x, y);
         if(ontile >= maps.getMapMoveKey()) {
-            if(ontile <= 10000) {
+            if(ontile <= 3000000) {
                 map_move(ontile-maps.getMapMoveKey(),x,y);
-                System.out.println(ontile-maps.getMapMoveKey());
-            } else if(Game_states.getControll_state() != GameUtil.TALK) {
+            } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
+                new Talk(0, 0);
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
-                System.out.println("鍵がかかっている");
                 repaint();
             }
         }
@@ -165,7 +166,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.MENU);
             }
             if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
-                ip.controll(key);
+                ip.controll(key,x,y,maps, tp);
             } else {
                 if(key == KeyEvent.VK_0) Game_states.updateControll_state(Game_states.getControll_state()+GameUtil.INVENTORY);
             }
@@ -184,7 +185,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 }
             }
         } else if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
-            tp.controll(key,0);
+            tp.controll(key,0,0);
         }
         repaint();
     } 
