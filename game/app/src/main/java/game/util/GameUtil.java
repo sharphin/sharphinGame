@@ -27,6 +27,8 @@ public class GameUtil {
     public static final long MAX_LOAN = Long.MAX_VALUE;
     public static final long MAX_BANK_MONEY = Long.MAX_VALUE;
     //操作ステート
+    //
+    public static final int PROLOGUE =   0b00000000000;
     public static final int PLAY =       0b00000000001;
     public static final int MENU =       0b00000000010;
     public static final int POSE =       0b00000000100;

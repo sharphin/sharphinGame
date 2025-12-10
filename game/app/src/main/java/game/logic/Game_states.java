@@ -47,8 +47,7 @@ public class Game_states {
         item_dictionary = init_item_dict(newname);
         today = LocalDateTime.now();
         branch_state = 0;
-        //controll_state = 17;
-        controll_state = 0b1010000;
+        controll_state = 17;
         map_data_path = "gamedata/map_data";
         pc_password = gen_pc_password();
     }
