@@ -26,11 +26,10 @@ public class Debug_paint {
         g.drawString("bank_money: "+Game_states.getBank_money(),500,180);
         g.drawString("luck: "+Game_states.getLuck(),500,210);
         g.drawString("mental: "+Game_states.getMental(),500,240);
-        g.drawString("lhealth: "+Game_states.getHealth(),500,270);
-        g.drawString("stamina: "+Game_states.getStamina(),500,300);
-        g.drawString("dept: "+Game_states.getDebt(),500,330);
-        g.drawString("loan: "+Game_states.getLoan(),500,360);
-        g.drawString("branch_state: "+Game_states.getBranch_state(),500,390);
-        g.drawString("game_state: "+Game_states.getControll_state(),500,420);
+        g.drawString("stamina: "+Game_states.getStamina(),500,270);
+        g.drawString("dept: "+Game_states.getDebt(),500,300);
+        g.drawString("loan: "+Game_states.getLoan(),500,330);
+        g.drawString("branch_state: "+Game_states.getBranch_state(),500,360);
+        g.drawString("game_state: "+Game_states.getControll_state(),500,390);
     }
 }

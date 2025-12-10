@@ -6,7 +6,7 @@ import game.frame.BaseFrame;
 import game.panel.Title;
 import game.util.GameUtil;
 
-public class Game_CLock implements Runnable{
+public class Game_CLock implements Runnable {
 
     private static LocalDateTime clock;
     private static long playtime;

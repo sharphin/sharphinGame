@@ -9,8 +9,6 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
 import game.frame.BaseFrame;
-import game.logic.Game_states;
-import game.main_panel.CCharacter;
 import game.main_panel.Prologue_panel;
 import game.util.FontUtil;
 import game.util.GameUtil;

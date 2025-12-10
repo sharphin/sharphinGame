@@ -14,36 +14,29 @@ public class Game_states {
     private static long bank_money;
     private static int luck;
     private static int mental;
-    private static int health;
     private static int stamina;
     private static int likeAbility;
     private static int branch_state;
     private static int controll_state = 1;
     private static int inventory[];
-    private static int item_strage[];
-    //private static int like_abirity[];
     private static long debt;
     private static long loan;
     private static long item_dictionary[];
     private static String map_data_path;
     private static LocalDateTime today;
     private static String pc_password;
-    public Game_states(String newname) {
+    public Game_states(String newname, int sportsPerWeek, int sportsPerDay) {
         name = newname;
         hp = 2500;
         hunger_level = 500;
         money = 10000;
         luck = 120;
         mental = 400;
-        health = 500;
-        stamina = 1000;
-        likeAbility = 1000;
+        stamina = calc_stamina(sportsPerWeek, sportsPerDay);
         debt = 100;
         loan = 200;
         bank_money = init_bank_money(newname);
         inventory = new int[]{-1,-1,-1,-1,-1,-1,-1,-1};
-        //like_abirity = new int[64];
-        item_strage = new int[255];
         item_dictionary = init_item_dict(newname);
         today = LocalDateTime.now();
         branch_state = 0;
@@ -61,13 +54,11 @@ public class Game_states {
         branch_state = intadata[3];
         luck = intadata[4];
         mental = intadata[5];
-        health = intadata[6];
-        stamina = intadata[7];
+        stamina = intadata[6];
         debt = longdata[2];
         loan = longdata[3];
         inventory = loadinventory;
         item_dictionary = itemDict;
-        item_strage = itemStrage;
         controll_state = 17;
         map_data_path = new StringBuilder().append("savedata/").append(filepath).toString();
         pc_password = gen_pc_password();
@@ -100,17 +91,6 @@ public class Game_states {
         if(i >= GameUtil.MAX_ALL_ITEMS) return -2;
         if(Long.bitCount(item_dictionary[area] & (long)(1<<shift)) == 0) return -1;
         return i;
-    }
-    static void updateItemStrage(int index) {
-        if(index >= GameUtil.MAX_ALL_ITEMS) return;
-        item_strage[index]++;
-    }
-    public static int[] getAllItemStrage() {
-        return item_strage;
-    }
-    public static int getItemStrage(int index) {
-        if(index >= GameUtil.MAX_ALL_ITEMS) return -1;
-        return item_strage[index];
     }
     static int addInventory(int item) {
         int result = 0;
@@ -195,12 +175,6 @@ public class Game_states {
     static void updateMental(int newMental) {
         mental = newMental > GameUtil.MAX_MENTAL ? GameUtil.MAX_MENTAL : newMental;
     }
-    public static int getHealth() {
-        return health;
-    }
-    static void updateHealth(int newMHealth) {
-        health = newMHealth > GameUtil.MAX_HEALTH ? GameUtil.MAX_HEALTH : newMHealth;
-    }
     public static int getStamina() {
         return stamina;
     }
@@ -254,5 +228,8 @@ public class Game_states {
         }
         System.out.println(sb.toString());
         return sb.toString();
+    }
+    private int calc_stamina(int sportsPerWeek, int sportsPerDay) {
+        return 100*sportsPerWeek*sportsPerDay;
     }
 }

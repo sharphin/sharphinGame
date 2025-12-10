@@ -30,6 +30,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int x, y, speed = GameUtil.WALK;
     private int hit_tile;
     private boolean front_leg_left;
+    private boolean prologue;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
     private Game_CLock clock;
@@ -41,20 +42,22 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
     Debug_paint dp = new Debug_paint();
-    public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock) {
+    public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock ,boolean prologue) {
         this.x = x;
         this.y = y;
         setSize(width, height);
         addKeyListener(this);
         setFocusable(true);
         this.clock = new Game_CLock(clock,play_time);
-        Thread th = new Thread(this);
-        th.start();
         Charactor_walk char_walk = new Charactor_walk(); 
         char_walk.start();
         maps.loadMap(map_number);
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
+        Thread th = new Thread(this);
+        th.start();
+        repaint();
+        this.prologue = prologue;
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -74,7 +77,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         g.setColor(Color.BLACK);
         g.setFont(font);
         g.drawImage(charImage, xx, yy-16, xx+28, yy+28,x1, 0, x1+GameUtil.TILE, 64, null);
-        //g.fillRect(xx, yy, GameUtil.TILE-4, GameUtil.TILE-4);
         g.setColor(Color.WHITE);
         g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
@@ -93,6 +95,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
             tp.paint_message(g);
         }
+        if(prologue) repaint();
     }
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
@@ -106,7 +109,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(ontile <= 3000000) {
                 map_move(ontile-maps.getMapMoveKey(),x,y);
             } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
-                new Talk(0, 0);
+                new Talk(1, 0);
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                 repaint();
             }
@@ -162,6 +165,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         return (height >> 1) - y;
     }
     public void keyPressed(KeyEvent e) {
+        if(prologue) return;
         int key = e.getKeyCode();
 
         if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
@@ -216,9 +220,15 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
 
     public void keyTyped(KeyEvent e) {}
     public void run() {
+        if(prologue){
+            try{Thread.sleep(2000);} catch(InterruptedException e) {}
+            new Talk(0,14);
+            Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+            prologue = false;
+        }
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT) {
             char_move();
-            if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY)repaint();
+            if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();
             try{
                 Thread.sleep(15);
             } catch(InterruptedException e) {}

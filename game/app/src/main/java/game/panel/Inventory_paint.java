@@ -54,7 +54,6 @@ public class Inventory_paint {
             case 50 -> index = 1;
             case 49 -> index = 0;
         }
-        //System.out.println(Game_states.getInventory(index));
         if(key == KeyEvent.VK_SPACE) {
             boolean door_open = false;
             for(int i = 0; i < 8;i++) {
@@ -84,7 +83,7 @@ public class Inventory_paint {
             }
             if(door_open) {
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
-                new Talk(0, 1);
+                new Talk(1, 1);
             }
         }
     }

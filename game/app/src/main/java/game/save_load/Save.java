@@ -81,7 +81,6 @@ public class Save {
             sb.append(Game_states.getBranch_state()).append(",");
             sb.append(Game_states.getLuck()).append(",");
             sb.append(Game_states.getMental()).append(",");
-            sb.append(Game_states.getHealth()).append(",");
             sb.append(Game_states.getStamina()).append(",");
             sb.append(Game_states.getBank_money()).append(",");
             sb.append(Game_states.getDebt()).append(",");
@@ -97,9 +96,6 @@ public class Save {
             bw.write(sb.toString());
             sb.delete(0, sb.length());
             bw.newLine();
-            for(int tmp: Game_states.getAllItemStrage()) {
-                sb.append(tmp).append(",");
-            }
             bw.write(sb.toString());
             bw.close();
         } catch (IOException e) {
@@ -116,7 +112,6 @@ public class Save {
             sb.append(makeDataProtect(Game_states.getBranch_state())).append(",");
             sb.append(makeDataProtect(Game_states.getLuck())).append(",");
             sb.append(makeDataProtect(Game_states.getMental())).append(",");
-            sb.append(makeDataProtect(Game_states.getHealth())).append(",");
             sb.append(makeDataProtect(Game_states.getStamina())).append(",");
             sb.append(makeDataProtect(Game_states.getBank_money())).append(",");
             sb.append(makeDataProtect(Game_states.getDebt())).append(",");
@@ -132,9 +127,6 @@ public class Save {
             bw.write(sb.toString());
             sb.delete(0, sb.length());
             bw.newLine();
-            for(int tmp: Game_states.getAllItemStrage()) {
-                sb.append(makeDataProtect(tmp)).append(",");
-            }
             bw.write(sb.toString());
             bw.close();
         } catch (IOException e) {
