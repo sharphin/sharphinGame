@@ -5,8 +5,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import game.logic.Game_states;
 import game.panel.CharaCreate_panel;
 import game.panel.Load_paint;
 import game.panel.Title;
@@ -63,7 +61,6 @@ public class BaseFrame extends JFrame implements KeyListener{
                     Load_paint.load_panel_open = true;
                     v = 1;
                 } else {
-                    new Game_states("sharphin");
                     panel_change(new CharaCreate_panel(),v);
                 }
             }

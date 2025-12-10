@@ -2,6 +2,7 @@ package game.logic;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.concurrent.ThreadLocalRandom;
 
 import game.util.GameUtil;
 
@@ -26,6 +27,7 @@ public class Game_states {
     private static long item_dictionary[];
     private static String map_data_path;
     private static LocalDateTime today;
+    private static String pc_password;
     public Game_states(String newname) {
         name = newname;
         hp = 2500;
@@ -45,8 +47,10 @@ public class Game_states {
         item_dictionary = init_item_dict(newname);
         today = LocalDateTime.now();
         branch_state = 0;
-        controll_state = 17;
+        //controll_state = 17;
+        controll_state = 0b1010000;
         map_data_path = "gamedata/map_data";
+        pc_password = gen_pc_password();
     }
     public Game_states(String loadname,String filepath, int[] intadata, long[] longdata, int loadinventory[], long itemDict[], int itemStrage[]) {
         name = loadname;
@@ -67,6 +71,10 @@ public class Game_states {
         item_strage = itemStrage;
         controll_state = 17;
         map_data_path = new StringBuilder().append("savedata/").append(filepath).toString();
+        pc_password = gen_pc_password();
+    }
+    public static String getPCPassword() {
+        return pc_password;
     }
     public static String getName(){
         return name;
@@ -105,7 +113,6 @@ public class Game_states {
         if(index >= GameUtil.MAX_ALL_ITEMS) return -1;
         return item_strage[index];
     }
-    //
     static int addInventory(int item) {
         int result = 0;
         int emptyi = -1;
@@ -229,7 +236,7 @@ public class Game_states {
             tmp[1] = Long.MAX_VALUE;
             tmp[2] = Long.MAX_VALUE;
             tmp[3] = Long.MAX_VALUE;
-        } 
+        }
         return tmp;
     }
     private long init_bank_money(String name) {
@@ -238,5 +245,15 @@ public class Game_states {
             case "POOR" -> 10000;
             default -> 200000;
         };
+    }
+    private String gen_pc_password() {
+        ThreadLocalRandom rand  = ThreadLocalRandom.current();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0;i < 4; i++) {
+            int randnum = rand.nextInt(9);
+            sb.append(randnum);
+        }
+        System.out.println(sb.toString());
+        return sb.toString();
     }
 }

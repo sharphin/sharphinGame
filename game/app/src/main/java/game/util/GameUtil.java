@@ -33,8 +33,9 @@ public class GameUtil {
     public static final int SAVE =       0b00000001000;
     public static final int INVENTORY =  0b00000010000;
     public static final int TALK      =  0b00000100000;
+    public static final int PC =         0b00001000000;
     public static final int GAME_EXIT =  0b01000000000;
-    public static final int DEBUG =      0b010000000000;
+    public static final int DEBUG =     0b010000000000;
 
     public static final int MAX_X = 20000;
     public static final int MAX_Y = 20000;

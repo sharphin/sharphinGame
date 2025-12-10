@@ -56,13 +56,19 @@ public class Inventory_paint {
         }
         //System.out.println(Game_states.getInventory(index));
         if(key == KeyEvent.VK_SPACE) {
-            int xxx = (x-4)>>5;
-            int yyy = (y-4)>>5;
-            for(int i = 0; i < 4;i++) {
+            boolean door_open = false;
+            for(int i = 0; i < 8;i++) {
+                int xxx = (x+14)>>5;
+                int yyy = (y+14)>>5;
                 switch(i) {
-                    case 1: xxx = (x+28)>>5;yyy = y>>5; break;
-                    case 2: xxx = (x+28)>>5;yyy = (y+28)>>5; break;
-                    case 3: xxx = x>>5;yyy = (y+28)>>5; break;
+                    case 1: xxx--;yyy--; break;
+                    case 2: xxx--;       break;
+                    case 3: xxx--;yyy++; break;
+                    case 4: xxx++;yyy--; break;
+                    case 5: xxx++;       break;
+                    case 6: xxx++;yyy++; break;
+                    case 7: yyy--; break;
+                    case 8: yyy++; break;
                 }
                 int ontile = hit_tile(xxx,yyy,maps);
                 if(ontile < 0) {
@@ -71,11 +77,14 @@ public class Inventory_paint {
                     break;
                 } else if(ontile > 3000000) {
                     if(Game_states.getInventory(index) == 7) {
-                        Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
-                        new Talk(0, 1);
+                        door_open = true;
                         maps.door_open(xxx, yyy);
                     }
                 }
+            }
+            if(door_open) {
+                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+                new Talk(0, 1);
             }
         }
     }

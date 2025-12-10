@@ -2,6 +2,8 @@ package game.main_panel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.time.LocalDateTime;
@@ -13,6 +15,7 @@ import game.logic.Game_states;
 import game.logic.Talk;
 import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
+import game.panel.PC_paint;
 import game.panel.Pose_paint;
 import game.panel.Talk_paint;
 import game.panel.sub_panel.Debug_paint;
@@ -22,9 +25,10 @@ import game.util.GameUtil;
 
 public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int dire;
-    //private int direction;
+    private int direction;
+    private Image charImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/sharphin.png");
     private int x, y, speed = GameUtil.WALK;
-    private int ontile;
+    private int hit_tile;
     private boolean front_leg_left;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
@@ -33,6 +37,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Maps maps = new Maps();
     Talk_paint tp = new Talk_paint();
     Pose_paint pp = new Pose_paint(); 
+    PC_paint pcp = new PC_paint();
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
     Debug_paint dp = new Debug_paint();
@@ -58,18 +63,18 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         maps.paint_map(g, scroll_x(), scroll_y());
         int xx = x+scroll_x()-32;
         int yy = y+scroll_y()-32;
-        //int y1 = 120;
-        //int x1 = 0;
-        //if(dire != 0) direction = dire;
-        //switch(direction) {
-        //    case 1:  y1 = 40;   break;
-        //    case 2:  y1 = 0;    break;
-        //    case 3:  y1 = 80;   break;
-        //    case 4:  y1 = 120;  break;
-        //}
+        int x1 = 0;
+        if(dire != 0) direction = dire;
+        switch(direction) {
+            case 1:  x1 = 96;  break;
+            case 2:  x1 = 32;  break;
+            case 3:  x1 = 0;   break;
+            case 4:  x1 = 64;  break;
+        }
         g.setColor(Color.BLACK);
         g.setFont(font);
-        g.fillRect(xx, yy, GameUtil.TILE-4, GameUtil.TILE-4);
+        g.drawImage(charImage, xx, yy-16, xx+28, yy+28,x1, 0, x1+GameUtil.TILE, 64, null);
+        //g.fillRect(xx, yy, GameUtil.TILE-4, GameUtil.TILE-4);
         g.setColor(Color.WHITE);
         g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
@@ -79,6 +84,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             pp.paint_pose(g);
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
             mp.paint_items(g);
+        } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
+            pcp.paint_pc(g);
         }
         if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG){
             dp.paint_debug(g,x,y,maps.map_number());
@@ -94,7 +101,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         return true;
     }
     private int hit_tile(int x, int y) {
-        ontile = maps.map_tile(x, y);
+        int ontile = maps.map_tile(x, y);
         if(ontile >= maps.getMapMoveKey()) {
             if(ontile <= 3000000) {
                 map_move(ontile-maps.getMapMoveKey(),x,y);
@@ -103,7 +110,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                 repaint();
             }
+        } else if(ontile < 0) {
+            ontile = ~ontile & 4095;
         }
+        hit_tile = ontile;
         return ontile;
     }
     private void map_move(int map_id, int x, int y) {
@@ -175,7 +185,11 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(key == KeyEvent.VK_RIGHT)   dire = 2;
             if(key == KeyEvent.VK_UP)      dire = 3;
             if(key == KeyEvent.VK_DOWN)    dire = 4;
-            if(key == KeyEvent.VK_SPACE) {}
+            if(key == KeyEvent.VK_SPACE) {
+                switch(hit_tile) {
+                    case 20,21 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
+                }
+            }
             if(key == KeyEvent.VK_ENTER) {}
             if(key == KeyEvent.VK_BACK_QUOTE) {
                 if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG) {
@@ -186,6 +200,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             }
         } else if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
             tp.controll(key,0,0);
+        } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
+            pcp.controll(key);
         }
         repaint();
     } 

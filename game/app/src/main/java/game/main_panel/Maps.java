@@ -51,8 +51,10 @@ public class Maps{
             y1 = (i << 5)+sy-32;
             for(int j = 0; j < map[active_map_num][i].length; j++) {
                 x1 = (j << 5)+sx-32;
-                if(map[active_map_num][i][j]>= 8192) continue;
-                switch(map[active_map_num][i][j] & (key_item_mask-1)){
+                int ftile = map[active_map_num][i][j];
+                if(ftile>= 8192) continue;
+                if(ftile < 0) ftile = ~ftile;
+                switch(ftile & (key_item_mask-1)){
                     case 0:  x2 = 0;     break;
                     case 1:  x2 = 32;    break;
                     case 2:  x2 = 64;    break;
@@ -71,6 +73,10 @@ public class Maps{
                     case 15: x2 = 480;   break;
                     case 16: x2 = 512;   break;
                     case 17: x2 = 544;   break;
+                    case 18: x2 = 576;   break;
+                    case 19: x2 = 608;   break;
+                    case 20: x2 = 640;   break;
+                    case 21: x2 = 672;   break;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
                 if(map[active_map_num][i][j] > -1) continue;
