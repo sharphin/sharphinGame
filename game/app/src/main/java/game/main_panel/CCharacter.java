@@ -109,7 +109,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(ontile <= 3000000) {
                 map_move(ontile-maps.getMapMoveKey(),x,y);
             } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
-                new Talk(1, 0);
+                new Talk("",1, 0);
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                 repaint();
             }
@@ -185,16 +185,17 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 if(key == KeyEvent.VK_0) Game_states.updateControll_state(Game_states.getControll_state()+GameUtil.INVENTORY);
             }
             if(key == KeyEvent.VK_E)       speed = GameUtil.DASH;
-            if(key == KeyEvent.VK_LEFT)    dire = 1;
-            if(key == KeyEvent.VK_RIGHT)   dire = 2;
-            if(key == KeyEvent.VK_UP)      dire = 3;
-            if(key == KeyEvent.VK_DOWN)    dire = 4;
+            if((Game_states.getControll_state() & GameUtil.ITEM_DELETE) != GameUtil.ITEM_DELETE) {
+                if(key == KeyEvent.VK_LEFT)    dire = 1;
+                if(key == KeyEvent.VK_RIGHT)   dire = 2;
+                if(key == KeyEvent.VK_UP)      dire = 3;
+                if(key == KeyEvent.VK_DOWN)    dire = 4;
+            }
             if(key == KeyEvent.VK_SPACE) {
                 switch(hit_tile) {
                     case 20,21 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
                 }
             }
-            if(key == KeyEvent.VK_ENTER) {}
             if(key == KeyEvent.VK_BACK_QUOTE) {
                 if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG) {
                     Game_states.updateControll_state(Game_states.getControll_state() & ~GameUtil.DEBUG);
@@ -217,22 +218,32 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             dire = 0;
         }
     }
-
     public void keyTyped(KeyEvent e) {}
     public void run() {
         if(prologue){
-            try{Thread.sleep(2000);} catch(InterruptedException e) {}
-            new Talk(0,14);
+            sleep(2000);
+            new Talk("",0,14);
             Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
             prologue = false;
         }
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT) {
             char_move();
+            if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC && PC_paint.password_correct()) {
+                PC_paint.setPclogin();
+                System.out.println("now");
+                sleep(500);
+                repaint();
+                sleep(10);
+                repaint();
+            }
             if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();
-            try{
-                Thread.sleep(15);
-            } catch(InterruptedException e) {}
+            sleep(15);
         }
+    }
+    private void sleep(int millis) {
+        try{
+            Thread.sleep(millis);
+        } catch(InterruptedException e) {}
     }
     private class Charactor_walk extends Thread {
         public void run() {

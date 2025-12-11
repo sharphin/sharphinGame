@@ -32,7 +32,8 @@ public class Menu_paint{
         g.drawString("ITEM DICT", 40, 50);
         g.setFont(font2);
         for(int i = 0; i <= 12;i++) {
-            g.drawString(item.item_name(i+itemline),400,(30*i)+70);
+            g.drawString(i+itemline+1+": ",350,(30*i)+70);
+            g.drawString(item.item_name(i+itemline+1),400,(30*i)+70);
         }
         g.fillRect(400,(30*line)+75,250,3);
         g.fillRect(672,scroll_y()+50,3,10);

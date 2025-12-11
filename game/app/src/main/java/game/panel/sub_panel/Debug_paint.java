@@ -18,8 +18,8 @@ public class Debug_paint {
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString("money:"+Game_states.getMoney(),500,30);
-        g.drawString("X: "+x,500,60);
-        g.drawString("Y: "+y,570,60);
+        g.drawString("X: "+(x>>5),500,60);
+        g.drawString("Y: "+(y>>5),570,60);
         g.drawString("map_num: "+map_num,500,90);
         g.drawString("hp: "+Game_states.getHP(),500,120);
         g.drawString("hunger_level: "+Game_states.getHunger_level(),500,150);

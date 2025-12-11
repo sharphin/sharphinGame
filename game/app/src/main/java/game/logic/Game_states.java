@@ -36,7 +36,7 @@ public class Game_states {
         debt = 100;
         loan = 200;
         bank_money = init_bank_money(newname);
-        inventory = new int[]{-1,-1,-1,-1,-1,-1,-1,-1};
+        inventory = new int[8];
         item_dictionary = init_item_dict(newname);
         today = LocalDateTime.now();
         branch_state = 0;
@@ -95,8 +95,8 @@ public class Game_states {
     static int addInventory(int item) {
         int result = 0;
         int emptyi = -1;
-        for(int i = 0; i < inventory.length; i++) {
-            if(inventory[i] == -1) {
+       for(int i = 0; i < inventory.length; i++) {
+            if(inventory[i] == 0) {
                 emptyi = i;
                 break;
             }
@@ -115,9 +115,9 @@ public class Game_states {
     }
     static int inventoryremove(int index) {
         if(index >= GameUtil.MAX_ITEM  || index < 0) return -1;
-        inventory[index] = -1;
-        for(int i = index; i< inventory.length; i++) {
-            inventory[index] = inventory[index+1];
+        inventory[index] = 0;
+        for(int i = index; i< inventory.length-1; i++) {
+            inventory[index] = inventory[i+1];
         }
         return 0;
     }

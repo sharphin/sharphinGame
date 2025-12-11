@@ -6,21 +6,23 @@ import java.io.IOException;
 public class Talk {
     private String message_list[] = {"/prologue.dat","/message1.dat"};
     private static String main_message[] = new String[1];
-    public Talk(int file_index, int message_id) {
-        main_message = messageread(file_index, message_id);
+    public Talk(String itemname,int file_index, int message_id) {
+        main_message = messageread(itemname,file_index, message_id);
     }
     public static String[] getMainMessage() {
         return main_message;
     }
-    private String[] messageread(int i, int message_id) {
-        String data = "";
+    private String[] messageread(String itemname,int i, int message_id) {
+        StringBuilder data = new StringBuilder(itemname);
         try (BufferedReader br = new BufferedReader(new FileReader("gamedata/message_data"+message_list[i]))) {
+            String str = "";
             for(int j = -1; j < message_id; j++) {
-                data = br.readLine();
+                str = br.readLine();
             }
+            data.append(str);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return data.split(",");
+        return data.toString().split(",");
     }
 }

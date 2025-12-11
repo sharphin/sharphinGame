@@ -91,9 +91,15 @@ public class Maps{
         map[active_map_num][y][x] = ~map[active_map_num][y][x] & key_item_mask-1;
         return key_item;
     }
+    public int put_key_item(int item_num, int x, int y) {
+        if((map[active_map_num][y][x] & key_item_mask) != 0) return -1;
+        map[active_map_num][y][x] = ~((item_num << 13)+key_item_mask+map[active_map_num][y][x]);
+        System.out.println(map[active_map_num][y][x] +" "+x+" "+y);
+        return 0;
+    }
     public void door_open(int x, int y) {
         map[active_map_num][y][x] = map[active_map_num][y][x]>>1;
-        System.out.println(map[active_map_num][y][x]);
+        //System.out.println(map[active_map_num][y][x]);
     }
     public int take_mormal_item() {
         return 0;

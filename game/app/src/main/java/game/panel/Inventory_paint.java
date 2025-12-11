@@ -18,6 +18,7 @@ public class Inventory_paint {
     Font font;
     Item item = new Item();
     private int index = 0;
+    private int v = 0;
     private Image itemImage = Toolkit.getDefaultToolkit().getImage("gamedata/item_data/items.png");
     public Inventory_paint() {
         FontUtil fl = new FontUtil();
@@ -29,13 +30,23 @@ public class Inventory_paint {
             g.setColor(new Color(255,255,255,150));
             g.fillRect((i*50)+150, 400, 50, 50);
             switch(Game_states.getInventory(i)) {
-                case 0: cx = 0; cy = 0; break;
+                case 1: cx = 0; cy = 0; break;
                 case 7: cx = 32; cy = 0; break;
             }
-            if(Game_states.getInventory(i) != -1) g.drawImage(itemImage, (i*50)+159, 409, (i*50)+191, 441, cx, cy, cx+32, cy+32, null);
+            if(Game_states.getInventory(i) != 0) g.drawImage(itemImage, (i*50)+159, 409, (i*50)+191, 441, cx, cy, cx+32, cy+32, null);
             g.setColor(Color.BLACK);
             g.drawRect((i*50)+150, 400, 50, 50);
 
+        }
+        if((Game_states.getControll_state() & GameUtil.ITEM_DELETE) == GameUtil.ITEM_DELETE) {
+            g.setColor(new Color(0,0,0,150));
+            g.fillRoundRect(440, 300, 100, 99, 5, 5);
+            g.setColor(Color.WHITE);
+            g.drawRoundRect(440, 300, 100, 99, 5, 5);
+            g.drawString("置く",450,325);
+            g.drawString("捨てる",450,355);
+            g.drawString("閉じる",450,385);
+            g.fillRect(450,(30*v)+330,70,3);
         }
         g.setColor(Color.WHITE);
         g.drawRect((index*50)+149,399, 52,52);
@@ -53,6 +64,22 @@ public class Inventory_paint {
             case 51 -> index = 2;
             case 50 -> index = 1;
             case 49 -> index = 0;
+        }
+        if((Game_states.getControll_state() & GameUtil.ITEM_DELETE) == GameUtil.ITEM_DELETE) {
+            if(key == KeyEvent.VK_UP && v-1 >= 0) v--;
+            if(key == KeyEvent.VK_DOWN && v+1 <= 2) v++;
+            if(key == KeyEvent.VK_ENTER) {
+                if(v == 0) {
+                    maps.put_key_item(Game_states.getInventory(index), (x+14)>>5, (y+14)>>5);
+                    item.removeInventory(index);
+                } else if(v == 1){
+                    item.removeInventory(index);
+                }
+                Game_states.updateControll_state(Game_states.getControll_state() & ~GameUtil.ITEM_DELETE);
+            }
+        }
+        if(key == KeyEvent.VK_DELETE && Game_states.getInventory(index)!=0) {
+            Game_states.updateControll_state(Game_states.getControll_state() | GameUtil.ITEM_DELETE);
         }
         if(key == KeyEvent.VK_SPACE) {
             boolean door_open = false;
@@ -73,6 +100,8 @@ public class Inventory_paint {
                 if(ontile < 0) {
                     int taken_item = maps.take_key_item(xxx,yyy);
                     item.setInventory(taken_item,getInventoryIndex());
+                    Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+                    new Talk(item.item_name(Game_states.getInventory(index)),1, 2);
                     break;
                 } else if(ontile > 3000000) {
                     if(Game_states.getInventory(index) == 7) {
@@ -83,7 +112,7 @@ public class Inventory_paint {
             }
             if(door_open) {
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
-                new Talk(1, 1);
+                new Talk(item.item_name(Game_states.getInventory(index)),1, 1);
             }
         }
     }

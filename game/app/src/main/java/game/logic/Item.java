@@ -16,18 +16,20 @@ public class Item {
         Game_states.updateItemDictionary(item);
     }
     public void setInventory(int item,int index) {
-        if(Game_states.searchItemDictionary(item)== -1)setItemDictionary(item);
+       if(Game_states.searchItemDictionary(item)== -1)setItemDictionary(item);
         Game_states.addInventory(item);
     }
     public void removeInventory(int index) {
         Game_states.inventoryremove(index);
     }
+    public void swapInventory() {
+        
+    }
     public String item_name(int index) {
         return switch(Game_states.searchItemDictionary(index)) {
-            case 0 -> "バスケットボール";
-            case 1 -> "OPHONE";
+            case 1 -> "バスケットボール";
             case 2 -> "漫画";
-            case 3 -> "PC";
+            case 3 -> "iPhone";
             case 4 -> "コップ";
             case 5 -> "ギター";
             case 6 -> "箸";
@@ -42,7 +44,7 @@ public class Item {
             case 15 -> "Icccc";
             case 16 -> "Jcccc";
             case 17 -> "Kcccc";
-            case 18 -> "Lccccc";
+            case 18 -> "バスケットボール";
             case 19 -> "M";
             case 20 -> "D";
             case 21 -> "E";
@@ -279,6 +281,7 @@ public class Item {
             case 252 -> "252";
             case 253 -> "253";
             case 254 -> "254";
+            case 255 -> "255";
             default -> "???";
         };
     }

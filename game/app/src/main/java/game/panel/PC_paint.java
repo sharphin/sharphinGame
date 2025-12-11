@@ -2,6 +2,8 @@ package game.panel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import game.logic.Game_states;
 import game.util.FontUtil;
@@ -12,15 +14,17 @@ public class PC_paint {
     private Font font;
     private Font font1;
     private String ERROR = "";
-    private int cursor_i;
-    private boolean now_login;
+    private int cursor_i,x,y;
+    private static boolean now_login;
+    private static boolean password_correct;
     private StringBuilder password;
-    //private String password;
+    private Image charImage1 = Toolkit.getDefaultToolkit().getImage("gamedata/image/folda.png");
+    private Image charImage2 = Toolkit.getDefaultToolkit().getImage("gamedata/image/camera.png");
     public PC_paint() {
-        password = new StringBuilder();
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
         font1 = fl.setFontSize_Mplus1Code(35f);
+        password = new StringBuilder();
     }
     public void paint_pc(Graphics g) {
         g.setColor(new Color(109,168,59));
@@ -36,7 +40,9 @@ public class PC_paint {
         g.setColor(Color.BLACK);
         g.setFont(font1);
         if(now_login) {
-            g.drawString("LOGIN SUCSESS", 270, 270);
+            g.drawImage(charImage1, 120, 80, null);
+            g.drawImage(charImage2, 210, 80, null);
+            g.drawRect((x*90)+110, y+80, 90, 70);
         } else {
             g.drawString("LOGIN",300,200);
             g.drawRoundRect(250, 300, 200, 40, 10, 10);
@@ -49,6 +55,7 @@ public class PC_paint {
                 g.setColor(Color.RED);
                 g.drawString(ERROR, 270, 270);
             }
+            if(password_correct)g.drawString("LOGIN SUCSESS", 270, 270);
         }
     }
     public void controll(int key) {
@@ -60,8 +67,17 @@ public class PC_paint {
             if(!password.toString().equals(Game_states.getPCPassword())) {
                 ERROR = "INCORRECT";
             } else {
-                now_login = true;
+                password = password.delete(0, password.length());
+                password_correct = true; 
+                cursor_i = 0;
             }
+        }
+        if(now_login) {
+            if(key == KeyEvent.VK_LEFT && (x-1) >= 0)    x--;
+            if(key == KeyEvent.VK_RIGHT && (x+1) <= 1)   x++;
+            if(key == KeyEvent.VK_UP && (y-1) >= 0)      y--;
+            if(key == KeyEvent.VK_DOWN && (y+1) <= 1)    y++;
+            return;
         }
         switch(key) {
             case 127 -> password_delete(cursor_i);
@@ -125,5 +141,18 @@ public class PC_paint {
     }
     private void cursor_dec() {
         if(cursor_i > 0) cursor_i--;
+    }
+    public static boolean pclogin() {
+        return now_login;
+    }
+    public static void setPclogin() {
+        now_login = true;
+        password_correct = false;
+    }
+    public static void pclogout() {
+        now_login = false;
+    }
+    public static boolean password_correct() {
+        return password_correct;
     }
 }
