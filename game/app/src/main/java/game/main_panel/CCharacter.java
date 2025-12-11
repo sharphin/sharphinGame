@@ -100,7 +100,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
         if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;    
-        if(hit_tile(x, y) >= 1) return false;
+        if(hit_tile(x, y) >= 2) return false;
         return true;
     }
     private int hit_tile(int x, int y) {
@@ -193,7 +193,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             }
             if(key == KeyEvent.VK_SPACE) {
                 switch(hit_tile) {
-                    case 20,21 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
+                    case 21,22 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
                 }
             }
             if(key == KeyEvent.VK_BACK_QUOTE) {
