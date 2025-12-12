@@ -50,7 +50,7 @@ public class Save_paint {
             v = 0;
         }
         if(key == KeyEvent.VK_ENTER) {
-            save.write(v, save_slot);
+            save.write(v, false,save_slot);
             setSave_slot();
         }
         y = 50*v;

@@ -26,7 +26,7 @@ public class Load {
     public boolean gameStatesLoad(String name,String filepath) {
         StringBuilder sb = new StringBuilder();
         sb.append("savedata/").append(filepath).append("/states.csv");
-        String data[][] = new String[3][];
+        String data[][] = new String[2][];
         try (BufferedReader br = new BufferedReader(new FileReader(sb.toString()))) {
             data[0] = br.readLine().split(",");
             data[1] = br.readLine().split(",");
@@ -35,43 +35,33 @@ public class Load {
         }
         sb = new StringBuilder();
         sb.append("savedata/").append(filepath).append("/mask.csv");
-        String data_mask[][] = new String[3][];
+        String data_mask[][] = new String[2][];
         try (BufferedReader br = new BufferedReader(new FileReader(sb.toString()))) {
             data_mask[0] = br.readLine().split(",");
             data_mask[1] = br.readLine().split(",");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int intdataList[] = new int[7];
-        int itemStrage[] = new int[GameUtil.MAX_ALL_ITEMS];
-        long longdataList[] = new long[4];
+        int intdataList[] = new int[5];
         long got_item_flags[] = new long[4];
-        longdataList[0] = Long.parseLong(data[0][0]);
+        long longdata = Long.parseLong(data[0][0]);
         intdataList[0] = Integer.parseInt(data[0][1]);
         intdataList[1] = Integer.parseInt(data[0][2]);
         intdataList[2] = Integer.parseInt(data[0][3]);
         intdataList[3] = Integer.parseInt(data[0][4]);
         intdataList[4] = Integer.parseInt(data[0][5]);
-        intdataList[5] = Integer.parseInt(data[0][6]);
-        intdataList[6] = Integer.parseInt(data[0][7]);
-        longdataList[1] = Long.parseLong(data[0][8]);
-        longdataList[2] = Long.parseLong(data[0][9]);
-        longdataList[3] = Long.parseLong(data[0][10]);
+        if(cheating(longdata, Long.parseLong(data_mask[0][0]))) return false;
         for(int i = 0; i < intdataList.length; i++) {
             if(cheating(intdataList[i], Integer.parseInt(data_mask[0][i+1]))) return false;
         }
-        if(cheating(longdataList[0], Long.parseLong(data_mask[0][0]))) return false;
-        if(cheating(longdataList[1], Long.parseLong(data_mask[0][8]))) return false;
-        if(cheating(longdataList[2], Long.parseLong(data_mask[0][9]))) return false;
-        if(cheating(longdataList[3], Long.parseLong(data_mask[0][10]))) return false;
-        int item_list[] = items_decryption(Long.parseLong(data[0][11]),Long.parseLong(data_mask[0][11]));
+        int item_list[] = items_decryption(Long.parseLong(data[0][6]),Long.parseLong(data_mask[0][6]));
         if(item_list[0] == -1) return false;
         for(int i = 0; i < got_item_flags.length; i++) {
             long tmp = Long.parseLong(data[1][i]);
             if(cheating(tmp, Long.parseLong(data_mask[1][i]))) return false;
             got_item_flags[i] = tmp;
         }
-        new Game_states(name, filepath, intdataList, longdataList, item_list, got_item_flags,itemStrage);
+        new Game_states(name, filepath, intdataList, longdata, item_list, got_item_flags);
         return true;
     }
     public int[] items_decryption(long itemsInfo,long pad) {

@@ -20,6 +20,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
     private final int width = GameUtil.PANEL_X, height = GameUtil.PANEL_Y;
     private int cursor_i;
     private int key;
+    private boolean shift;
     private StringBuilder name = new StringBuilder();
     private String ERROR = "";
     private int xcoords1[][];
@@ -75,8 +76,6 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
             g.drawRect(xcoords4[0][i], 395, 40, 40);
             if(key == xcoords4[1][i]) g.fillRect(xcoords4[0][i], 395, 40, 40);
         }
-        
-        g.drawString("ESC", 20, 285);
         g.drawString("1", 73, 285);
         g.drawString("2", 118, 285);
         g.drawString("3", 163, 285);
@@ -87,39 +86,68 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
         g.drawString("8", 388, 285);
         g.drawString("9", 433, 285);
         g.drawString("0", 478, 285);
-
-        g.drawString("Q", 96, 330);
-        g.drawString("W", 141, 330);
-        g.drawString("E", 186, 330);
-        g.drawString("R", 231, 330);
-        g.drawString("T", 276, 330);
-        g.drawString("Y", 321, 330);
-        g.drawString("U", 366, 330);
-        g.drawString("I", 411, 330);
-        g.drawString("O", 456, 330);
-        g.drawString("P", 501, 330);
+        if(shift) {
+            g.drawString("Q", 96, 330);
+            g.drawString("W", 141, 330);
+            g.drawString("E", 186, 330);
+            g.drawString("R", 231, 330);
+            g.drawString("T", 276, 330);
+            g.drawString("Y", 321, 330);
+            g.drawString("U", 366, 330);
+            g.drawString("I", 411, 330);
+            g.drawString("O", 456, 330);
+            g.drawString("P", 501, 330);
+            g.drawString("A", 111, 375);
+            g.drawString("S", 156, 375);
+            g.drawString("D", 201, 375);
+            g.drawString("F", 246, 375);
+            g.drawString("G", 291, 375);
+            g.drawString("H", 336, 375);
+            g.drawString("J", 381, 375);
+            g.drawString("K", 426, 375);
+            g.drawString("L", 471, 375);
+            g.drawString("Z", 136, 420);
+            g.drawString("X", 181, 420);
+            g.drawString("C", 226, 420);
+            g.drawString("V", 271, 420);
+            g.drawString("B", 316, 420);
+            g.drawString("N", 361, 420);
+            g.drawString("M", 406, 420);
+        } else {
+            g.drawString("q", 96, 330);
+            g.drawString("w", 141, 330);
+            g.drawString("e", 186, 330);
+            g.drawString("r", 231, 330);
+            g.drawString("t", 276, 330);
+            g.drawString("y", 321, 330);
+            g.drawString("u", 366, 330);
+            g.drawString("i", 411, 330);
+            g.drawString("o", 456, 330);
+            g.drawString("p", 501, 330);
+            g.drawString("a", 111, 375);
+            g.drawString("s", 156, 375);
+            g.drawString("d", 201, 375);
+            g.drawString("f", 246, 375);
+            g.drawString("g", 291, 375);
+            g.drawString("h", 336, 375);
+            g.drawString("j", 381, 375);
+            g.drawString("k", 426, 375);
+            g.drawString("l", 471, 375);
+            g.drawString("z", 136, 420);
+            g.drawString("x", 181, 420);
+            g.drawString("c", 226, 420);
+            g.drawString("v", 271, 420);
+            g.drawString("b", 316, 420);
+            g.drawString("n", 361, 420);
+            g.drawString("m", 406, 420);
+        }
         g.drawString("/\\", 543, 330);
-        g.drawString("DEL", 638, 330);
-        g.drawString("A", 111, 375);
-        g.drawString("S", 156, 375);
-        g.drawString("D", 201, 375);
-        g.drawString("F", 246, 375);
-        g.drawString("G", 291, 375);
-        g.drawString("H", 336, 375);
-        g.drawString("J", 381, 375);
-        g.drawString("K", 426, 375);
-        g.drawString("L", 471, 375);
+        g.drawString("\\/", 541, 420);
         g.drawString("<", 516, 375);
         g.drawString(">", 561, 375);
         g.drawString("START", 615, 375);
-        g.drawString("Z", 136, 420);
-        g.drawString("X", 181, 420);
-        g.drawString("C", 226, 420);
-        g.drawString("V", 271, 420);
-        g.drawString("B", 316, 420);
-        g.drawString("N", 361, 420);
-        g.drawString("M", 406, 420);
-        g.drawString("\\/", 541, 420);
+        g.drawString("DEL", 638, 330);
+        g.drawString("ESC", 20, 285);
         g.drawString(ERROR,500, 200);
         for(int i = 0; i < name.length(); i++) {
             g.drawString(name.charAt(i)+"", (i*10)+20, 237);
@@ -134,42 +162,43 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
             if(name.toString().isEmpty()) {
                 ERROR = "DON'T EMPTY";
             } else {
-                if(name.toString().equals("SKIP")) {
+                if(name.toString().equals("SKIP") || name.toString().equals("skip")) {
                     new Game_states(name.toString(),1,1);
-                    BaseFrame.frame_generator().panel_change(new CCharacter(600, 500,6,(long)0,Game_states.getTodayTime(),false),1);
+                    BaseFrame.frame_generator().panel_change(new CCharacter(100, 500,0,(long)0,Game_states.getTodayTime(),false),1);
                 } else {
-                    BaseFrame.frame_generator().panel_change(new Prologue_panel(name.toString()),1);
+                    BaseFrame.frame_generator().panel_change(new Prologue_panel(name.toString(),false),1);
                 }
             }
         }
+        if(key == KeyEvent.VK_SHIFT) shift = !shift;
         switch(key) {
             case 127 -> name_delete(cursor_i);
-            case 90 -> name_type('Z');
-            case 89 -> name_type('Y');
-            case 88 -> name_type('X');
-            case 87 -> name_type('W');
-            case 86 -> name_type('V');
-            case 85 -> name_type('U');
-            case 84 -> name_type('T');
-            case 83 -> name_type('S');
-            case 82 -> name_type('R');
-            case 81 -> name_type('Q');
-            case 80 -> name_type('P');
-            case 79 -> name_type('O');
-            case 78 -> name_type('N');
-            case 77 -> name_type('M');
-            case 76 -> name_type('L');
-            case 75 -> name_type('K');
-            case 74 -> name_type('J');
-            case 73 -> name_type('I');
-            case 72 -> name_type('H');
-            case 71 -> name_type('G');
-            case 70 -> name_type('F');
-            case 69 -> name_type('E');
-            case 68 -> name_type('D');
-            case 67 -> name_type('C');
-            case 66 -> name_type('B');
-            case 65 -> name_type('A');
+            case 90 -> name_type(key);
+            case 89 -> name_type(key);
+            case 88 -> name_type(key);
+            case 87 -> name_type(key);
+            case 86 -> name_type(key);
+            case 85 -> name_type(key);
+            case 84 -> name_type(key);
+            case 83 -> name_type(key);
+            case 82 -> name_type(key);
+            case 81 -> name_type(key);
+            case 80 -> name_type(key);
+            case 79 -> name_type(key);
+            case 78 -> name_type(key);
+            case 77 -> name_type(key);
+            case 76 -> name_type(key);
+            case 75 -> name_type(key);
+            case 74 -> name_type(key);
+            case 73 -> name_type(key);
+            case 72 -> name_type(key);
+            case 71 -> name_type(key);
+            case 70 -> name_type(key);
+            case 69 -> name_type(key);
+            case 68 -> name_type(key);
+            case 67 -> name_type(key);
+            case 66 -> name_type(key);
+            case 65 -> name_type(key);
             case 57 -> name_type('9');
             case 56 -> name_type('8');
             case 55 -> name_type('7');
@@ -187,8 +216,9 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
         }
         repaint();
     }
-    private void name_type(char token) {
-        name.insert(cursor_i, token);
+    private void name_type(int token) {
+        if(!shift) token = token |32;
+        name.insert(cursor_i, (char)token);
         cursor_i++;
     }
     private void name_backspace(int i) {

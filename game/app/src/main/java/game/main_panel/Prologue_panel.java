@@ -31,7 +31,7 @@ public class Prologue_panel extends JPanel implements KeyListener,Runnable{
     private int v = 1,bounds;
 
     Font font;
-    public Prologue_panel(String name) {
+    public Prologue_panel(String name, boolean newGame_plus) {
         setSize(width, height);
         addKeyListener(this);
         setFocusable(true);
@@ -52,17 +52,17 @@ public class Prologue_panel extends JPanel implements KeyListener,Runnable{
         g.setColor(Color.WHITE);
         g.drawString(sb[0].toString(),10,100);
         g.drawString(sb[1].toString(),10,140);
-        if(message_line == 6) {
+        if(message_line == 10) {
             for(int i = 1; i <= 7;i++) {
                 g.drawString(i+"回 ",150,140+(i*40));
             }
             g.fillRect(150,145+(v*40),250,3);
-        } else if(message_line == 7) {
+        } else if(message_line == 11) {
             for(int i = 1; i <= 11;i+=3) {
                 g.drawString(i+"時間 ~ "+(i+2)+"時間",150,180+((i/3)*40));
             }
             g.fillRect(150,145+(v*40),250,3);
-        } else if(message_line == 8) {
+        } else if(message_line == 12) {
             g.drawString(bounds+"時間",150,180);
             g.drawString((bounds+1)+"時間",150,220);
             g.drawString((bounds+2)+"時間",150,260);
@@ -86,15 +86,15 @@ public class Prologue_panel extends JPanel implements KeyListener,Runnable{
         if(key == KeyEvent.VK_ENTER && hereMessage_tail) {
             sb[0] = new StringBuilder();
             sb[1] = new StringBuilder();
-            if(message_line == 6)sportsPerWeek = v;
-            if(message_line == 8)sportsPerDay = bounds+1;
-            if(message_line == 7) bounds = ((v-1)*3)+1;
+            if(message_line == 10)sportsPerWeek = v;
+            if(message_line == 1)sportsPerDay = bounds+1;
+            if(message_line == 11) bounds = ((v-1)*3)+1;
             i = 0;
             v = 1;
-            if(message_line+1 >= 14) {
+            if(message_line+1 >= 18) {
                 new Game_states(name, sportsPerWeek,sportsPerDay);
                 prologuefin = true;
-                BaseFrame.frame_generator().panel_change(new CCharacter(600, 500,6,(long)0,Game_states.getTodayTime(),true),1);
+                BaseFrame.frame_generator().panel_change(new CCharacter(600, 500,7,(long)0,Game_states.getTodayTime(),true),1);
             } else {
                 message_line++;
                 hereMessage_tail = false;

@@ -8,55 +8,38 @@ import game.util.GameUtil;
 
 public class Game_states {
     private static String name;
-    private static int hp;
     private static int hunger_level;
     private static int money;
-    private static long bank_money;
-    private static int luck;
     private static int mental;
     private static int stamina;
-    private static int likeAbility;
-    private static int branch_state;
+    private static int route_branch;
     private static int controll_state = 1;
     private static int inventory[];
-    private static long debt;
-    private static long loan;
     private static long item_dictionary[];
     private static String map_data_path;
     private static LocalDateTime today;
     private static String pc_password;
     public Game_states(String newname, int sportsPerWeek, int sportsPerDay) {
         name = newname;
-        hp = 2500;
-        hunger_level = 500;
-        money = 10000;
-        luck = 120;
+        money = 100000;
         mental = 400;
         stamina = calc_stamina(sportsPerWeek, sportsPerDay);
-        debt = 100;
-        loan = 200;
-        bank_money = init_bank_money(newname);
         inventory = new int[8];
         item_dictionary = init_item_dict(newname);
         today = LocalDateTime.now();
-        branch_state = 0;
+        route_branch = 0;
         controll_state = 17;
         map_data_path = "gamedata/map_data";
         pc_password = gen_pc_password();
     }
-    public Game_states(String loadname,String filepath, int[] intadata, long[] longdata, int loadinventory[], long itemDict[], int itemStrage[]) {
+    public Game_states(String loadname,String filepath, int[] intadata, long longdata, int loadinventory[], long itemDict[]) {
         name = loadname;
-        today = unixTimeToLocalDateTime(longdata[0]);
-        hp = intadata[0];
-        hunger_level = intadata[1];
-        money = intadata[2];
-        bank_money = longdata[1];
-        branch_state = intadata[3];
-        luck = intadata[4];
-        mental = intadata[5];
-        stamina = intadata[6];
-        debt = longdata[2];
-        loan = longdata[3];
+        today = unixTimeToLocalDateTime(longdata);
+        hunger_level = intadata[0];
+        money = intadata[1];
+        route_branch = intadata[2];
+        mental = intadata[3];
+        stamina = intadata[4];
         inventory = loadinventory;
         item_dictionary = itemDict;
         controll_state = 17;
@@ -121,12 +104,6 @@ public class Game_states {
         }
         return 0;
     }
-    public static int getHP() {
-        return hp;
-    }
-    static void updateHP(int new_hp) {
-        hp = new_hp;
-    }
     public static int getHunger_level() {
         return hunger_level;
     }
@@ -139,20 +116,14 @@ public class Game_states {
     static void updateHMoney(int new_money) {
         money = new_money;
     }
-    public static long getBank_money() {
-        return bank_money;
-    }
-    static void updateBank_money(int new_bank_money) {
-        bank_money = new_bank_money;
-    }
     public static LocalDateTime getTodayTime() {
         return today;
     }
-    public static int getBranch_state() {
-        return branch_state;
+    public static int getRoute_branch() {
+        return route_branch;
     }
-    static void updateBranch_state(int new_branch_state) {
-        branch_state = new_branch_state;
+    static void updateRoute_branch(int new_route_branch) {
+        route_branch = new_route_branch;
     }
     public static int getControll_state() {
         return controll_state;
@@ -162,12 +133,6 @@ public class Game_states {
     }
     public static String getMapDataPath() {
         return map_data_path;
-    }
-    public static int getLuck() {
-        return luck;
-    }
-    static void updateLuck(int newLuck) {
-        luck = newLuck > GameUtil.MAX_LUCK ? GameUtil.MAX_LUCK : newLuck;
     }
     public static int getMental() {
         return mental;
@@ -181,23 +146,8 @@ public class Game_states {
     static void updateStamina(int newStamina) {
         stamina = newStamina > GameUtil.MAX_STAMINA ? GameUtil.MAX_STAMINA : newStamina;
     }
-    public static int getLikeAbility() {
-        return likeAbility;
-    }
     static void updateLikeAbility(int newLikeAbility) {
         stamina = newLikeAbility > GameUtil.MAX_LIKELABILITY ? GameUtil.MAX_LIKELABILITY : newLikeAbility;
-    }
-    public static long getDebt() {
-        return debt;
-    }
-    static void updateDebt(int newDebt) {
-        debt = newDebt > GameUtil.MAX_DEBT ? GameUtil.MAX_DEBT : newDebt;
-    }
-    public static long getLoan() {
-        return loan;
-    }
-    static void updateLoan(int newLoan) {
-        loan = newLoan > GameUtil.MAX_LOAN ? GameUtil.MAX_LOAN : newLoan;
     }
     private LocalDateTime unixTimeToLocalDateTime(long unixtime) {
         return LocalDateTime.ofInstant(Instant.ofEpochSecond(unixtime), ZoneId.systemDefault());
@@ -212,17 +162,10 @@ public class Game_states {
         }
         return tmp;
     }
-    private long init_bank_money(String name) {
-        return switch(name) {
-            case "RICH" -> Long.MAX_VALUE;
-            case "POOR" -> 10000;
-            default -> 200000;
-        };
-    }
     private String gen_pc_password() {
         ThreadLocalRandom rand  = ThreadLocalRandom.current();
         StringBuilder sb = new StringBuilder();
-        for(int i = 0;i < 4; i++) {
+        for(int i = 0;i < 6; i++) {
             int randnum = rand.nextInt(9);
             sb.append(randnum);
         }

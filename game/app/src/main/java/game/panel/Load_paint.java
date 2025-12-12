@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import game.frame.BaseFrame;
 import game.logic.Game_states;
 import game.main_panel.CCharacter;
+import game.main_panel.Prologue_panel;
 import game.save_load.Load;
 import game.util.FontUtil;
 import game.util.GameUtil;
@@ -74,12 +75,17 @@ public class Load_paint{
                 error = "!BROKEN DATA!";
                 return;
             }
-            int x = xymap[0];
-            int y = xymap[1];
-            int map_number = xymap[2];
-            long play_time = Long.parseLong(stc[1]);
-            BaseFrame.frame_generator().panel_change(new CCharacter(x, y, map_number,play_time,Game_states.getTodayTime(),false),v);
-            load_panel_open = false;
+            if((Game_states.getRoute_branch() & GameUtil.GAME_CLEAR) ==  GameUtil.GAME_CLEAR) {
+                BaseFrame.frame_generator().panel_change(new Prologue_panel(stc[0],true),1);
+                load_panel_open = false;
+            } else {
+                int x = xymap[0];
+                int y = xymap[1];
+                int map_number = xymap[2];
+                long play_time = Long.parseLong(stc[1]);
+                BaseFrame.frame_generator().panel_change(new CCharacter(x, y, map_number,play_time,Game_states.getTodayTime(),false),v);
+                load_panel_open = false;
+            }
         }
         y = 50*v;
     }

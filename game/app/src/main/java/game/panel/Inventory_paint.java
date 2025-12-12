@@ -36,7 +36,6 @@ public class Inventory_paint {
             if(Game_states.getInventory(i) != 0) g.drawImage(itemImage, (i*50)+159, 409, (i*50)+191, 441, cx, cy, cx+32, cy+32, null);
             g.setColor(Color.BLACK);
             g.drawRect((i*50)+150, 400, 50, 50);
-
         }
         if((Game_states.getControll_state() & GameUtil.ITEM_DELETE) == GameUtil.ITEM_DELETE) {
             g.setColor(new Color(0,0,0,150));
