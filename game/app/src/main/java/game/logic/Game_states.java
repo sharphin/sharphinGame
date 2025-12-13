@@ -18,11 +18,11 @@ public class Game_states {
     private static long item_dictionary[];
     private static String map_data_path;
     private static LocalDateTime today;
-    private static String pc_password;
+    private static int pc_password;
     public Game_states(String newname, int sportsPerWeek, int sportsPerDay) {
         name = newname;
         money = 100000;
-        mental = 400;
+        mental = 500;
         stamina = calc_stamina(sportsPerWeek, sportsPerDay);
         inventory = new int[8];
         item_dictionary = init_item_dict(newname);
@@ -44,9 +44,10 @@ public class Game_states {
         item_dictionary = itemDict;
         controll_state = 17;
         map_data_path = new StringBuilder().append("savedata/").append(filepath).toString();
-        pc_password = gen_pc_password();
+        pc_password = intadata[5];
+        System.out.println(pc_password);
     }
-    public static String getPCPassword() {
+    public static int getPCPassword() {
         return pc_password;
     }
     public static String getName(){
@@ -162,15 +163,15 @@ public class Game_states {
         }
         return tmp;
     }
-    private String gen_pc_password() {
+    public static int gen_pc_password() {
         ThreadLocalRandom rand  = ThreadLocalRandom.current();
         StringBuilder sb = new StringBuilder();
         for(int i = 0;i < 6; i++) {
-            int randnum = rand.nextInt(9);
+            int randnum = rand.nextInt(10);
             sb.append(randnum);
         }
         System.out.println(sb.toString());
-        return sb.toString();
+        return Integer.parseInt(sb.toString());
     }
     private int calc_stamina(int sportsPerWeek, int sportsPerDay) {
         return 100*sportsPerWeek*sportsPerDay;

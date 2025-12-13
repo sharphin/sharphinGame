@@ -64,7 +64,7 @@ public class PC_paint {
             Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.PC);
         }
         if(key == KeyEvent.VK_ENTER) {
-            if(!password.toString().equals(Game_states.getPCPassword())) {
+            if(Integer.parseInt(password.toString()) != Game_states.getPCPassword()) {
                 ERROR = "INCORRECT";
             } else {
                 password = password.delete(0, password.length());
@@ -81,32 +81,6 @@ public class PC_paint {
         }
         switch(key) {
             case 127 -> password_delete(cursor_i);
-            case 90 -> password_type('Z');
-            case 89 -> password_type('Y');
-            case 88 -> password_type('X');
-            case 87 -> password_type('W');
-            case 86 -> password_type('V');
-            case 85 -> password_type('U');
-            case 84 -> password_type('T');
-            case 83 -> password_type('S');
-            case 82 -> password_type('R');
-            case 81 -> password_type('Q');
-            case 80 -> password_type('P');
-            case 79 -> password_type('O');
-            case 78 -> password_type('N');
-            case 77 -> password_type('M');
-            case 76 -> password_type('L');
-            case 75 -> password_type('K');
-            case 74 -> password_type('J');
-            case 73 -> password_type('I');
-            case 72 -> password_type('H');
-            case 71 -> password_type('G');
-            case 70 -> password_type('F');
-            case 69 -> password_type('E');
-            case 68 -> password_type('D');
-            case 67 -> password_type('C');
-            case 66 -> password_type('B');
-            case 65 -> password_type('A');
             case 57 -> password_type('9');
             case 56 -> password_type('8');
             case 55 -> password_type('7');

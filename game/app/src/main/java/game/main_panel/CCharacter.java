@@ -86,7 +86,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             pp.paint_pose(g);
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
             mp.paint_items(g);
-        } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
+        } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC){
             pcp.paint_pc(g);
         }
         if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG){
@@ -167,7 +167,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     public void keyPressed(KeyEvent e) {
         if(prologue) return;
         int key = e.getKeyCode();
-
         if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
             pp.controll(key,x,y, maps.map_number(),clock.getPlayTime());
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {

@@ -20,7 +20,21 @@ public class Maps {
                                  "/map5.csv",
                                  "/map6.csv",
                                  "/map7.csv",
-                                 "/map8.csv"};
+                                 "/map8.csv",
+                                 "/map9.csv",
+                                 "/map10.csv",
+                                 "/map11.csv",
+                                 "/map12.csv", 
+                                 "/map13.csv",
+                                 "/map14.csv",
+                                 "/map15.csv",
+                                 "/map16.csv",
+                                 "/map17.csv",
+                                 "/map18.csv",
+                                 "/map19.csv",
+                                 "/map20.csv",
+                                 "/map21.csv",
+                                 "/map22.csv"};
     private Image mapImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/map.png");
     private int tile = GameUtil.TILE;
     private int active_map_num;

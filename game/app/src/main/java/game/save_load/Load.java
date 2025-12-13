@@ -42,7 +42,7 @@ public class Load {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int intdataList[] = new int[5];
+        int intdataList[] = new int[6];
         long got_item_flags[] = new long[4];
         long longdata = Long.parseLong(data[0][0]);
         intdataList[0] = Integer.parseInt(data[0][1]);
@@ -50,11 +50,13 @@ public class Load {
         intdataList[2] = Integer.parseInt(data[0][3]);
         intdataList[3] = Integer.parseInt(data[0][4]);
         intdataList[4] = Integer.parseInt(data[0][5]);
+        intdataList[5] = Integer.parseInt(data[0][6]);
         if(cheating(longdata, Long.parseLong(data_mask[0][0]))) return false;
         for(int i = 0; i < intdataList.length; i++) {
             if(cheating(intdataList[i], Integer.parseInt(data_mask[0][i+1]))) return false;
         }
-        int item_list[] = items_decryption(Long.parseLong(data[0][6]),Long.parseLong(data_mask[0][6]));
+        intdataList[5] = passwordDecrypt(intdataList[5]);
+        int item_list[] = items_decryption(Long.parseLong(data[0][7]),Long.parseLong(data_mask[0][7]));
         if(item_list[0] == -1) return false;
         for(int i = 0; i < got_item_flags.length; i++) {
             long tmp = Long.parseLong(data[1][i]);
@@ -78,6 +80,9 @@ public class Load {
         if(cheating(cryp, crypincyip)) return new int[]{-1,-1,-1};
         int tmp[] = {(int)(cryp>>38),(int)(cryp>>19) & 524287,(int)(cryp & 127)};
         return tmp;
+    }
+    private static int passwordDecrypt(int num) {
+        return ~num & 1048575;
     }
     private boolean cheating(int num, int pad) {
         int mask = -1498760516;

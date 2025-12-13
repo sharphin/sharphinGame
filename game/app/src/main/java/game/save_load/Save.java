@@ -81,6 +81,7 @@ public class Save {
             sb.append(Game_states.getRoute_branch()).append(",");
             sb.append(Game_states.getMental()).append(",");
             sb.append(Game_states.getStamina()).append(",");
+            sb.append(passwordEncrypt(Game_states.getPCPassword())).append(",");
             sb.append(encryption(Game_states.getAllInventory())).append(",");
             bw.write(sb.toString());
             sb.delete(0, sb.length());
@@ -104,6 +105,7 @@ public class Save {
             sb.append(makeDataProtect(Game_states.getRoute_branch())).append(",");
             sb.append(makeDataProtect(Game_states.getMental())).append(",");
             sb.append(makeDataProtect(Game_states.getStamina())).append(",");
+            sb.append(makeDataProtect(passwordEncrypt(Game_states.getPCPassword()))).append(",");
             sb.append(makeDataProtect(encryption(Game_states.getAllInventory())));
             bw.write(sb.toString());
             sb.delete(0, sb.length());
@@ -155,6 +157,9 @@ public class Save {
         ffff = ffff+(long)y<<19;
         ffff = ffff+(long)map;
         return ffff;
+    }
+    private static int passwordEncrypt(int num) {
+        return ~num & 1048575;
     }
     private int makeDataProtect(int num) {
         int mask = -1498760516;
