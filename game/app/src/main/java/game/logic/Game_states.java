@@ -72,14 +72,13 @@ public class Game_states {
     public static int searchItemDictionary(int i) {
         int area = i>>6;
         int shift = i-(area<<6);
-        if(i >= GameUtil.MAX_ALL_ITEMS) return -2;
+        if(i > GameUtil.MAX_ALL_ITEMS) return -2;
         if(Long.bitCount(item_dictionary[area] & (long)(1<<shift)) == 0) return -1;
         return i;
     }
     static int addInventory(int item) {
-        int result = 0;
         int emptyi = -1;
-       for(int i = 0; i < inventory.length; i++) {
+        for(int i = 0; i < inventory.length; i++) {
             if(inventory[i] == 0) {
                 emptyi = i;
                 break;
@@ -87,7 +86,7 @@ public class Game_states {
         }
         if(emptyi == -1) return -1;
         inventory[emptyi] = item;
-        return result;
+        return emptyi;
     }
     static int inventoryswap(int index1, int index2) {
         if(index1 >= GameUtil.MAX_ITEM  || index1 < 0) return -1;
@@ -100,9 +99,6 @@ public class Game_states {
     static int inventoryremove(int index) {
         if(index >= GameUtil.MAX_ITEM  || index < 0) return -1;
         inventory[index] = 0;
-        for(int i = index; i< inventory.length-1; i++) {
-            inventory[index] = inventory[i+1];
-        }
         return 0;
     }
     public static int getHunger_level() {

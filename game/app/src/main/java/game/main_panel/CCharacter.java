@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 import javax.swing.JPanel;
 
+import game.frame.BaseFrame;
 import game.logic.Game_CLock;
 import game.logic.Game_states;
 import game.logic.Talk;
@@ -86,6 +87,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             pp.paint_pose(g);
         } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
             mp.paint_items(g);
+            repaint();
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC){
             pcp.paint_pc(g);
         }
@@ -107,6 +109,11 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         int ontile = maps.map_tile(x, y);
         if(ontile >= maps.getMapMoveKey()) {
             if(ontile <= 3000000) {
+                if(ontile == 2999999) {
+                    Game_states.updateControll_state(GameUtil.GAME_CLEAR);
+                    BaseFrame.frame_generator().panel_change(new GameEnding("GAME CLEAR"), 1);
+                    return 0;
+                }
                 map_move(ontile-maps.getMapMoveKey(),x,y);
             } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
                 new Talk("",1, 0);
@@ -153,15 +160,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
     }
     private int scroll_x() {
-        //int map_width = maps.map_x_length()-2 << 5;
-        //if(x >= map_width-(width >> 1))  return width - map_width;
-        //if(x <= width >> 1) return 0;
         return (width >> 1) - x;
     }
     private int scroll_y() {
-        //int map_height = maps.map_y_length()-2 << 5;
-        //if(y >= map_height-(height >> 1)) return height - map_height;
-        //if(y <= height >> 1) return 0;
         return (height >> 1) - y;
     }
     public void keyPressed(KeyEvent e) {
@@ -225,7 +226,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
             prologue = false;
         }
-        while(Game_states.getControll_state() != GameUtil.GAME_EXIT) {
+        while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_CLEAR) {
             char_move();
             if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC && PC_paint.password_correct()) {
                 PC_paint.setPclogin();

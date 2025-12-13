@@ -1,5 +1,11 @@
 package game.logic;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import game.util.GameUtil;
 
 public class Item {
@@ -15,15 +21,32 @@ public class Item {
     public void setItemDictionary(int item) {
         Game_states.updateItemDictionary(item);
     }
-    public void setInventory(int item,int index) {
+    public int setInventory(int item,int index) {
        if(Game_states.searchItemDictionary(item)== -1)setItemDictionary(item);
-        Game_states.addInventory(item);
+        return Game_states.addInventory(item);
     }
     public void removeInventory(int index) {
         Game_states.inventoryremove(index);
     }
-    public void swapInventory() {
-        
+    public void swapInventory() {}
+    public static boolean key_check(int key, int lock) {
+        switch (lock) {
+            case 4194316: if(key == 7) return true; break;
+            case 5999998: if(key == 13) return true; break;
+        }
+        return false;
+    }
+    public String[] loadexplain() {
+        List<String> datas = new ArrayList<String>();
+        try (BufferedReader br = new BufferedReader(new FileReader("gamedata/item_data/items.dat"))) {
+            String data;
+            while ((data = br.readLine()) != null) {
+                datas.add(data);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return datas.toArray(new String[datas.size()]);
     }
     public String item_name(int index) {
         return switch(Game_states.searchItemDictionary(index)) {
@@ -33,18 +56,18 @@ public class Item {
             case 4 -> "コップ";
             case 5 -> "ギター";
             case 6 -> "箸";
-            case 7 -> "ROOMKEY";
-            case 8 -> "Bxccc";
-            case 9 -> "Cccc";
-            case 10 -> "Dccc";
-            case 11 -> "Ecccc";
-            case 12 -> "Fcccc";
-            case 13 -> "Gcccc";
-            case 14 -> "Hcccc";
-            case 15 -> "Icccc";
-            case 16 -> "Jcccc";
-            case 17 -> "Kcccc";
-            case 18 -> "バスケットボール";
+            case 7 -> "ROOMKEY_A";
+            case 8 -> "ROOMKEY_B";
+            case 9 -> "ROOMKEY_C";
+            case 10 -> "ROOMKEY_D";
+            case 11 -> "ROOMKEY_E";
+            case 12 -> "ROOMKEY_F";
+            case 13 -> "ENTRANCEKEY";
+            case 14 -> "卒業アルバム";
+            case 15 -> "メモ_A";
+            case 16 -> "メモ_B";
+            case 17 -> "手帳";
+            case 18 -> "カレンダー";
             case 19 -> "M";
             case 20 -> "D";
             case 21 -> "E";

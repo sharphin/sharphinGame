@@ -30,8 +30,19 @@ public class Inventory_paint {
             g.setColor(new Color(255,255,255,150));
             g.fillRect((i*50)+150, 400, 50, 50);
             switch(Game_states.getInventory(i)) {
-                case 1: cx = 0; cy = 0; break;
-                case 7: cx = 32; cy = 0; break;
+                case 1:   cx = 0; cy = 0; break;
+                case 2:   cx = 32; cy = 0; break;
+                case 3:   cx = 64; cy = 0; break;
+                case 4:   cx = 96; cy = 0; break;
+                case 5:   cx = 128; cy = 0; break;
+                case 6:   cx = 160; cy = 0; break;
+                case 7:   cx = 192; cy = 0; break;
+                case 8:   cx = 224; cy = 0; break;
+                case 9:   cx = 256; cy = 0; break;
+                case 10:  cx = 288; cy = 0; break;
+                case 11:  cx = 320; cy = 0; break;
+                case 12:  cx = 352; cy = 0; break;
+                case 13:  cx = 384; cy = 0; break;
             }
             if(Game_states.getInventory(i) != 0) g.drawImage(itemImage, (i*50)+159, 409, (i*50)+191, 441, cx, cy, cx+32, cy+32, null);
             g.setColor(Color.BLACK);
@@ -82,7 +93,8 @@ public class Inventory_paint {
         }
         if(key == KeyEvent.VK_SPACE) {
             boolean door_open = false;
-            for(int i = 0; i < 8;i++) {
+            boolean diff_key = false;
+            for(int i = 0; i < 9;i++) {
                 int xxx = (x+14)>>5;
                 int yyy = (y+14)>>5;
                 switch(i) {
@@ -97,21 +109,32 @@ public class Inventory_paint {
                 }
                 int ontile = hit_tile(xxx,yyy,maps);
                 if(ontile < 0) {
-                    int taken_item = maps.take_key_item(xxx,yyy);
-                    item.setInventory(taken_item,getInventoryIndex());
-                    Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
-                    new Talk(item.item_name(Game_states.getInventory(index)),1, 2);
+                    int taken_item = maps.ref_key_item(xxx,yyy);
+                    int setslot = item.setInventory(taken_item,getInventoryIndex());
+                    if(setslot == -1)  {
+                        Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+                        new Talk("",1, 4);
+                    } else {
+                        maps.take_key_item(xxx, yyy);
+                        Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+                        new Talk(item.item_name(Game_states.getInventory(setslot)),1, 2);
+                    }
                     break;
-                } else if(ontile > 3000000) {
-                    if(Game_states.getInventory(index) == 7) {
+                } else if(ontile > 3000000 && Game_states.getInventory(index) != -1) {
+                    if(Item.key_check(Game_states.getInventory(index), ontile)) {
                         door_open = true;
                         maps.door_open(xxx, yyy);
+                    } else {
+                        diff_key = true;
                     }
                 }
             }
             if(door_open) {
                 Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                 new Talk(item.item_name(Game_states.getInventory(index)),1, 1);
+            } else if(diff_key){
+                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+                new Talk("",1, 3);
             }
         }
     }

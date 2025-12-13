@@ -12,29 +12,98 @@ import game.logic.Game_states;
 import game.util.GameUtil;
 
 public class Maps {
-    private String[] map_list = {"/map0.csv",
-                                 "/map1.csv",
-                                 "/map2.csv",
-                                 "/map3.csv",
-                                 "/map4.csv",
-                                 "/map5.csv",
-                                 "/map6.csv",
-                                 "/map7.csv",
-                                 "/map8.csv",
-                                 "/map9.csv",
-                                 "/map10.csv",
-                                 "/map11.csv",
-                                 "/map12.csv", 
-                                 "/map13.csv",
-                                 "/map14.csv",
-                                 "/map15.csv",
-                                 "/map16.csv",
-                                 "/map17.csv",
-                                 "/map18.csv",
-                                 "/map19.csv",
-                                 "/map20.csv",
-                                 "/map21.csv",
-                                 "/map22.csv"};
+private String[]map_list = {"/map0.csv",
+                             "/map1.csv",
+                             "/map2.csv",
+                             "/map3.csv",
+                             "/map4.csv",
+                             "/map5.csv",
+                             "/map6.csv",
+                             "/map7.csv",
+                             "/map8.csv",
+                             "/map9.csv",
+                             "/map10.csv",
+                             "/map11.csv",
+                             "/map12.csv",
+                             "/map13.csv",
+                             "/map14.csv",
+                             "/map15.csv",
+                             "/map16.csv",
+                             "/map17.csv",
+                             "/map18.csv",
+                             "/map19.csv",
+                             "/map20.csv",
+                             "/map21.csv",
+                             "/map22.csv",
+                             "/map23.csv",
+                             "/map24.csv",
+                             "/map25.csv",
+                             "/map26.csv",
+                             "/map27.csv",
+                             "/map28.csv",
+                             "/map29.csv",
+                             "/map30.csv",
+                             "/map31.csv",
+                             "/map32.csv",
+                             "/map33.csv",
+                             "/map34.csv",
+                             "/map35.csv",
+                             "/map36.csv",
+                             "/map37.csv",
+                             "/map38.csv",
+                             "/map39.csv",
+                             "/map40.csv",
+                             "/map41.csv",
+                             "/map42.csv",
+                             "/map43.csv",
+                             "/map44.csv",
+                             "/map45.csv",
+                             "/map46.csv",
+                             "/map47.csv",
+                             "/map48.csv",
+                             "/map49.csv",
+                             "/map50.csv",
+                             "/map51.csv",
+                             "/map52.csv",
+                             "/map53.csv",
+                             "/map54.csv",
+                             "/map55.csv",
+                             "/map56.csv",
+                             "/map57.csv",
+                             "/map58.csv",
+                             "/map59.csv",
+                             "/map60.csv",
+                             "/map61.csv",
+                             "/map62.csv",
+                             "/map63.csv",
+                             "/map64.csv",
+                             "/map65.csv",
+                             "/map66.csv",
+                             "/map67.csv",
+                             "/map68.csv",
+                             "/map69.csv",
+                             "/map70.csv",
+                             "/map71.csv",
+                             "/map72.csv",
+                             "/map73.csv",
+                             "/map74.csv",
+                             "/map75.csv",
+                             "/map76.csv",
+                             "/map77.csv",
+                             "/map78.csv",
+                             "/map79.csv",
+                             "/map80.csv",
+                             "/map81.csv",
+                             "/map82.csv",
+                             "/map83.csv",
+                             "/map84.csv",
+                             "/map85.csv",
+                             "/map86.csv",
+                             "/map87.csv",
+                             "/map88.csv",
+                             "/map89.csv",
+                             "/map90.csv",
+                             "/map91.csv"};
     private Image mapImage = Toolkit.getDefaultToolkit().getImage("gamedata/image/map.png");
     private int tile = GameUtil.TILE;
     private int active_map_num;
@@ -111,6 +180,9 @@ public class Maps {
             }
         }
     }
+    public int ref_key_item(int x, int y) {
+        return (~map[active_map_num][y][x] & 2093056)>>13;
+    }
     public int take_key_item(int x, int y) {
         int key_item = (~map[active_map_num][y][x] & 2093056)>>13;
         map[active_map_num][y][x] = ~map[active_map_num][y][x] & key_item_mask-1;
@@ -124,7 +196,7 @@ public class Maps {
     }
     public void door_open(int x, int y) {
         map[active_map_num][y][x] = map[active_map_num][y][x]>>1;
-        //System.out.println(map[active_map_num][y][x]);
+        System.out.println(map[active_map_num][y][x]);
     }
     public int take_mormal_item() {
         return 0;
