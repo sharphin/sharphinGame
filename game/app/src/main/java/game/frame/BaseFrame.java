@@ -3,6 +3,7 @@ package game.frame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import game.panel.CharaCreate_panel;
@@ -21,9 +22,11 @@ public class BaseFrame extends JFrame implements KeyListener{
     }
     private BaseFrame() {
         super.add(ti = new Title());
+        ImageIcon icon = new ImageIcon(GameUtil.FILE_PATH+"gamedata/image/icon.png");
+        setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(300,100,GameUtil.FRAME_X, GameUtil.FRAME_Y);
-        setTitle("GAME");
+        setTitle("Revenge");
         setVisible(true);
         setResizable(false);
         addKeyListener(this);

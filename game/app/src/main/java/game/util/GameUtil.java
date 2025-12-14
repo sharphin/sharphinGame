@@ -33,4 +33,5 @@ public class GameUtil {
     public static final int MAX_Y = 20000;
     public static final int MAX_MAP_LEN = 625;
     public static final String FILE_PATH = "";
+    //public static final String FILE_PATH = "/Program Files/Revenge/app/";
 }
