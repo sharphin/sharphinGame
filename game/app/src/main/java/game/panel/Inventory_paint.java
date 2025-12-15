@@ -19,7 +19,7 @@ public class Inventory_paint {
     Item item = new Item();
     private int index = 0;
     private int v = 0;
-    private Image itemImage = Toolkit.getDefaultToolkit().getImage("/Program Files/Revenge/app/gamedata/item_data/items.png");
+    private Image itemImage = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/item_data/items.png");
     public Inventory_paint() {
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(30f);

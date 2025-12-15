@@ -31,7 +31,6 @@ public class Game_CLock implements Runnable {
                 Thread.sleep(1000);
             } catch(InterruptedException e) {}
         }
-        System.out.println("stop");
         BaseFrame.frame_generator().back_title(new Title());
     }
     public LocalDateTime getNowTime() {

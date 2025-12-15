@@ -30,6 +30,7 @@ public class Item {
     }
     public void swapInventory() {}
     public static boolean key_check(int key, int lock) {
+        if(key == 14) return true;
         switch (lock) {
             case 4194316: if(key == 7) return true; break;
             case 5999998: if(key == 13) return true; break;
@@ -38,7 +39,7 @@ public class Item {
     }
     public String[] loadexplain() {
         List<String> datas = new ArrayList<String>();
-        try (BufferedReader br = new BufferedReader(new FileReader("gamedata/item_data/items.dat"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(GameUtil.FILE_PATH+"gamedata/item_data/items.dat"))) {
             String data;
             while ((data = br.readLine()) != null) {
                 datas.add(data);
@@ -63,8 +64,8 @@ public class Item {
             case 11 -> "ROOMKEY_E";
             case 12 -> "ROOMKEY_F";
             case 13 -> "ENTRANCEKEY";
-            case 14 -> "卒業アルバム";
-            case 15 -> "メモ_A";
+            case 14 -> "MASTERKEY";
+            case 15 -> "卒業アルバム";
             case 16 -> "メモ_B";
             case 17 -> "手帳";
             case 18 -> "カレンダー";

@@ -19,7 +19,7 @@ public class Load {
                 save_slot[i] = data;
             }
         } catch (IOException e) {
-            return null;
+            return save_slot;
         }
         return save_slot;
     }

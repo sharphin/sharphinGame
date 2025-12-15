@@ -134,7 +134,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if(y >= 33) this.y = 1;
     }
     private void char_move() {
-        int tile = GameUtil.TILE-4;
+        int tile = GameUtil.TILE-5;
         int fx = 0, fx1 = 0, fy = 0, fy1 = 0;
         switch(dire) {
             case 1: fx = (x - speed) >> 5;
@@ -209,7 +209,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             pcp.controll(key);
         }
         repaint();
-    } 
+    }
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         if(key == KeyEvent.VK_E)   {

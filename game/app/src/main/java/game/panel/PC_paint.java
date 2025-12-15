@@ -1,10 +1,16 @@
 package game.panel;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+
 import game.logic.Game_states;
 import game.util.FontUtil;
 import game.util.GameUtil;
@@ -20,6 +26,7 @@ public class PC_paint {
     private StringBuilder password;
     private Image charImage1 = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/folda.png");
     private Image charImage2 = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/camera.png");
+    private Image charImage3 = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/mapicon.png");
     public PC_paint() {
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
@@ -39,12 +46,15 @@ public class PC_paint {
         g.fillRect(100,70,500,400);
         g.setColor(Color.BLACK);
         g.setFont(font1);
+
         if(now_login) {
             g.drawImage(charImage1, 120, 80, null);
             g.drawImage(charImage2, 210, 80, null);
-            g.drawRect((x*90)+110, y+80, 90, 70);
+            g.drawImage(charImage3, 300, 80, null);
+            g.drawRect((x*90)+110, (y*85)+80, 90, 70);
         } else {
-            g.drawString("LOGIN",300,200);
+            g.drawString("kosuke takanashi",220,170);
+            g.drawString("LOGIN",300,240);
             g.drawRoundRect(250, 300, 200, 40, 10, 10);
             g.setFont(font);
             for(int i = 0; i < password.length(); i++) {
@@ -64,19 +74,25 @@ public class PC_paint {
             Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.PC);
         }
         if(key == KeyEvent.VK_ENTER) {
-            if(Integer.parseInt(password.toString()) != Game_states.getPCPassword()) {
-                ERROR = "INCORRECT";
+            if(now_login) {
+                if(x == 4 && y == 3)openBrowser();
             } else {
-                password = password.delete(0, password.length());
-                password_correct = true; 
-                cursor_i = 0;
+                if(password.length() < 1)return;
+                if(Integer.parseInt(password.toString()) != Game_states.getPCPassword()) {
+                    ERROR = "INCORRECT";
+                } else {
+                    password = password.delete(0, password.length());
+                    password_correct = true; 
+                    cursor_i = 0;
+                }
             }
         }
         if(now_login) {
             if(key == KeyEvent.VK_LEFT && (x-1) >= 0)    x--;
-            if(key == KeyEvent.VK_RIGHT && (x+1) <= 1)   x++;
+            if(key == KeyEvent.VK_RIGHT && (x+1) <= 4)   x++;
             if(key == KeyEvent.VK_UP && (y-1) >= 0)      y--;
-            if(key == KeyEvent.VK_DOWN && (y+1) <= 1)    y++;
+            if(key == KeyEvent.VK_DOWN && (y+1) <= 3)    y++;
+            System.out.println(y);
             return;
         }
         switch(key) {
@@ -93,9 +109,39 @@ public class PC_paint {
             case 48 -> password_type('0');
             case 39 -> cursor_inc();
             case 37 -> cursor_dec();
-            case 32 -> password_type(' ');
             case 8  -> password_backspace(cursor_i);
         }
+    }
+    private void openBrowser() {
+        String urlStr[];
+        try (BufferedReader br = new BufferedReader(new FileReader(GameUtil.FILE_PATH+"gamedata/revenger.dat"))) {
+            urlStr = br.readLine().split(",");
+        } catch (IOException e) {
+            return;
+        }
+        if(!urlcheck(urlStr)) return;
+        Desktop desktop = Desktop.getDesktop();
+        try{
+            URI uri = new URI(urlStr[0]);
+            desktop.browse( uri );
+        } catch(Exception e ){
+            e.printStackTrace();
+        }
+    }
+    private boolean urlcheck(String[] url) {
+        try {
+            byte[] con = url[0].getBytes();
+            int keys[] = new int[]{132,37,128,85,121,114,57,44,136,109,144,127,19,24,123,87,89,120,54,50,40,13,141,142,58,75,63,98,87};
+            byte[] vert = new byte[con.length];
+            String tmp[] = url[1].split("\\.");
+            for(int i = 0; i < con.length;i++) {
+                vert[i] = (byte)(con[i]^keys[i]);
+                if(vert[i] != Byte.parseByte(tmp[i])) return false;
+            }
+        } catch(ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+        return true;
     }
     private void password_type(char token) {
         password.insert(cursor_i, token);

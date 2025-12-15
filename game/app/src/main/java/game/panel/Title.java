@@ -29,7 +29,7 @@ public class Title extends JPanel{
         }
         g.setColor(Color.WHITE);
         g.setFont(font2);
-        g.drawString("リベンジ", 240, 200);
+        g.drawString("REVENGE", 250, 200);
         g.setFont(font);
         g.drawString("NEW GAME", 280, 280);
         g.drawString("LOAD", 310, 340);
