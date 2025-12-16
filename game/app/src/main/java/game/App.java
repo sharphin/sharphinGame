@@ -15,6 +15,6 @@ public class App {
         int key_item = 14;
         int tile_num = 0;
         int fff = (key_item<<13)+key_item_mask +tile_num;
-        System.out.println("zip "+~(fff)+" "+Integer.toBinaryString(fff));
+        IO.println("zip "+~(fff)+" "+Integer.toBinaryString(fff));
     }
 }

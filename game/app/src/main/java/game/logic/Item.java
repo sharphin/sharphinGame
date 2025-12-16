@@ -32,7 +32,7 @@ public class Item {
     public static boolean key_check(int key, int lock) {
         if(key == 14) return true;
         switch (lock) {
-            case 4194316: if(key == 7) return true; break;
+            case 4194342: if(key == 7) return true; break;
             case 5999998: if(key == 13) return true; break;
         }
         return false;
