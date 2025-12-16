@@ -34,6 +34,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private boolean prologue;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
     
+    
+    private int mapnum;
+
     private Game_CLock clock;
     Font font;
     Maps maps = new Maps();
@@ -52,6 +55,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         this.clock = new Game_CLock(clock,play_time);
         Charactor_walk char_walk = new Charactor_walk(); 
         char_walk.start();
+
+
+mapnum = map_number;
+
         maps.loadMap(map_number);
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
@@ -207,6 +214,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             tp.controll(key,0,0);
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
             pcp.controll(key);
+        }
+        if(key == KeyEvent.VK_P) {
+            maps.loadMap(mapnum);
         }
         repaint();
     }
