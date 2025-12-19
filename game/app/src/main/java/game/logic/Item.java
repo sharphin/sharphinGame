@@ -66,10 +66,10 @@ public class Item {
             case 13 -> "ENTRANCEKEY";
             case 14 -> "MASTERKEY";
             case 15 -> "卒業アルバム";
-            case 16 -> "メモ_B";
+            case 16 -> "メモ_A";
             case 17 -> "手帳";
             case 18 -> "カレンダー";
-            case 19 -> "M";
+            case 19 -> "メモ_B";
             case 20 -> "D";
             case 21 -> "E";
             case 22 -> "F";
