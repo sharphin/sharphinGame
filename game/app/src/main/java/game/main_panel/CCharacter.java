@@ -33,7 +33,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private boolean front_leg_left;
     private boolean prologue;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
-    private final Color near_black = new Color(50);
+    private final Color near_black = new Color(20);
     
     private int mapnum;
 
@@ -73,8 +73,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         g.setColor(near_black);
         g.fillRect(0, 0, width, height);
         maps.paint_map(g, scroll_x(), scroll_y());
-        int xx = x+scroll_x()-32;
-        int yy = y+scroll_y()-32;
+        int scroll_x = scroll_x();
+        int scroll_y = scroll_y();
+        int xx = x+scroll_x-32;
+        int yy = y+scroll_y-32;
         int x1 = 0;
         if(dire != 0) direction = dire;
         switch(direction) {
@@ -86,6 +88,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         g.setColor(Color.BLACK);
         g.setFont(font);
         g.drawImage(charImage, xx, yy-16, xx+28, yy+28,x1, 0, x1+GameUtil.TILE, 64, null);
+        maps.paint_map2(g, scroll_x, scroll_y);
         g.setColor(Color.WHITE);
         g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
@@ -142,30 +145,28 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
 
 
         if(x <= 0) this.x = GameUtil.TILE*32;
-        if(y <= 0) this.y = GameUtil.TILE*32;
-        if(x >= 33) this.x = 2;
-        if(y >= 33) this.y = 2;
+        if(y <= 2) this.y = GameUtil.TILE*32;
+        if(x >= 33) this.x = 64;
+        if(y >= 33) this.y = 96;
     }
     private void char_move() {
         int tile = GameUtil.TILE-5;
-        int fx = 0, fx1 = 0, fy = 0, fy1 = 0;
+        int fx = 0, fx1 = 0, fy = 0;
         switch(dire) {
             case 1: fx = (x - speed) >> 5;
                     fy = y+8 >> 5;
-                    fy1 = (y+tile) >> 5;
-                    if(can_move(fx,fy) && can_move(fx,fy1))  x -= speed;
+                    if(can_move(fx,fy))  x -= speed;
                     break;
             case 2: fx = (x+tile + speed) >> 5;
                     fy = y+8 >> 5;
-                    fy1 = (y+tile) >> 5;
-                    if(can_move(fx,fy) && can_move(fx,fy1))  x += speed;
+                    if(can_move(fx,fy))  x += speed;
                     break;
             case 3: fy = (y-speed+8) >> 5;
                     fx = x >> 5;
                     fx1 = (x+tile) >> 5;
                     if(can_move(fx,fy) && can_move(fx1,fy))  y -= speed;
                     break;
-            case 4: fy = (y+tile+speed) >> 5;
+            case 4: fy = (y+speed+8) >> 5;
                     fx = x >> 5;
                     fx1 = (x+tile) >> 5;
                     if(can_move(fx,fy) && can_move(fx1,fy))  y += speed;
@@ -253,7 +254,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 repaint();
             }
             if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();
-            sleep(15);
+            sleep(16);
         }
     }
     private void sleep(int millis) {

@@ -65,12 +65,12 @@ public class Item {
             case 12 -> "ROOMKEY_F";
             case 13 -> "ENTRANCEKEY";
             case 14 -> "MASTERKEY";
-            case 15 -> "卒業アルバム";
+            case 15 -> "BASEMENTKEY";
             case 16 -> "メモ_A";
             case 17 -> "手帳";
             case 18 -> "カレンダー";
             case 19 -> "メモ_B";
-            case 20 -> "D";
+            case 20 -> "卒業アルバム";
             case 21 -> "E";
             case 22 -> "F";
             case 23 -> "G";
@@ -88,7 +88,7 @@ public class Item {
             case 35 -> "S";
             case 36 -> "T";
             case 37 -> "U";
-            case 38 -> "V";
+            case 38 -> "卒業アルバム";
             case 39 -> "W";
             case 40 -> "X";
             case 41 -> "Y";

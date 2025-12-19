@@ -26,7 +26,7 @@ public class Debug_paint {
         g.drawString("stamina: "+Game_states.getStamina(),500,180);
         g.drawString("branch_state: "+Game_states.getRoute_branch(),500,210);
         g.drawString("game_state: "+Game_states.getControll_state(),500,240);
-        if(map_num>= 69){
+        if(map_num>= 56){
             g.drawString("floor: B1F",500,270);
         } else if(map_num>= 35){
             g.drawString("floor: 3F",500,270);

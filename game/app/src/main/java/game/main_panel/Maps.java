@@ -120,17 +120,10 @@ private String[] map_list = {"/map0.csv",
                     case 3:  x2 = 768;   break;
                     case 4:  x2 = 800;   break;
                     case 5:  x2 = 32;    break;
-                    case 6:  x2 = 64;    break;
-                    case 7:  x2 = 96;    break;
-                    case 8:  x2 = 128;   break;
                     case 9:  x2 = 160;   break;
                     case 10: x2 = 192;   break;
-                    case 11: x2 = 224;   break;
-                    case 12: x2 = 256;   break;
-                    case 13: x2 = 288;   break;
                     case 14: x2 = 320;   break;
                     case 15: x2 = 352;   break;
-                    case 16: x2 = 384;   break;
                     case 17: x2 = 416;   break;
                     case 18: x2 = 448;   break;
                     case 19: x2 = 480;   break;
@@ -140,6 +133,34 @@ private String[] map_list = {"/map0.csv",
                     case 23: x2 = 608;   break;
                     case 24: x2 = 640;   break;
                     case 25: x2 = 672;   break;
+                    default: continue;
+                }
+                g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
+                if(map[active_map_num][i][j] > -1) continue;
+                if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) continue;
+                g.setColor(new Color(255,255,255,color_delta()));
+                g.fillOval(x1, y1, 5, 5);
+            }
+        }
+    }
+    public final void paint_map2(Graphics g, int sx, int sy) {
+        int x1=1, y1=1,x2 = 0, y2 = 0;
+        for(int i = 0; i < map[active_map_num].length; i++) {
+            y1 = (i << 5)+sy-32;
+            for(int j = 0; j < map[active_map_num][i].length; j++) {
+                x1 = (j << 5)+sx-32;
+                int ftile = map[active_map_num][i][j];
+                if(ftile>= 8192) continue;
+                if(ftile < 0) ftile = ~ftile;
+                switch(ftile & (key_item_mask-1)){
+                    case 6:  x2 = 64;    break;
+                    case 7:  x2 = 96;    break;
+                    case 8:  x2 = 128;   break;
+                    case 11: x2 = 224;   break;
+                    case 12: x2 = 256;   break;
+                    case 13: x2 = 288;   break;
+                    case 16: x2 = 384;   break;
+                    default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
                 if(map[active_map_num][i][j] > -1) continue;
