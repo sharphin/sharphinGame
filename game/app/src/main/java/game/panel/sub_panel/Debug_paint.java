@@ -28,9 +28,9 @@ public class Debug_paint {
         g.drawString("game_state: "+Game_states.getControll_state(),500,240);
         if(map_num>= 69){
             g.drawString("floor: B1F",500,270);
-        } else if(map_num>= 46){
+        } else if(map_num>= 35){
             g.drawString("floor: 3F",500,270);
-        } else if(map_num>= 23){
+        } else if(map_num>= 19){
             g.drawString("floor: 2F",500,270);
         } else {
             g.drawString("floor: 1F",500,270);

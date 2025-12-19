@@ -12,7 +12,7 @@ import game.logic.Game_states;
 import game.util.GameUtil;
 
 public class Maps {
-private String[]map_list = {"/map0.csv",
+private String[] map_list = {"/map0.csv",
                              "/map1.csv",
                              "/map2.csv",
                              "/map3.csv",
@@ -71,39 +71,8 @@ private String[]map_list = {"/map0.csv",
                              "/map56.csv",
                              "/map57.csv",
                              "/map58.csv",
-                             "/map59.csv",
-                             "/map60.csv",
-                             "/map61.csv",
-                             "/map62.csv",
-                             "/map63.csv",
-                             "/map64.csv",
-                             "/map65.csv",
-                             "/map66.csv",
-                             "/map67.csv",
-                             "/map68.csv",
-                             "/map69.csv",
-                             "/map70.csv",
-                             "/map71.csv",
-                             "/map72.csv",
-                             "/map73.csv",
-                             "/map74.csv",
-                             "/map75.csv",
-                             "/map76.csv",
-                             "/map77.csv",
-                             "/map78.csv",
-                             "/map79.csv",
-                             "/map80.csv",
-                             "/map81.csv",
-                             "/map82.csv",
-                             "/map83.csv",
-                             "/map84.csv",
-                             "/map85.csv",
-                             "/map86.csv",
-                             "/map87.csv",
-                             "/map88.csv",
-                             "/map89.csv",
-                             "/map90.csv",
-                             "/map91.csv"};
+                             "/map59.csv"};
+                             
     private Image mapImage = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/map.png");
     private int tile = GameUtil.TILE;
     private int active_map_num;

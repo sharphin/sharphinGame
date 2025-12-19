@@ -33,7 +33,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private boolean front_leg_left;
     private boolean prologue;
     private final int width = GameUtil.PANEL_X+3, height = GameUtil.PANEL_Y+3;
-    
+    private final Color near_black = new Color(50);
     
     private int mapnum;
 
@@ -57,7 +57,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         char_walk.start();
 
 
-mapnum = map_number;
+        mapnum = map_number;
+
 
         maps.loadMap(map_number);
         FontUtil fl = new FontUtil();
@@ -69,7 +70,7 @@ mapnum = map_number;
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.BLACK);
+        g.setColor(near_black);
         g.fillRect(0, 0, width, height);
         maps.paint_map(g, scroll_x(), scroll_y());
         int xx = x+scroll_x()-32;
@@ -135,26 +136,31 @@ mapnum = map_number;
     }
     private void map_move(int map_id, int x, int y) {
         maps.updateActiveMapNum(map_id);
-        if(x <= 0) this.x = GameUtil.TILE*33;
-        if(y <= 0) this.y = GameUtil.TILE*33;
-        if(x >= 33) this.x = 1;
-        if(y >= 33) this.y = 1;
+
+
+        mapnum = map_id;
+
+
+        if(x <= 0) this.x = GameUtil.TILE*32;
+        if(y <= 0) this.y = GameUtil.TILE*32;
+        if(x >= 33) this.x = 2;
+        if(y >= 33) this.y = 2;
     }
     private void char_move() {
         int tile = GameUtil.TILE-5;
         int fx = 0, fx1 = 0, fy = 0, fy1 = 0;
         switch(dire) {
             case 1: fx = (x - speed) >> 5;
-                    fy = y >> 5;
+                    fy = y+8 >> 5;
                     fy1 = (y+tile) >> 5;
                     if(can_move(fx,fy) && can_move(fx,fy1))  x -= speed;
                     break;
             case 2: fx = (x+tile + speed) >> 5;
-                    fy = y >> 5;
+                    fy = y+8 >> 5;
                     fy1 = (y+tile) >> 5;
                     if(can_move(fx,fy) && can_move(fx,fy1))  x += speed;
                     break;
-            case 3: fy = (y-speed) >> 5;
+            case 3: fy = (y-speed+8) >> 5;
                     fx = x >> 5;
                     fx1 = (x+tile) >> 5;
                     if(can_move(fx,fy) && can_move(fx1,fy))  y -= speed;
