@@ -164,7 +164,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
             } else {
                 if(name.toString().equals("COMPLETE") || name.toString().equals("skip")) {
                     new Game_states(name.toString(),1,1);
-                    BaseFrame.frame_generator().panel_change(new CCharacter(200, 150,2,(long)0,Game_states.getTodayTime(),false),1);
+                    BaseFrame.frame_generator().panel_change(new CCharacter(800, 500,18,(long)0,Game_states.getTodayTime(),false),1);
                 } else {
                     BaseFrame.frame_generator().panel_change(new Prologue_panel(name.toString(),false),1);
                 }

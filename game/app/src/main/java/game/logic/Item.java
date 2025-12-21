@@ -33,6 +33,7 @@ public class Item {
         if(key == 14) return true;
         switch (lock) {
             case 4194338: if(key == 7) return true; break;
+            case 4194418: if(key == 15) return true; break;
             case 5999998: if(key == 13) return true; break;
         }
         return false;

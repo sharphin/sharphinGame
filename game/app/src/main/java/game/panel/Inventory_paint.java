@@ -43,6 +43,8 @@ public class Inventory_paint {
                 case 11:  cx = 320; cy = 0; break;
                 case 12:  cx = 352; cy = 0; break;
                 case 13:  cx = 384; cy = 0; break;
+                case 14:  cx = 416; cy = 0; break;
+                case 15:  cx = 448; cy = 0; break;
             }
             if(Game_states.getInventory(i) != 0) g.drawImage(itemImage, (i*50)+159, 409, (i*50)+191, 441, cx, cy, cx+32, cy+32, null);
             g.setColor(Color.BLACK);

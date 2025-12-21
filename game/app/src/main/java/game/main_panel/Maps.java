@@ -123,7 +123,6 @@ private String[] map_list = {"/map0.csv",
                     case 9:  x2 = 160;   break;
                     case 10: x2 = 192;   break;
                     case 14: x2 = 320;   break;
-                    case 15: x2 = 352;   break;
                     case 17: x2 = 416;   break;
                     case 18: x2 = 448;   break;
                     case 19: x2 = 480;   break;
@@ -159,6 +158,7 @@ private String[] map_list = {"/map0.csv",
                     case 11: x2 = 224;   break;
                     case 12: x2 = 256;   break;
                     case 13: x2 = 288;   break;
+                    case 15: x2 = 352;   break;
                     case 16: x2 = 384;   break;
                     default: continue;
                 }
