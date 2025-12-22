@@ -41,7 +41,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Font font;
     Maps maps = new Maps();
     Talk_paint tp = new Talk_paint();
-    Pose_paint pp = new Pose_paint(); 
+    Pose_paint pp = new Pose_paint();
     PC_paint pcp = new PC_paint();
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
@@ -247,10 +247,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             char_move();
             if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC && PC_paint.password_correct()) {
                 PC_paint.setPclogin();
-                System.out.println("now");
+                //System.out.println("now");
                 sleep(500);
                 repaint();
-                sleep(10);
+                sleep(40);
                 repaint();
             }
             if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();

@@ -24,13 +24,13 @@ public class PC_paint {
     private static boolean now_login;
     private static boolean password_correct;
     private StringBuilder password;
-    private Image charImage1 = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/folda.png");
-    private Image charImage2 = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/camera.png");
-    private Image charImage3 = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/mapicon.png");
+    private Image charImage[] = new Image[3];
     public PC_paint() {
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
         font1 = fl.setFontSize_Mplus1Code(35f);
+        charImage[0] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/folda.png");
+        charImage[1] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/mapicon.png");
         password = new StringBuilder();
     }
     public void paint_pc(Graphics g) {
@@ -48,10 +48,9 @@ public class PC_paint {
         g.setFont(font1);
 
         if(now_login) {
-            g.drawImage(charImage1, 120, 80, null);
-            g.drawImage(charImage2, 210, 80, null);
-            g.drawImage(charImage3, 300, 80, null);
-            g.drawRect((x*90)+110, (y*85)+80, 90, 70);
+            g.drawImage(charImage[0], 120, 90, null);
+            g.drawImage(charImage[1], 202, 90, null);
+            g.drawRect((x*82)+110, (y*85)+80, 70, 70);
         } else {
             g.drawString("kosuke takanashi",220,170);
             g.drawString("LOGIN",300,240);
@@ -89,10 +88,9 @@ public class PC_paint {
         }
         if(now_login) {
             if(key == KeyEvent.VK_LEFT && (x-1) >= 0)    x--;
-            if(key == KeyEvent.VK_RIGHT && (x+1) <= 4)   x++;
+            if(key == KeyEvent.VK_RIGHT && (x+1) <= 5)   x++;
             if(key == KeyEvent.VK_UP && (y-1) >= 0)      y--;
             if(key == KeyEvent.VK_DOWN && (y+1) <= 3)    y++;
-            System.out.println(y);
             return;
         }
         switch(key) {
