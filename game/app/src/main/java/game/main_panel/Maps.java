@@ -118,7 +118,6 @@ private String[] map_list = {"/map0.csv",
                     case 1:  x2 = 704;   break;
                     case 2:  x2 = 736;   break;
                     case 3:  x2 = 768;   break;
-                    case 4:  x2 = 800;   break;
                     case 5:  x2 = 32;    break;
                     case 9:  x2 = 160;   break;
                     case 10: x2 = 192;   break;
@@ -132,7 +131,7 @@ private String[] map_list = {"/map0.csv",
                     case 23: x2 = 608;   break;
                     case 24: x2 = 640;   break;
                     case 25: x2 = 672;   break;
-                    case 27: x2 = 864;   break;
+                    case 27: x2 = 832;   break;
                     default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
@@ -161,7 +160,7 @@ private String[] map_list = {"/map0.csv",
                     case 13: x2 = 288;   break;
                     case 15: x2 = 352;   break;
                     case 16: x2 = 384;   break;
-                    case 26: x2 = 832;   break;
+                    case 26: x2 = 800;   break;
                     default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
