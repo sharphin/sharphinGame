@@ -105,11 +105,12 @@ private String[] map_list = {"/map0.csv",
         return map;
     }
     public final void paint_map(Graphics g, int sx, int sy) {
-        int x1=1, y1=1,x2 = 0, y2 = 0;
+        int x1=1, y1=1;
         for(int i = 0; i < map[active_map_num].length; i++) {
             y1 = (i << 5)+sy-32;
             for(int j = 0; j < map[active_map_num][i].length; j++) {
                 x1 = (j << 5)+sx-32;
+                int x2 = 0,y2 = 0;
                 int ftile = map[active_map_num][i][j];
                 if(ftile>= 8192) continue;
                 if(ftile < 0) ftile = ~ftile;
@@ -132,9 +133,13 @@ private String[] map_list = {"/map0.csv",
                     case 24: x2 = 640;   break;
                     case 25: x2 = 672;   break;
                     case 27: x2 = 832;   break;
+                    case 28: x2 = 0;  y2 = 32;  break;
+                    case 29: x2 = 32; y2 = 32;  break;
+                    case 30: x2 = 64; y2 = 32;  break;
+                    case 31: x2 = 96; y2 = 32;  break;
                     default: continue;
                 }
-                g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
+                g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, y2+tile, null);
                 if(map[active_map_num][i][j] > -1) continue;
                 if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) continue;
                 g.setColor(new Color(255,255,255,color_delta()));
