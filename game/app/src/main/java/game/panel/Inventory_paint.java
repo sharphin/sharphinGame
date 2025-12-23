@@ -114,11 +114,9 @@ public class Inventory_paint {
                     int taken_item = maps.ref_key_item(xxx,yyy);
                     int setslot = item.setInventory(taken_item,getInventoryIndex());
                     if(setslot == -1)  {
-                        Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                         new Talk("",1, 4);
                     } else {
                         maps.take_key_item(xxx, yyy);
-                        Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                         new Talk(item.item_name(Game_states.getInventory(setslot)),1, 2);
                     }
                     break;
@@ -132,10 +130,8 @@ public class Inventory_paint {
                 }
             }
             if(door_open) {
-                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                 new Talk(item.item_name(Game_states.getInventory(index)),1, 1);
             } else if(diff_key){
-                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                 new Talk("",1, 3);
             }
         }

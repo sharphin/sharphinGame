@@ -133,10 +133,16 @@ private String[] map_list = {"/map0.csv",
                     case 24: x2 = 640;   break;
                     case 25: x2 = 672;   break;
                     case 27: x2 = 832;   break;
-                    case 28: x2 = 0;  y2 = 32;  break;
-                    case 29: x2 = 32; y2 = 32;  break;
-                    case 30: x2 = 64; y2 = 32;  break;
-                    case 31: x2 = 96; y2 = 32;  break;
+                    case 28: x2 = 0;   y2 = 32;  break;
+                    case 29: x2 = 32;  y2 = 32;  break;
+                    case 30: x2 = 64;  y2 = 32;  break;
+                    case 31: x2 = 96;  y2 = 32;  break;
+                    case 32,38: x2 = 128; y2 = 32;  break;//ここから壁の紙
+                    case 33,39: x2 = 160; y2 = 32;  break;
+                    case 34,40: x2 = 192; y2 = 32;  break;
+                    case 35,41: x2 = 224; y2 = 32;  break;
+                    case 36,42: x2 = 256; y2 = 32;  break;
+                    case 37,43: x2 = 288; y2 = 32;  break;
                     default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, y2+tile, null);

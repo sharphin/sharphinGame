@@ -128,7 +128,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 map_move(ontile-maps.getMapMoveKey(),x,y);
             } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
                 new Talk("",1, 0);
-                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
                 repaint();
             }
         } else if(ontile < 0) {
@@ -208,6 +207,12 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(key == KeyEvent.VK_SPACE) {
                 switch(hit_tile) {
                     case 24,25 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
+                    case 33 -> new Talk("",1, 5);
+                    case 35 -> new Talk("",1, 9);
+                    case 37 -> new Talk("",1, 7);
+                    case 39 -> new Talk("",1, 6);
+                    case 41 -> new Talk("",1, 10);
+                    case 43 -> new Talk("",1, 8);
                 }
             }
             if(key == KeyEvent.VK_BACK_QUOTE) {
@@ -240,7 +245,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if(prologue){
             sleep(2000);
             new Talk("",0,18);
-            Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
             prologue = false;
         }
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_CLEAR) {
