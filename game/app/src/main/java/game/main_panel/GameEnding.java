@@ -20,11 +20,12 @@ public class GameEnding extends JPanel implements Runnable{
         Thread th = new Thread(this);
         th.start();
         FontUtil fl = new FontUtil();
-        font = fl.setFontSize_Mplus1Code(20f);
+        font = fl.setFontSize_Mplus1Code(40f);
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawString(endingMessage,50,100);
+        g.setFont(font);
+        g.drawString(endingMessage,220,200);
     }
     public void run() {
         try{

@@ -208,7 +208,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 if(key == KeyEvent.VK_DOWN)    dire = 4;
             }
             if(key == KeyEvent.VK_SPACE) {
-                IO.println(hit_tile);
                 switch(hit_tile) {
                     case 24,25 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
                     case 33 -> new Talk("",1, 5);
