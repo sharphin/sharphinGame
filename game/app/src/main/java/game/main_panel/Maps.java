@@ -75,7 +75,7 @@ private String[] map_list = {"/map0.csv",
                              
     private Image mapImage = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/map.png");
     private int tile = GameUtil.TILE;
-    private int active_map_num;
+    private static int active_map_num;
     private static int map[][][];
     private int map_move_key = 2097152;
     private int key_item_mask = 4096;
@@ -139,15 +139,15 @@ private String[] map_list = {"/map0.csv",
                     case 29: x2 = 32;  y2 = 32;  break;
                     case 30: x2 = 64;  y2 = 32;  break;
                     case 31: x2 = 96;  y2 = 32;  break;
-                    case 32,40: x2 = 128; y2 = 32;  break;//ここから壁の紙
-                    case 33,41: x2 = 160; y2 = 32;  break;
-                    case 34,42: x2 = 192; y2 = 32;  break;
-                    case 35,43: x2 = 224; y2 = 32;  break;
-                    case 36,44: x2 = 256; y2 = 32;  break;
-                    case 37,45: x2 = 288; y2 = 32;  break;
-                    case 38,46: x2 = 320; y2 = 32;  break;
-                    case 39,47: x2 = 352; y2 = 32;  break;
-                    case 8191: x2 = 864;break;
+                    case 32,40,48: x2 = 128; y2 = 32;  break;//ここから壁の紙
+                    case 33,41,49: x2 = 160; y2 = 32;  break;
+                    case 34,42,50: x2 = 192; y2 = 32;  break;
+                    case 35,43,51: x2 = 224; y2 = 32;  break;
+                    case 36,44,52: x2 = 256; y2 = 32;  break;
+                    case 37,45,53: x2 = 288; y2 = 32;  break;
+                    case 38,46,54: x2 = 320; y2 = 32;  break;
+                    case 39,47,55: x2 = 352; y2 = 32;  break;
+                    case 4095: x2 = 864;break;
                     default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, y2+tile, null);
@@ -199,9 +199,9 @@ private String[] map_list = {"/map0.csv",
         //System.out.println(map[active_map_num][y][x] +" "+x+" "+y);
         return 0;
     }
-    public boolean dye_black(int map_num,int x, int y) {
-        if(map[map_num][y][x] == 8191) return false;  
-        map[map_num][y][x] = 8191;
+    public boolean dye_black(int x, int y) {
+        if(map[active_map_num][y][x] >= 4095) return false;  
+        map[active_map_num][y][x] = 4095;
         return true;
     }
     public void door_open(int x, int y) {

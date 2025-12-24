@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
+import game.logic.BlackDye;
 import game.logic.Game_states;
 import game.logic.Talk;
 import game.util.FontUtil;
@@ -48,12 +49,13 @@ public class Talk_paint {
             g.drawString(messagestr[3], 110, 490);
         }
     }
-    public void controll(int key, int i,int message_id) {
+    public void controll(int key, int i,int message_id, int hit_tile) {
         if(key == KeyEvent.VK_ENTER) message_line++;
         if(key == KeyEvent.VK_UP) {}
         if(key == KeyEvent.VK_DOWN) {}
         if(message_line >= Talk.getMainMessage().length) {
             Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.TALK);
+            if(hit_tile == 55) new BlackDye();
             message_line = 0;
         }
     }

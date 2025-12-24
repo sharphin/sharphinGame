@@ -131,7 +131,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             }
         } else if(ontile < 0) {
             ontile = ~ontile & 4095;
-        } else if(ontile == 8191) {
+        } else if(ontile == 4095) {
             Game_states.updateControll_state(GameUtil.GAME_END);
             BaseFrame.frame_generator().panel_change(new GameEnding("GAME OVER"), 1);
             return 0;
@@ -218,7 +218,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     case 41 -> new Talk("",1, 6);
                     case 43 -> new Talk("",1, 10);
                     case 45 -> new Talk("",1, 8);
-                    case 47 -> new Talk(Game_states.getName(),1, 13);
+                    case 47 -> new Talk(Game_states.getName(),1, 14);
+                    case 55 -> new Talk(Game_states.getName(),1, 12);
                 }
             }
             if(key == KeyEvent.VK_BACK_QUOTE) {
@@ -229,7 +230,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 }
             }
         } else if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
-            tp.controll(key,0,0);
+            tp.controll(key,0,0,hit_tile);
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
             pcp.controll(key);
         }
@@ -257,7 +258,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             char_move();
             if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC && PC_paint.password_correct()) {
                 PC_paint.setPclogin();
-                //System.out.println("now");
                 sleep(500);
                 repaint();
                 sleep(40);
