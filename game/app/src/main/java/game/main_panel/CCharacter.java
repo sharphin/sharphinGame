@@ -72,11 +72,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         super.paintComponent(g);
         g.setColor(near_black);
         g.fillRect(0, 0, width, height);
-        maps.paint_map(g, scroll_x(), scroll_y());
         int scroll_x = scroll_x();
         int scroll_y = scroll_y();
-        int xx = x+scroll_x-32;
-        int yy = y+scroll_y-32;
+        int xx = x+scroll_x;
+        int yy = y+scroll_y;
         int x1 = 0;
         if(dire != 0) direction = dire;
         switch(direction) {
@@ -85,10 +84,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             case 3:  x1 = 0;   break;
             case 4:  x1 = 64;  break;
         }
-        g.setColor(Color.BLACK);
-        g.setFont(font);
+        maps.paint_map(g, scroll_x, scroll_y);
         g.drawImage(charImage, xx, yy-16, xx+28, yy+28,x1, 0, x1+GameUtil.TILE, 64, null);
         maps.paint_map2(g, scroll_x, scroll_y);
+        g.setFont(font);
         g.setColor(Color.WHITE);
         g.drawString(clock.getNowTime().format(FormatUtil.format1),10, 30);
         if((Game_states.getControll_state() & GameUtil.INVENTORY) == GameUtil.INVENTORY) {
@@ -121,7 +120,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if(ontile >= maps.getMapMoveKey()) {
             if(ontile <= 3000000) {
                 if(ontile == 2999999) {
-                    Game_states.updateControll_state(GameUtil.GAME_CLEAR);
+                    Game_states.updateControll_state(GameUtil.GAME_END);
                     BaseFrame.frame_generator().panel_change(new GameEnding("GAME CLEAR"), 1);
                     return 0;
                 }
@@ -132,6 +131,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             }
         } else if(ontile < 0) {
             ontile = ~ontile & 4095;
+        } else if(ontile == 8191) {
+            Game_states.updateControll_state(GameUtil.GAME_END);
+            BaseFrame.frame_generator().panel_change(new GameEnding("GAME OVER"), 1);
+            return 0;
         }
         hit_tile = ontile;
         return ontile;
@@ -205,14 +208,17 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 if(key == KeyEvent.VK_DOWN)    dire = 4;
             }
             if(key == KeyEvent.VK_SPACE) {
+                IO.println(hit_tile);
                 switch(hit_tile) {
                     case 24,25 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
                     case 33 -> new Talk("",1, 5);
                     case 35 -> new Talk("",1, 9);
                     case 37 -> new Talk("",1, 7);
-                    case 39 -> new Talk("",1, 6);
-                    case 41 -> new Talk("",1, 10);
-                    case 43 -> new Talk("",1, 8);
+                    case 39 -> new Talk("",1, 11);
+                    case 41 -> new Talk("",1, 6);
+                    case 43 -> new Talk("",1, 10);
+                    case 45 -> new Talk("",1, 8);
+                    case 47 -> new Talk(Game_states.getName(),1, 13);
                 }
             }
             if(key == KeyEvent.VK_BACK_QUOTE) {
@@ -247,7 +253,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             new Talk("",0,18);
             prologue = false;
         }
-        while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_CLEAR) {
+        while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_END) {
             char_move();
             if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC && PC_paint.password_correct()) {
                 PC_paint.setPclogin();
@@ -257,8 +263,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 sleep(40);
                 repaint();
             }
-            if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();
             sleep(16);
+            if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();
         }
     }
     private void sleep(int millis) {

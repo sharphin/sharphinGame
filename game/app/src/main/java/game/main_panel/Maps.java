@@ -106,10 +106,12 @@ private String[] map_list = {"/map0.csv",
     }
     public final void paint_map(Graphics g, int sx, int sy) {
         int x1=1, y1=1;
-        for(int i = 0; i < map[active_map_num].length; i++) {
-            y1 = (i << 5)+sy-32;
-            for(int j = 0; j < map[active_map_num][i].length; j++) {
-                x1 = (j << 5)+sx-32;
+        int i_len = map[active_map_num].length;
+        int j_len = map[active_map_num][0].length;
+        for(int i = 0; i < i_len; i++) {
+            y1 = (i << 5)+sy;
+            for(int j = 0; j < j_len; j++) {
+                x1 = (j << 5)+sx;
                 int x2 = 0,y2 = 0;
                 int ftile = map[active_map_num][i][j];
                 if(ftile>= 8192) continue;
@@ -137,12 +139,15 @@ private String[] map_list = {"/map0.csv",
                     case 29: x2 = 32;  y2 = 32;  break;
                     case 30: x2 = 64;  y2 = 32;  break;
                     case 31: x2 = 96;  y2 = 32;  break;
-                    case 32,38: x2 = 128; y2 = 32;  break;//ここから壁の紙
-                    case 33,39: x2 = 160; y2 = 32;  break;
-                    case 34,40: x2 = 192; y2 = 32;  break;
-                    case 35,41: x2 = 224; y2 = 32;  break;
-                    case 36,42: x2 = 256; y2 = 32;  break;
-                    case 37,43: x2 = 288; y2 = 32;  break;
+                    case 32,40: x2 = 128; y2 = 32;  break;//ここから壁の紙
+                    case 33,41: x2 = 160; y2 = 32;  break;
+                    case 34,42: x2 = 192; y2 = 32;  break;
+                    case 35,43: x2 = 224; y2 = 32;  break;
+                    case 36,44: x2 = 256; y2 = 32;  break;
+                    case 37,45: x2 = 288; y2 = 32;  break;
+                    case 38,46: x2 = 320; y2 = 32;  break;
+                    case 39,47: x2 = 352; y2 = 32;  break;
+                    case 8191: x2 = 864;break;
                     default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, y2+tile, null);
@@ -154,14 +159,16 @@ private String[] map_list = {"/map0.csv",
         }
     }
     public final void paint_map2(Graphics g, int sx, int sy) {
-        int x1=1, y1=1,x2 = 0, y2 = 0;
-        for(int i = 0; i < map[active_map_num].length; i++) {
-            y1 = (i << 5)+sy-32;
-            for(int j = 0; j < map[active_map_num][i].length; j++) {
-                x1 = (j << 5)+sx-32;
+        int x1=1, y1=1;
+        int i_len = map[active_map_num].length;
+        int j_len = map[active_map_num][0].length;
+        for(int i = 0; i < i_len; i++) {
+            y1 = (i << 5)+sy;
+            for(int j = 0; j < j_len; j++) {
+                x1 = (j << 5)+sx;
+                int x2 = 0,y2 = 0;
                 int ftile = map[active_map_num][i][j];
                 if(ftile>= 8192) continue;
-                if(ftile < 0) ftile = ~ftile;
                 switch(ftile & (key_item_mask-1)){
                     case 6:  x2 = 64;    break;
                     case 7:  x2 = 96;    break;
@@ -175,10 +182,6 @@ private String[] map_list = {"/map0.csv",
                     default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, tile, null);
-                if(map[active_map_num][i][j] > -1) continue;
-                if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) continue;
-                g.setColor(new Color(255,255,255,color_delta()));
-                g.fillOval(x1, y1, 5, 5);
             }
         }
     }
@@ -193,12 +196,17 @@ private String[] map_list = {"/map0.csv",
     public int put_key_item(int item_num, int x, int y) {
         if((map[active_map_num][y][x] & key_item_mask) != 0) return -1;
         map[active_map_num][y][x] = ~((item_num << 13)+key_item_mask+map[active_map_num][y][x]);
-        System.out.println(map[active_map_num][y][x] +" "+x+" "+y);
+        //System.out.println(map[active_map_num][y][x] +" "+x+" "+y);
         return 0;
+    }
+    public boolean dye_black(int map_num,int x, int y) {
+        if(map[map_num][y][x] == 8191) return false;  
+        map[map_num][y][x] = 8191;
+        return true;
     }
     public void door_open(int x, int y) {
         map[active_map_num][y][x] = map[active_map_num][y][x]>>1;
-        System.out.println(map[active_map_num][y][x]);
+        //System.out.println(map[active_map_num][y][x]);
     }
     public int take_mormal_item() {
         return 0;

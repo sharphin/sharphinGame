@@ -75,7 +75,7 @@ public class Load_paint{
                 error = "!BROKEN DATA!";
                 return;
             }
-            if((Game_states.getRoute_branch() & GameUtil.GAME_CLEAR) ==  GameUtil.GAME_CLEAR) {
+            if((Game_states.getRoute_branch() & GameUtil.GAME_END) ==  GameUtil.GAME_END) {
                 BaseFrame.frame_generator().panel_change(new Prologue_panel(stc[0],true),1);
                 load_panel_open = false;
             } else {

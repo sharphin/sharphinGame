@@ -24,8 +24,28 @@ public class Talk_paint {
         g.setColor(Color.WHITE);
         g.drawRoundRect(100, 370, 500, 130,5,5);
         g.setFont(font1);
+        String messagestr[] = {"","","",""};
         if(Talk.getMainMessage() != null) {
-            g.drawString(Talk.getMainMessage()[message_line], 110, 400);
+            String temp = Talk.getMainMessage()[message_line];
+            if(Talk.getMainMessage()[message_line].length() > 69) {
+                messagestr[3] = temp.substring(69);
+                temp = Talk.getMainMessage()[message_line].substring(0,69);
+            }
+            if(Talk.getMainMessage()[message_line].length() > 46) {
+                messagestr[2] = temp.substring(46);
+                temp = Talk.getMainMessage()[message_line].substring(0,46);
+            }
+            if(Talk.getMainMessage()[message_line].length() > 23) {
+                messagestr[1] = temp.substring(23);
+                temp = Talk.getMainMessage()[message_line].substring(0,23);
+                messagestr[0] = temp;
+            } else {
+                messagestr[0] = Talk.getMainMessage()[message_line];
+            }
+            g.drawString(messagestr[0], 110, 400);
+            g.drawString(messagestr[1], 110, 430);
+            g.drawString(messagestr[2], 110, 460);
+            g.drawString(messagestr[3], 110, 490);
         }
     }
     public void controll(int key, int i,int message_id) {
