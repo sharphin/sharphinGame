@@ -24,7 +24,7 @@ public class Game_CLock implements Runnable {
                 clock = clock.plusSeconds(1);
                 playtime++;
                 if(PC_paint.pclogin()) pc_leave_time++;
-                if(pc_leave_time > 1800) PC_paint.pclogout();
+                if(pc_leave_time > 60) PC_paint.pclogout();
             }
             if(pc_leave_time > 0 && (Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) pc_leave_time = 0;
             try {

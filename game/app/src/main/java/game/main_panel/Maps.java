@@ -139,6 +139,8 @@ private String[] map_list = {"/map0.csv",
                     case 29: x2 = 32;  y2 = 32;  break;
                     case 30: x2 = 64;  y2 = 32;  break;
                     case 31: x2 = 96;  y2 = 32;  break;
+                    case 100: x2 = 576;y2 = 32;  break;
+                    case 101: x2 = 608;y2 = 32;  break;
                     case 32,40,48: x2 = 128; y2 = 32;  break;//ここから壁の紙
                     case 33,41,49: x2 = 160; y2 = 32;  break;
                     case 34,42,50: x2 = 192; y2 = 32;  break;
@@ -152,9 +154,12 @@ private String[] map_list = {"/map0.csv",
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, y2+tile, null);
                 if(map[active_map_num][i][j] > -1) continue;
-                if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) continue;
-                g.setColor(new Color(255,255,255,color_delta()));
-                g.fillOval(x1, y1, 5, 5);
+                if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) {
+                    
+                } else {
+                    g.setColor(new Color(255,255,255,color_delta()));
+                    g.fillOval(x1, y1, 5, 5);
+                }
             }
         }
     }
@@ -203,6 +208,14 @@ private String[] map_list = {"/map0.csv",
         if(map[active_map_num][y][x] >= 4095) return false;  
         map[active_map_num][y][x] = 4095;
         return true;
+    }
+    public void pc_on() {
+        map[18][14][25] = 100;
+        map[18][14][26] = 101;
+    }
+    public void pc_off() {
+        map[18][14][25] = 22;
+        map[18][14][26] = 23;
     }
     public void door_open(int x, int y) {
         map[active_map_num][y][x] = map[active_map_num][y][x]>>1;

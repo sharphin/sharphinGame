@@ -231,7 +231,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         } else if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
             tp.controll(key,0,0,hit_tile);
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
-            pcp.controll(key);
+            pcp.controll(key,Game_states.getInventory(ip.getInventoryIndex()));
         }
         if(key == KeyEvent.VK_P) {
             maps.loadMap(mapnum);

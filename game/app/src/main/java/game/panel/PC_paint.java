@@ -11,26 +11,29 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 
+import javax.swing.JPanel;
+
+import game.frame.PcAppFrame;
 import game.logic.Game_states;
+import game.main_panel.Maps;
 import game.util.FontUtil;
 import game.util.GameUtil;
 
-public class PC_paint {
+public class PC_paint extends JPanel{
     private final int width = GameUtil.PANEL_X, height = GameUtil.PANEL_Y;
     private Font font;
     private Font font1;
-    private String ERROR = "";
-    private int cursor_i,x,y;
-    private static boolean now_login;
-    private static boolean password_correct;
-    private StringBuilder password;
     private Image charImage[] = new Image[3];
+    private int cursor_i,x,y;
+    private String ERROR = "";
+    private StringBuilder password;
+    private static boolean password_correct,now_login,hold_usb;
     public PC_paint() {
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
         font1 = fl.setFontSize_Mplus1Code(35f);
-        charImage[0] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/folda.png");
-        charImage[1] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/mapicon.png");
+        charImage[0] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/mapicon.png");
+        charImage[1] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/folda.png");
         password = new StringBuilder();
     }
     public void paint_pc(Graphics g) {
@@ -49,7 +52,7 @@ public class PC_paint {
 
         if(now_login) {
             g.drawImage(charImage[0], 120, 90, null);
-            g.drawImage(charImage[1], 202, 90, null);
+            if(hold_usb) g.drawImage(charImage[1], 202, 90, null);
             g.drawRect((x*82)+110, (y*85)+80, 70, 70);
         } else {
             g.drawString("kosuke takanashi",220,170);
@@ -67,14 +70,18 @@ public class PC_paint {
             if(password_correct)g.drawString("LOGIN SUCSESS", 270, 270);
         }
     }
-    public void controll(int key) {
+    public void controll(int key, int item) {
+        if(item == 16) hold_usb = true;
         ERROR = "";
-        if(key == KeyEvent.VK_ESCAPE) {
+        if(key == KeyEvent.VK_ESCAPE && !PcAppFrame.ViewMiniMap() && !PcAppFrame.ViewTruth()) {
             Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.PC);
+            hold_usb = false;
         }
         if(key == KeyEvent.VK_ENTER) {
             if(now_login) {
-                if(x == 4 && y == 3)openBrowser();
+                if(x == 5 && y == 3)openBrowser();
+                if(x == 0 && y == 0 && !PcAppFrame.ViewMiniMap()) new PcAppFrame("mini map");
+                if(x == 1 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("truth");
             } else {
                 if(password.length() < 1)return;
                 if(Integer.parseInt(password.toString()) != Game_states.getPCPassword()) {
@@ -164,11 +171,15 @@ public class PC_paint {
         return now_login;
     }
     public static void setPclogin() {
+        Maps map = new Maps();
+        map.pc_on();
         now_login = true;
         password_correct = false;
     }
     public static void pclogout() {
         now_login = false;
+        Maps map = new Maps();
+        map.pc_off();
     }
     public static boolean password_correct() {
         return password_correct;
