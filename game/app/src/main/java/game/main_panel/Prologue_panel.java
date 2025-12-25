@@ -94,7 +94,7 @@ public class Prologue_panel extends JPanel implements KeyListener,Runnable{
             if(message_line+1 >= 18) {
                 new Game_states(name, sportsPerWeek,sportsPerDay);
                 prologuefin = true;
-                BaseFrame.frame_generator().panel_change(new CCharacter(600, 500,7,(long)0,Game_states.getTodayTime(),true),1);
+                BaseFrame.frame_generator().panel_change(new CCharacter(600, 500,18,(long)0,Game_states.getTodayTime(),true),1);
             } else {
                 message_line++;
                 hereMessage_tail = false;
