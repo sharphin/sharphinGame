@@ -2,10 +2,10 @@ package game.frame;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import game.panel.CharaCreate_panel;
 import game.panel.Load_paint;
 import game.panel.Title;
@@ -69,7 +69,8 @@ public class BaseFrame extends JFrame implements KeyListener{
             }
         }
         repaint();
-    } 
+    }
     public void keyReleased(KeyEvent e) {}
     public void keyTyped(KeyEvent e) {}
+
 }

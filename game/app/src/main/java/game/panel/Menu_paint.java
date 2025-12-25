@@ -52,7 +52,9 @@ public class Menu_paint{
             case 13:  cx = 384; cy = 0; break;
             case 14:  cx = 416; cy = 0; break;
             case 15:  cx = 448; cy = 0; break;
-            case 19:  cx = 32; cy = 0; break;
+            case 16:  cx = 512; cy = 0; break;
+            case 19:  cx = 64; cy = 0; break;
+            case 20:  cx = 480; cy = 0; break;
         }
         g.setFont(font2);
         if (items_num != -1) {

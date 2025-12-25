@@ -5,6 +5,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
 import game.panel.PC_paint;
 import game.panel.sub_panel.Minimap_panel;
 import game.panel.sub_panel.Truth_panel;
@@ -19,7 +20,7 @@ public class PcAppFrame extends JFrame implements WindowListener{
     public PcAppFrame(String app_name) {
         ImageIcon icon = new ImageIcon(GameUtil.FILE_PATH+"gamedata/image/icon.png");
         setIconImage(icon.getImage());
-        setBounds(300,100,GameUtil.FRAME_X, GameUtil.FRAME_Y);
+        setBounds(330,130,GameUtil.FRAME_X, GameUtil.FRAME_Y);
         setTitle(app_name);
         setVisible(true);
         setResizable(false);
@@ -32,7 +33,6 @@ public class PcAppFrame extends JFrame implements WindowListener{
             case "truth":    view_truth = true;
                              add(new Truth_panel());
                              break;
-
         }
         if(app_name.equals("mini map")) view_mini_map = true;
         if(app_name.equals("truth")) view_truth = true;
@@ -67,4 +67,5 @@ public class PcAppFrame extends JFrame implements WindowListener{
     public void windowDeiconified(WindowEvent e) {}
     public void windowActivated(WindowEvent e) {}
     public void windowDeactivated(WindowEvent e) {}
+
 }
