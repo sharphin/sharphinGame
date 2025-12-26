@@ -83,12 +83,13 @@ private String[] map_list = {"/map0.csv",
     private int color_delta = 0;
     public Maps() {}
 
-    public void loadMap(int index) {
+    public void loadMap(int index,boolean escaped) {
         active_map_num = index;
         map = new int [map_list.length][GameUtil.MAP_Y_LEN][GameUtil.MAP_X_LEN];
         for(int i = 0; i < map.length;i++) {
             map[i] = mapread(map[i],i);
         }
+        if(escaped) put_password_tile();
     }
     private int[][] mapread(int map[][],int index) {
         try (BufferedReader br = new BufferedReader(new FileReader(mapPathBuilder(Game_states.getMapDataPath(),index)))) {
@@ -208,6 +209,10 @@ private String[] map_list = {"/map0.csv",
         if(map[active_map_num][y][x] >= 4095) return false;  
         map[active_map_num][y][x] = 4095;
         return true;
+    }
+    public void put_password_tile() {
+        map[38][25][5] = 52;
+        map[38][26][5] = 53;
     }
     public void pc_on() {
         map[18][14][25] = 100;

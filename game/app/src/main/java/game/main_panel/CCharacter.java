@@ -46,7 +46,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
     Debug_paint dp = new Debug_paint();
-    public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock ,boolean prologue) {
+    public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock ,boolean prologue,boolean escaped) {
         this.x = x;
         this.y = y;
         setSize(width, height);
@@ -60,7 +60,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         mapnum = map_number;
 
 
-        maps.loadMap(map_number);
+        maps.loadMap(map_number,escaped);
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
         Thread th = new Thread(this);
@@ -126,7 +126,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 }
                 map_move(ontile-maps.getMapMoveKey(),x,y);
             } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
-                new Talk("",1, 0);
+                int message_id = 0;
+                if(ontile == 4194408) message_id = 16;
+                new Talk("",1, message_id);
                 repaint();
             }
         } else if(ontile < 0) {
@@ -218,6 +220,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     case 43 -> new Talk("",1, 10);
                     case 45 -> new Talk("",1, 8);
                     case 47 -> new Talk(Game_states.getName(),1, 14);
+                    case 53 -> new Talk(Integer.toString(Game_states.getPCPassword()),2, 0);
                     case 55 -> new Talk(Game_states.getName(),1, 12);
                 }
             }
@@ -234,7 +237,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             pcp.controll(key,Game_states.getInventory(ip.getInventoryIndex()));
         }
         if(key == KeyEvent.VK_P) {
-            maps.loadMap(mapnum);
+            maps.loadMap(mapnum,true);
         }
         repaint();
     }

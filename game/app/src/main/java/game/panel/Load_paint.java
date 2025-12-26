@@ -83,7 +83,7 @@ public class Load_paint{
                 int y = xymap[1];
                 int map_number = xymap[2];
                 long play_time = Long.parseLong(stc[1]);
-                BaseFrame.frame_generator().panel_change(new CCharacter(x, y, map_number,play_time,Game_states.getTodayTime(),false),1);
+                BaseFrame.frame_generator().panel_change(new CCharacter(x, y, map_number,play_time,Game_states.getTodayTime(),false,false),1);
                 load_panel_open = false;
             }
         }

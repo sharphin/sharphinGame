@@ -1,6 +1,7 @@
 package game;
 
 import game.frame.BaseFrame;
+import game.frame.PcAppFrame;
 import game.util.FontUtil;
 public class App {
     public String getGreeting() {
@@ -16,5 +17,6 @@ public class App {
         int tile_num = 3;
         int fff = (key_item<<13)+key_item_mask +tile_num;
         IO.println("zip "+~(fff)+" "+Integer.toBinaryString(fff));
+        new PcAppFrame("QR", 556, 579);
     }
 }

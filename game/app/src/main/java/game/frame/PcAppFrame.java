@@ -8,19 +8,20 @@ import javax.swing.JFrame;
 
 import game.panel.PC_paint;
 import game.panel.sub_panel.Minimap_panel;
+import game.panel.sub_panel.QR_panel;
 import game.panel.sub_panel.Truth_panel;
 import game.util.GameUtil;
 
 public class PcAppFrame extends JFrame implements WindowListener{
     PC_paint pp;
-    Character charc;
     private static boolean view_mini_map;
     private static boolean view_truth;
+    private static boolean view_qr;
     private String app_name;
-    public PcAppFrame(String app_name) {
+    public PcAppFrame(String app_name, int width, int height) {
         ImageIcon icon = new ImageIcon(GameUtil.FILE_PATH+"gamedata/image/icon.png");
         setIconImage(icon.getImage());
-        setBounds(330,130,GameUtil.FRAME_X, GameUtil.FRAME_Y);
+        setBounds(330,130,width,height);
         setTitle(app_name);
         setVisible(true);
         setResizable(false);
@@ -33,15 +34,13 @@ public class PcAppFrame extends JFrame implements WindowListener{
             case "truth":    view_truth = true;
                              add(new Truth_panel());
                              break;
+            case "QR":       view_qr = true;
+                             add(new QR_panel());
+                             break;
         }
         if(app_name.equals("mini map")) view_mini_map = true;
         if(app_name.equals("truth")) view_truth = true;
-    }
-    public void setViewMiniMap(boolean minimap){
-        view_mini_map = minimap;
-    }
-    public void setViewTruth(boolean truth){
-        view_truth = truth;
+        if(app_name.equals("QR")) view_qr = true;
     }
     public static boolean ViewMiniMap(){
         return view_mini_map;
@@ -49,18 +48,16 @@ public class PcAppFrame extends JFrame implements WindowListener{
     public static boolean ViewTruth(){
         return view_truth;
     }
-
-    public void windowClosed(WindowEvent e) {
-        switch(app_name) {
-            case "mini map" -> view_mini_map = false;
-            case "truth"    -> view_truth = false;
-        }
+    public static boolean ViewQr(){
+        return view_qr;
     }
+    public void windowClosed(WindowEvent e) {}
     public void windowOpened(WindowEvent e) {}
     public void windowClosing(WindowEvent e) {
         switch(app_name) {
             case "mini map" -> view_mini_map = false;
             case "truth"    -> view_truth = false;
+            case "QR"       -> view_qr = false;
         }
     }
     public void windowIconified(WindowEvent e) {}

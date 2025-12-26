@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.JPanel;
 
@@ -164,7 +165,9 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
             } else {
                 if(name.toString().equals("COMPLETE") || name.toString().equals("skip")) {
                     new Game_states(name.toString(),1,1);
-                    BaseFrame.frame_generator().panel_change(new CCharacter(800, 800,18,(long)0,Game_states.getTodayTime(),false),1);
+                    String dirPath = System.getProperty("user.home")+ "/Documents/Revenge/fromcomputer.txt";
+                    File f = new File(dirPath);
+                    BaseFrame.frame_generator().panel_change(new CCharacter(800, 600,18,(long)0,Game_states.getTodayTime(),false,f.exists()),1);
                 } else {
                     BaseFrame.frame_generator().panel_change(new Prologue_panel(name.toString(),false),1);
                 }

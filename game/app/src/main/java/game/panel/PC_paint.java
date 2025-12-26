@@ -34,6 +34,7 @@ public class PC_paint extends JPanel{
         font1 = fl.setFontSize_Mplus1Code(35f);
         charImage[0] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/mapicon.png");
         charImage[1] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/folda.png");
+        charImage[2] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/qr.png");
         password = new StringBuilder();
     }
     public void paint_pc(Graphics g) {
@@ -52,7 +53,10 @@ public class PC_paint extends JPanel{
 
         if(now_login) {
             g.drawImage(charImage[0], 120, 90, null);
-            if(hold_usb) g.drawImage(charImage[1], 202, 90, null);
+            if(hold_usb) {
+                g.drawImage(charImage[1], 202, 90, null);
+                g.drawImage(charImage[2], 284, 90, null);
+            }
             g.drawRect((x*82)+110, (y*85)+80, 70, 70);
         } else {
             g.drawString("kosuke takanashi",220,170);
@@ -80,8 +84,9 @@ public class PC_paint extends JPanel{
         if(key == KeyEvent.VK_ENTER) {
             if(now_login) {
                 if(x == 5 && y == 3)openBrowser();
-                if(x == 0 && y == 0 && !PcAppFrame.ViewMiniMap()) new PcAppFrame("mini map");
-                if(x == 1 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("truth");
+                if(x == 0 && y == 0 && !PcAppFrame.ViewMiniMap()) new PcAppFrame("mini map",GameUtil.FRAME_X, GameUtil.FRAME_Y);
+                if(x == 1 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("truth",GameUtil.FRAME_X, GameUtil.FRAME_Y);
+                if(x == 2 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("QR",556, 579);
             } else {
                 if(password.length() < 1)return;
                 if(Integer.parseInt(password.toString()) != Game_states.getPCPassword()) {

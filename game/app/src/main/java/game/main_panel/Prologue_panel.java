@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,7 +95,9 @@ public class Prologue_panel extends JPanel implements KeyListener,Runnable{
             if(message_line+1 >= 18) {
                 new Game_states(name, sportsPerWeek,sportsPerDay);
                 prologuefin = true;
-                BaseFrame.frame_generator().panel_change(new CCharacter(600, 500,18,(long)0,Game_states.getTodayTime(),true),1);
+                String dirPath = System.getProperty("user.home")+ "/Documents/Revenge/fromcomputer.txt";
+                File f = new File(dirPath);
+                BaseFrame.frame_generator().panel_change(new CCharacter(600, 500,18,(long)0,Game_states.getTodayTime(),true,f.exists()),1);
             } else {
                 message_line++;
                 hereMessage_tail = false;
