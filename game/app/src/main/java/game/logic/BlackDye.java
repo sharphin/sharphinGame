@@ -17,7 +17,11 @@ public class BlackDye implements Runnable{
         sleep(100);
         int x = rand.nextInt(33);
         int y = rand.nextInt(33);
-        if(map.dye_black(x, y));
+        if(!map.dye_black(x, y)) {
+            x = rand.nextInt(33);
+            y = rand.nextInt(33);
+            map.dye_black(x, y);
+        }
         dye();
     }
     private void sleep(int millis) {

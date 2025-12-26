@@ -55,7 +55,9 @@ public class Talk_paint {
         if(key == KeyEvent.VK_DOWN) {}
         if(message_line >= Talk.getMainMessage().length) {
             Game_states.updateControll_state((Game_states.getControll_state()+GameUtil.PLAY) & ~GameUtil.TALK);
-            if(hit_tile == 55) new BlackDye();
+            if(hit_tile == 47) {
+                new BlackDye();
+            }
             message_line = 0;
         }
     }

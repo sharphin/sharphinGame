@@ -89,7 +89,7 @@ private String[] map_list = {"/map0.csv",
         for(int i = 0; i < map.length;i++) {
             map[i] = mapread(map[i],i);
         }
-        if(escaped) put_password_tile();
+        if(escaped) put_escaped_init();
     }
     private int[][] mapread(int map[][],int index) {
         try (BufferedReader br = new BufferedReader(new FileReader(mapPathBuilder(Game_states.getMapDataPath(),index)))) {
@@ -149,14 +149,13 @@ private String[] map_list = {"/map0.csv",
                     case 36,40,44: x2 = 160; y2 = 32;  break;
                     case 37,41,45: x2 = 224; y2 = 32;  break;
                     case 38,42,46: x2 = 288; y2 = 32;  break;
-                    case 39,43,47: x2 = 352; y2 = 32;  break;
-                    case 4095: x2 = 864;break;
+                    case 39,43,47,51: x2 = 352; y2 = 32;  break;
+                    case 4095: x2 = 864; break;
                     default: continue;
                 }
                 g.drawImage(mapImage, x1, y1, x1+tile, y1+tile,x2, y2, x2+tile, y2+tile, null);
                 if(map[active_map_num][i][j] > -1) continue;
-                if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) {
-                    
+                if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) {  
                 } else {
                     g.setColor(new Color(255,255,255,color_delta()));
                     g.fillOval(x1, y1, 5, 5);
@@ -210,9 +209,10 @@ private String[] map_list = {"/map0.csv",
         map[active_map_num][y][x] = 4095;
         return true;
     }
-    public void put_password_tile() {
-        map[38][25][5] = 35;
-        map[38][26][5] = 53;
+    public void put_escaped_init() {
+        map[38][25][5] = 34;
+        map[38][26][5] = 46;
+        map[15][14][7] = -135169;
     }
     public void pc_on() {
         map[18][14][25] = 100;
@@ -222,9 +222,20 @@ private String[] map_list = {"/map0.csv",
         map[18][14][25] = 22;
         map[18][14][26] = 23;
     }
-    public void door_open(int x, int y) {
-        map[active_map_num][y][x] = map[active_map_num][y][x]>>1;
+    public static void door_open(int map_num,int x, int y) {
+        if(map_num == -1) {
+            map[active_map_num][y][x] = map[active_map_num][y][x]>>1;
+        } else {
+            map[map_num][y][x] = map[map_num][y][x]>>1;
+        }
         //System.out.println(map[active_map_num][y][x]);
+    }
+    public static void door_lock(int map_num,int x, int y) {
+        if(map_num == -1) {
+            map[active_map_num][y][x] = map[active_map_num][y][x]<<1;
+        } else {
+            map[map_num][y][x] = map[map_num][y][x]<<1;
+        }
     }
     public int take_mormal_item() {
         return 0;
@@ -232,8 +243,10 @@ private String[] map_list = {"/map0.csv",
     public String map_file_name(int i) {
         return map_list[i];
     }
-    public void updateActiveMapNum(int index) {
+    public int updateActiveMapNum(int index) {
+        int rrr = active_map_num;
         active_map_num = index;
+        return rrr;
     }
     public int map_number() {
         return active_map_num;

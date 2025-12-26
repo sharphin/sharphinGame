@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import javax.swing.JPanel;
 
 import game.frame.PcAppFrame;
 import game.logic.Game_states;
@@ -13,15 +12,15 @@ import game.main_panel.Maps;
 import game.util.FontUtil;
 import game.util.GameUtil;
 
-public class PC_paint extends JPanel{
+public class PC_paint{
     private final int width = GameUtil.PANEL_X, height = GameUtil.PANEL_Y;
     private Font font;
     private Font font1;
-    private Image charImage[] = new Image[3];
+    private Image charImage[] = new Image[5];
     private int cursor_i,x,y;
     private String ERROR = "";
     private StringBuilder password;
-    private static boolean password_correct,now_login,hold_usb;
+    private static boolean password_correct,now_login,hold_usb,door_opened;
     public PC_paint() {
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(20f);
@@ -29,6 +28,8 @@ public class PC_paint extends JPanel{
         charImage[0] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/mapicon.png");
         charImage[1] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/folda.png");
         charImage[2] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/qr.png");
+        charImage[3] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/lock.png");
+        charImage[4] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/open.png");
         password = new StringBuilder();
     }
     public void paint_pc(Graphics g) {
@@ -50,6 +51,11 @@ public class PC_paint extends JPanel{
             if(hold_usb) {
                 g.drawImage(charImage[1], 202, 90, null);
                 g.drawImage(charImage[2], 284, 90, null);
+                if(door_opened) {
+                    g.drawImage(charImage[4], 366, 90, null);
+                } else {
+                    g.drawImage(charImage[3], 366, 90, null);
+                }
             }
             g.drawRect((x*82)+110, (y*85)+80, 70, 70);
         } else {
@@ -80,6 +86,11 @@ public class PC_paint extends JPanel{
                 if(x == 0 && y == 0 && !PcAppFrame.ViewMiniMap()) new PcAppFrame("mini map",GameUtil.FRAME_X, GameUtil.FRAME_Y);
                 if(x == 1 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("truth",GameUtil.FRAME_X, GameUtil.FRAME_Y);
                 if(x == 2 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("QR",556, 579);
+                if(x == 3 && y == 0 && hold_usb && !door_opened) {
+                    Maps.door_open(38, 16, 31);
+                    door_opened = true;
+                    IO.println("open");
+                }
             } else {
                 if(password.length() < 1)return;
                 if(Integer.parseInt(password.toString()) != Game_states.getPCPassword()) {
@@ -151,5 +162,8 @@ public class PC_paint extends JPanel{
     }
     public static boolean password_correct() {
         return password_correct;
+    }
+    public static boolean lock_door_opened() {
+        return door_opened;
     }
 }

@@ -127,7 +127,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                 map_move(ontile-maps.getMapMoveKey(),x,y);
             } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
                 int message_id = 0;
-                if(ontile == 4194408) message_id = 16;
+                if(ontile == 4194408) message_id = 5;
                 new Talk("",1, message_id);
                 repaint();
             }
@@ -142,9 +142,12 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         return ontile;
     }
     private void map_move(int map_id, int x, int y) {
-        maps.updateActiveMapNum(map_id);
+        int before_map_od = maps.updateActiveMapNum(map_id);
 
-
+        if(before_map_od == 58 && map_id == 59) {
+            Maps.door_lock(map_id, 30, 7);
+            Maps.door_lock(map_id, 31, 7);
+        }
         mapnum = map_id;
 
 
@@ -212,17 +215,22 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(key == KeyEvent.VK_SPACE) {
                 switch(hit_tile) {
                     case 24,25 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
-                    case 36 -> new Talk("",1, 5);
-                    case 35 -> new Talk("",1, 9);
-                    case 37 -> new Talk("",1, 7);
-                    case 39 -> new Talk("",1, 11);
-                    case 40 -> new Talk("",1, 6);
-                    case 43 -> new Talk("",1, 10);
-                    case 45 -> new Talk("",1, 8);
-                    case 47 -> new Talk(Game_states.getName(),1, 14);
-                    case 49 -> new Talk("",1, 15);
-                    case 53 -> new Talk(Integer.toString(Game_states.getPCPassword()),2, 0);
-                    case 55 -> new Talk(Game_states.getName(),1, 12);
+                    case 36 -> new Talk("",1, 6);
+                    case 37 -> new Talk("",1,11);
+                    case 38 -> new Talk("",1, 8);
+                    case 39 -> new Talk("",1, 12);
+
+                    case 40 -> new Talk("",1, 7);
+                    case 41 -> new Talk("",1, 10);
+                    case 42 -> new Talk("",1, 16);
+                    case 43 -> new Talk(Game_states.getName(),1, 15);
+
+                    case 44 -> new Talk("",1, 14);
+                    case 45 -> new Talk("",1, 9);
+                    case 46 -> new Talk(Integer.toString(Game_states.getPCPassword()),1, 17);
+                    case 47 -> new Talk(Game_states.getName(),1, 13);
+
+                    case 51 -> new Talk("",1, 18);
                 }
             }
             if(key == KeyEvent.VK_BACK_QUOTE) {
@@ -259,12 +267,17 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_END) {
             char_move();
-            if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC && PC_paint.password_correct()) {
-                PC_paint.setPclogin();
-                sleep(500);
-                repaint();
-                sleep(40);
-                repaint();
+            if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
+                if(PC_paint.password_correct()) {
+                    PC_paint.setPclogin();
+                    sleep(500);
+                    repaint();
+                    sleep(40);
+                    repaint();
+                }
+                if(PC_paint.lock_door_opened()) {
+                    repaint();
+                }
             }
             sleep(16);
             if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();

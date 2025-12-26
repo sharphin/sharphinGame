@@ -29,7 +29,7 @@ public class GameEnding extends JPanel implements Runnable{
         th.start();
         FontUtil fl = new FontUtil();
         font = fl.setFontSize_Mplus1Code(40f);
-        write();
+        if(this.endingMessage.equals("GAME CLEAR")) write();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

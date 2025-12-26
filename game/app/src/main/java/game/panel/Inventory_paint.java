@@ -123,10 +123,10 @@ public class Inventory_paint {
                         new Talk(item.item_name(Game_states.getInventory(setslot)),1, 2);
                     }
                     break;
-                } else if(ontile > 3000000 && Game_states.getInventory(index) != -1) {
+                } else if(ontile != 4194408 && ontile > 3000000 && Game_states.getInventory(index) != -1) {
                     if(Item.key_check(Game_states.getInventory(index), ontile)) {
                         door_open = true;
-                        maps.door_open(xxx, yyy);
+                        Maps.door_open(-1,xxx, yyy);
                     } else {
                         diff_key = true;
                     }

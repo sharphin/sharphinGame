@@ -167,6 +167,7 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
                     new Game_states(name.toString(),1,1);
                     String dirPath = System.getProperty("user.home")+ "/Documents/Revenge/fromcomputer.txt";
                     File f = new File(dirPath);
+                    //BaseFrame.frame_generator().panel_change(new CCharacter(66, 288,38,(long)0,Game_states.getTodayTime(),false,f.exists()),1);
                     BaseFrame.frame_generator().panel_change(new CCharacter(800, 600,18,(long)0,Game_states.getTodayTime(),false,f.exists()),1);
                 } else {
                     BaseFrame.frame_generator().panel_change(new Prologue_panel(name.toString(),false),1);
