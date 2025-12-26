@@ -1,16 +1,10 @@
 package game.panel;
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URI;
-
 import javax.swing.JPanel;
 
 import game.frame.PcAppFrame;
@@ -83,7 +77,6 @@ public class PC_paint extends JPanel{
         }
         if(key == KeyEvent.VK_ENTER) {
             if(now_login) {
-                if(x == 5 && y == 3)openBrowser();
                 if(x == 0 && y == 0 && !PcAppFrame.ViewMiniMap()) new PcAppFrame("mini map",GameUtil.FRAME_X, GameUtil.FRAME_Y);
                 if(x == 1 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("truth",GameUtil.FRAME_X, GameUtil.FRAME_Y);
                 if(x == 2 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("QR",556, 579);
@@ -122,37 +115,7 @@ public class PC_paint extends JPanel{
             case 8  -> password_backspace(cursor_i);
         }
     }
-    private void openBrowser() {
-        String urlStr[];
-        try (BufferedReader br = new BufferedReader(new FileReader(GameUtil.FILE_PATH+"gamedata/revenger.dat"))) {
-            urlStr = br.readLine().split(",");
-        } catch (IOException e) {
-            return;
-        }
-        if(!urlcheck(urlStr)) return;
-        Desktop desktop = Desktop.getDesktop();
-        try{
-            URI uri = new URI(urlStr[0]);
-            desktop.browse( uri );
-        } catch(Exception e ){
-            e.printStackTrace();
-        }
-    }
-    private boolean urlcheck(String[] url) {
-        try {
-            byte[] con = url[0].getBytes();
-            int keys[] = new int[]{132,37,128,85,121,114,57,44,136,109,144,127,19,24,123,87,89,120,54,50,40,13,141,142,58,75,63,98,87};
-            byte[] vert = new byte[con.length];
-            String tmp[] = url[1].split("\\.");
-            for(int i = 0; i < con.length;i++) {
-                vert[i] = (byte)(con[i]^keys[i]);
-                if(vert[i] != Byte.parseByte(tmp[i])) return false;
-            }
-        } catch(ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
-        return true;
-    }
+
     private void password_type(char token) {
         password.insert(cursor_i, token);
         cursor_i++;

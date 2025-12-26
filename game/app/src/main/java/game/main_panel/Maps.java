@@ -142,14 +142,14 @@ private String[] map_list = {"/map0.csv",
                     case 31: x2 = 96;  y2 = 32;  break;
                     case 100: x2 = 576;y2 = 32;  break;
                     case 101: x2 = 608;y2 = 32;  break;
-                    case 32,40,48: x2 = 128; y2 = 32;  break;//ここから壁の紙
-                    case 33,41,49: x2 = 160; y2 = 32;  break;
-                    case 34,42,50: x2 = 192; y2 = 32;  break;
-                    case 35,43,51: x2 = 224; y2 = 32;  break;
-                    case 36,44,52: x2 = 256; y2 = 32;  break;
-                    case 37,45,53: x2 = 288; y2 = 32;  break;
-                    case 38,46,54: x2 = 320; y2 = 32;  break;
-                    case 39,47,55: x2 = 352; y2 = 32;  break;
+                    case 32: x2 = 128; y2 = 32;  break;//ここから壁の紙
+                    case 33: x2 = 192; y2 = 32;  break;
+                    case 34: x2 = 256; y2 = 32;  break; 
+                    case 35: x2 = 320; y2 = 32;  break;
+                    case 36,40,44: x2 = 160; y2 = 32;  break;
+                    case 37,41,45: x2 = 224; y2 = 32;  break;
+                    case 38,42,46: x2 = 288; y2 = 32;  break;
+                    case 39,43,47: x2 = 352; y2 = 32;  break;
                     case 4095: x2 = 864;break;
                     default: continue;
                 }
@@ -211,7 +211,7 @@ private String[] map_list = {"/map0.csv",
         return true;
     }
     public void put_password_tile() {
-        map[38][25][5] = 52;
+        map[38][25][5] = 35;
         map[38][26][5] = 53;
     }
     public void pc_on() {

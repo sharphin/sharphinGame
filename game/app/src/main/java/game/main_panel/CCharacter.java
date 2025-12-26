@@ -212,14 +212,15 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(key == KeyEvent.VK_SPACE) {
                 switch(hit_tile) {
                     case 24,25 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
-                    case 33 -> new Talk("",1, 5);
+                    case 36 -> new Talk("",1, 5);
                     case 35 -> new Talk("",1, 9);
                     case 37 -> new Talk("",1, 7);
                     case 39 -> new Talk("",1, 11);
-                    case 41 -> new Talk("",1, 6);
+                    case 40 -> new Talk("",1, 6);
                     case 43 -> new Talk("",1, 10);
                     case 45 -> new Talk("",1, 8);
                     case 47 -> new Talk(Game_states.getName(),1, 14);
+                    case 49 -> new Talk("",1, 15);
                     case 53 -> new Talk(Integer.toString(Game_states.getPCPassword()),2, 0);
                     case 55 -> new Talk(Game_states.getName(),1, 12);
                 }
