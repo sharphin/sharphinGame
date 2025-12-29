@@ -99,7 +99,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             mp.paint_items(g);
             repaint();
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC){
-            pcp.paint_pc(g);
+            pcp.paint_pc(g,this);
         }
         if((Game_states.getControll_state() & GameUtil.DEBUG) == GameUtil.DEBUG){
             dp.paint_debug(g,x,y,maps.map_number());
@@ -267,17 +267,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_END) {
             char_move();
-            if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
-                if(PC_paint.password_correct()) {
-                    PC_paint.setPclogin();
-                    sleep(500);
-                    repaint();
-                    sleep(40);
-                    repaint();
-                }
-                if(PC_paint.lock_door_opened()) {
-                    repaint();
-                }
+            if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC && PC_paint.password_correct()) {
+                PC_paint.setPclogin();
+                sleep(500);
+                repaint();
             }
             sleep(16);
             if((Game_states.getControll_state() & GameUtil.PLAY) == GameUtil.PLAY) repaint();

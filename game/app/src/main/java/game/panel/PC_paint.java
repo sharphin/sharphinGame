@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JPanel;
+
 import game.frame.PcAppFrame;
 import game.logic.Game_states;
 import game.main_panel.Maps;
@@ -32,7 +34,7 @@ public class PC_paint{
         charImage[4] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/open.png");
         password = new StringBuilder();
     }
-    public void paint_pc(Graphics g) {
+    public void paint_pc(Graphics g,JPanel panel) {
         g.setColor(new Color(109,168,59));
         g.fillRect(0, 0, width, height);
         g.setColor(new Color(40,40,40));
@@ -47,14 +49,14 @@ public class PC_paint{
         g.setFont(font1);
 
         if(now_login) {
-            g.drawImage(charImage[0], 120, 90, null);
+            g.drawImage(charImage[0], 120, 90, panel);
             if(hold_usb) {
-                g.drawImage(charImage[1], 202, 90, null);
-                g.drawImage(charImage[2], 284, 90, null);
+                g.drawImage(charImage[1], 202, 90, panel);
+                g.drawImage(charImage[2], 284, 90, panel);
                 if(door_opened) {
-                    g.drawImage(charImage[4], 366, 90, null);
+                    g.drawImage(charImage[4], 366, 90, panel);
                 } else {
-                    g.drawImage(charImage[3], 366, 90, null);
+                    g.drawImage(charImage[3], 366, 90, panel);
                 }
             }
             g.drawRect((x*82)+110, (y*85)+80, 70, 70);
