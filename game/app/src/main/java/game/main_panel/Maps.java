@@ -79,7 +79,8 @@ private String[] map_list = {"/map0.csv",
     private static int map[][][];
     private int map_move_key = 2097152;
     private int key_item_mask = 4096;
-    
+    private int switchon_map_tile;
+
     private int color_delta = 0;
     public Maps() {}
 
@@ -142,6 +143,8 @@ private String[] map_list = {"/map0.csv",
                     case 31: x2 = 96;  y2 = 32;  break;
                     case 100: x2 = 576;y2 = 32;  break;
                     case 101: x2 = 608;y2 = 32;  break;
+                    case 102: x2 = 384;y2 = 32;  break;
+                    case 103: x2 = 416;y2 = 32;  break;
                     case 32: x2 = 128; y2 = 32;  break;//ここから壁の紙
                     case 33: x2 = 192; y2 = 32;  break;
                     case 34: x2 = 256; y2 = 32;  break; 
@@ -252,10 +255,19 @@ private String[] map_list = {"/map0.csv",
         return active_map_num;
     }
     public int map_tile(int x ,int y) {
-        return map[active_map_num][y][x];
+        int nowtile = map[active_map_num][y][x];
+        if(nowtile != switchon_map_tile) switchon_map_tile = 0;
+        return nowtile;
     }
-    public void updataMapTile(int map_num,int x, int y) {
-        map[map_num][y][x] = 0;
+    public int switchon_map_tile_map_tile() {
+        return switchon_map_tile;
+    }
+    public void updataMapTile(int map_num,int x, int y, int new_tile) {
+        map[map_num][y][x] = new_tile;
+    }
+    public void updataMapTile(int x, int y, int new_tile) {
+        switchon_map_tile = new_tile; 
+        map[active_map_num][y][x] = new_tile;
     }
     public int readMapKinds() {
         return map.length;

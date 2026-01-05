@@ -115,8 +115,10 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     }
     private boolean can_move(int x, int y) {
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
-        if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;    
-        if(hit_tile(x, y) >= 5) return false;
+        if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;
+        int tmp = hit_tile(x, y);
+        if(tmp == 102 || tmp == 103) return true;
+        if(tmp >= 5) return false;
         return true;
     }
     private int hit_tile(int x, int y) {
@@ -141,6 +143,12 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             Game_states.updateControll_state(GameUtil.GAME_END);
             BaseFrame.frame_generator().panel_change(new GameEnding("GAME OVER"), 1);
             return 0;
+        }
+        IO.println(ontile +" "+ maps.switchon_map_tile_map_tile());
+        if(ontile == 102 && ontile != maps.switchon_map_tile_map_tile()) {
+            maps.updataMapTile(x, y,103);
+        } else if(ontile == 103 && ontile != maps.switchon_map_tile_map_tile()){
+            maps.updataMapTile(x, y, 102);
         }
         hit_tile = ontile;
         return ontile;
