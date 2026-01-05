@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import game.panel.PC_paint;
 import game.panel.sub_panel.Minimap_panel;
 import game.panel.sub_panel.QR_panel;
-import game.panel.sub_panel.Truth_panel;
+import game.panel.sub_panel.Archive_panel;
 import game.util.GameUtil;
 
 public class PcAppFrame extends JFrame implements WindowListener{
@@ -31,8 +31,8 @@ public class PcAppFrame extends JFrame implements WindowListener{
             case "mini map": view_mini_map = true;
                              add(new Minimap_panel());
                              break;
-            case "truth":    view_truth = true;
-                             add(new Truth_panel());
+            case "archive":  view_truth = true;
+                             add(new Archive_panel());
                              break;
             case "QR":       view_qr = true;
                              add(new QR_panel());
@@ -64,5 +64,4 @@ public class PcAppFrame extends JFrame implements WindowListener{
     public void windowDeiconified(WindowEvent e) {}
     public void windowActivated(WindowEvent e) {}
     public void windowDeactivated(WindowEvent e) {}
-
 }

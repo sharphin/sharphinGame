@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 
 import game.logic.Game_states;
 import game.logic.Item;
-import game.logic.Talk;
+import game.logic.Message;
 import game.main_panel.Maps;
 import game.util.FontUtil;
 import game.util.GameUtil;
@@ -117,10 +117,10 @@ public class Inventory_paint {
                     int taken_item = maps.ref_key_item(xxx,yyy);
                     int setslot = item.setInventory(taken_item,getInventoryIndex());
                     if(setslot == -1)  {
-                        new Talk("",1, 4);
+                        new Message("",1, 4,true);
                     } else {
                         maps.take_key_item(xxx, yyy);
-                        new Talk(item.item_name(Game_states.getInventory(setslot)),1, 2);
+                        new Message(item.item_name(Game_states.getInventory(setslot)),1, 2,true);
                     }
                     break;
                 } else if(ontile != 4194408 && ontile > 3000000 && Game_states.getInventory(index) != -1) {
@@ -133,9 +133,9 @@ public class Inventory_paint {
                 }
             }
             if(door_open) {
-                new Talk(item.item_name(Game_states.getInventory(index)),1, 1);
+                new Message(item.item_name(Game_states.getInventory(index)),1, 1,true);
             } else if(diff_key){
-                new Talk("",1, 3);
+                new Message("",1, 3,true);
             }
         }
     }

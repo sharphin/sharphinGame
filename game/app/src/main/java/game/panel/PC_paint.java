@@ -86,7 +86,7 @@ public class PC_paint{
         if(key == KeyEvent.VK_ENTER) {
             if(now_login) {
                 if(x == 0 && y == 0 && !PcAppFrame.ViewMiniMap()) new PcAppFrame("mini map",GameUtil.FRAME_X, GameUtil.FRAME_Y);
-                if(x == 1 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("truth",GameUtil.FRAME_X, GameUtil.FRAME_Y);
+                if(x == 1 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("archive",GameUtil.FRAME_X, GameUtil.FRAME_Y);
                 if(x == 2 && y == 0 && !PcAppFrame.ViewTruth() && hold_usb) new PcAppFrame("QR",556, 579);
                 if(x == 3 && y == 0 && hold_usb && !door_opened) {
                     Maps.door_open(38, 16, 31);

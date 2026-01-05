@@ -5,11 +5,15 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import game.util.GameUtil;
-public class Talk {
-    private String message_list[] = {"/prologue.dat","/message1.dat","/message2.dat"};
+public class Message {
+    private String message_list[] = {"/prologue.dat","/message1.dat","puzzle.dat"};
     private static String main_message[] = new String[1];
-    public Talk(String itemname,int file_index, int message_id) {
-        Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+    public Message(String itemname,int file_index, int message_id, boolean talk) {
+        if(talk){
+            Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TALK);
+        } else {
+            Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.MESSAGE);
+        }
         main_message = messageread(itemname,file_index, message_id);
     }
     public static String[] getMainMessage() {

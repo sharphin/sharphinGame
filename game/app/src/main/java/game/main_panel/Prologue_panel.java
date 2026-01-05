@@ -87,8 +87,8 @@ public class Prologue_panel extends JPanel implements KeyListener,Runnable{
         if(key == KeyEvent.VK_ENTER && hereMessage_tail) {
             sb[0] = new StringBuilder();
             sb[1] = new StringBuilder();
-            if(message_line == 10)sportsPerWeek = v;
-            if(message_line == 1)sportsPerDay = bounds+1;
+            if(message_line == 10) sportsPerWeek = v;
+            if(message_line == 1)  sportsPerDay = bounds+1;
             if(message_line == 11) bounds = ((v-1)*3)+1;
             i = 0;
             v = 1;

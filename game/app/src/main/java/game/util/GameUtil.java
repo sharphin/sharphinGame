@@ -25,6 +25,7 @@ public class GameUtil {
     public static final int TALK      =  0b00000100000;
     public static final int PC =         0b00001000000;
     public static final int ITEM_DELETE =0b00010000000;
+    public static final int MESSAGE =    0b00100000000;
     public static final int GAME_EXIT =  0b01000000000;
     public static final int DEBUG =     0b010000000000;
     public static final int GAME_END =0b010000000000000000;

@@ -13,9 +13,10 @@ import javax.swing.JPanel;
 import game.frame.BaseFrame;
 import game.logic.Game_CLock;
 import game.logic.Game_states;
-import game.logic.Talk;
+import game.logic.Message;
 import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
+import game.panel.Message_paint;
 import game.panel.PC_paint;
 import game.panel.Pose_paint;
 import game.panel.Talk_paint;
@@ -46,6 +47,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Menu_paint mp = new Menu_paint();
     Inventory_paint ip = new Inventory_paint();
     Debug_paint dp = new Debug_paint();
+    Message_paint mep = new Message_paint(); 
     public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock ,boolean prologue,boolean escaped) {
         this.x = x;
         this.y = y;
@@ -106,6 +108,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
         if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
             tp.paint_message(g);
+        } else if((Game_states.getControll_state() & GameUtil.MESSAGE) == GameUtil.MESSAGE){
+            mep.paint_message(g);
         }
         if(prologue) repaint();
     }
@@ -128,7 +132,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             } else if((Game_states.getControll_state() & GameUtil.TALK) != GameUtil.TALK) {
                 int message_id = 0;
                 if(ontile == 4194408) message_id = 5;
-                new Talk("",1, message_id);
+                new Message("",1, message_id,true);
                 repaint();
             }
         } else if(ontile < 0) {
@@ -215,22 +219,22 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             if(key == KeyEvent.VK_SPACE) {
                 switch(hit_tile) {
                     case 24,25 -> Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.PC);
-                    case 36 -> new Talk("",1, 6);
-                    case 37 -> new Talk("",1,11);
-                    case 38 -> new Talk("",1, 8);
-                    case 39 -> new Talk("",1, 12);
+                    case 36 -> new Message("",1, 6,false);
+                    case 37 -> new Message("",1,11,false);
+                    case 38 -> new Message("",1, 8,false);
+                    case 39 -> new Message("",1, 12,false);
 
-                    case 40 -> new Talk("",1, 7);
-                    case 41 -> new Talk("",1, 10);
-                    case 42 -> new Talk("",1, 16);
-                    case 43 -> new Talk(Game_states.getName(),1, 15);
+                    case 40 -> new Message("",1, 7,false);
+                    case 41 -> new Message("",1, 10,false);
+                    case 42 -> new Message("",1, 16,false);
+                    case 43 -> new Message(Game_states.getName(),1, 15,false);
 
-                    case 44 -> new Talk("",1, 14);
-                    case 45 -> new Talk("",1, 9);
-                    case 46 -> new Talk(Integer.toString(Game_states.getPCPassword()),1, 17);
-                    case 47 -> new Talk(Game_states.getName(),1, 13);
+                    case 44 -> new Message("",1, 14,false);
+                    case 45 -> new Message("",1, 9,false);
+                    case 46 -> new Message(Integer.toString(Game_states.getPCPassword()),1, 17,false);
+                    case 47 -> new Message(Game_states.getName(),1, 13,false);
 
-                    case 51 -> new Talk("",1, 18);
+                    case 51 -> new Message("",1, 18,false);
                 }
             }
             if(key == KeyEvent.VK_BACK_QUOTE) {
@@ -242,6 +246,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             }
         } else if((Game_states.getControll_state() & GameUtil.TALK) == GameUtil.TALK){
             tp.controll(key,0,0,hit_tile);
+        } else if((Game_states.getControll_state() & GameUtil.MESSAGE) == GameUtil.MESSAGE){
+            mep.controll(key,0,0,hit_tile);
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
             pcp.controll(key,Game_states.getInventory(ip.getInventoryIndex()));
         }
@@ -262,7 +268,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     public void run() {
         if(prologue){
             sleep(2000);
-            new Talk("",0,18);
+            new Message("",0,18,false);
             prologue = false;
         }
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_END) {

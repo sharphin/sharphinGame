@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 
 import game.util.GameUtil;
 
-public class Truth_panel extends JPanel implements MouseListener {
-    public Truth_panel() {
+public class Archive_panel extends JPanel implements MouseListener {
+    public Archive_panel() {
         setSize(GameUtil.PANEL_X, GameUtil.PANEL_Y);
         addMouseListener(this);
     }
