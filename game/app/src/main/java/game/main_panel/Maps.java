@@ -79,7 +79,7 @@ private String[] map_list = {"/map0.csv",
     private static int map[][][];
     private int map_move_key = 2097152;
     private int key_item_mask = 4096;
-    private int switchon_map_tile;
+    private int x,y;
 
     private int color_delta = 0;
     public Maps() {}
@@ -255,18 +255,15 @@ private String[] map_list = {"/map0.csv",
         return active_map_num;
     }
     public int map_tile(int x ,int y) {
-        int nowtile = map[active_map_num][y][x];
-        if(nowtile != switchon_map_tile) switchon_map_tile = 0;
-        return nowtile;
-    }
-    public int switchon_map_tile_map_tile() {
-        return switchon_map_tile;
+        return map[active_map_num][y][x];
     }
     public void updataMapTile(int map_num,int x, int y, int new_tile) {
         map[map_num][y][x] = new_tile;
     }
     public void updataMapTile(int x, int y, int new_tile) {
-        switchon_map_tile = new_tile; 
+        if(this.x == x && this.y == y) return;
+        this.x = x;
+        this.y = y;
         map[active_map_num][y][x] = new_tile;
     }
     public int readMapKinds() {

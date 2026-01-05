@@ -144,11 +144,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             BaseFrame.frame_generator().panel_change(new GameEnding("GAME OVER"), 1);
             return 0;
         }
-        IO.println(ontile +" "+ maps.switchon_map_tile_map_tile());
-        if(ontile == 102 && ontile != maps.switchon_map_tile_map_tile()) {
-            maps.updataMapTile(x, y,103);
-        } else if(ontile == 103 && ontile != maps.switchon_map_tile_map_tile()){
-            maps.updataMapTile(x, y, 102);
+        if(ontile == 102 || ontile == 103) {
+            maps.updataMapTile(x, y,0b1111111 & (1 ^ (~(ontile ^ Integer.MAX_VALUE))));
         }
         hit_tile = ontile;
         return ontile;
