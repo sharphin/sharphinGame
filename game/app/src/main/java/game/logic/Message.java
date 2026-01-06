@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import game.util.GameUtil;
 public class Message {
-    private String message_list[] = {"/prologue.dat","/message1.dat","puzzle.dat"};
+    private String message_list[] = {"/prologue.dat","/message1.dat","/puzzle.dat"};
     private static String main_message[] = new String[1];
     public Message(String itemname,int file_index, int message_id, boolean talk) {
         if(talk){

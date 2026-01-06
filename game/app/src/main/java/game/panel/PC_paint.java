@@ -99,7 +99,7 @@ public class PC_paint{
                     ERROR = "INCORRECT";
                 } else {
                     password = password.delete(0, password.length());
-                    password_correct = true; 
+                    password_correct = true;
                     cursor_i = 0;
                 }
             }
@@ -128,7 +128,6 @@ public class PC_paint{
             case 8  -> password_backspace(cursor_i);
         }
     }
-
     private void password_type(char token) {
         password.insert(cursor_i, token);
         cursor_i++;

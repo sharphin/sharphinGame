@@ -149,7 +149,7 @@ private String[] map_list = {"/map0.csv",
                     case 33: x2 = 192; y2 = 32;  break;
                     case 34: x2 = 256; y2 = 32;  break; 
                     case 35: x2 = 320; y2 = 32;  break;
-                    case 36,40,44: x2 = 160; y2 = 32;  break;
+                    case 36,40,44,48: x2 = 160; y2 = 32;  break;
                     case 37,41,45: x2 = 224; y2 = 32;  break;
                     case 38,42,46: x2 = 288; y2 = 32;  break;
                     case 39,43,47,51: x2 = 352; y2 = 32;  break;
@@ -260,11 +260,15 @@ private String[] map_list = {"/map0.csv",
     public void updataMapTile(int map_num,int x, int y, int new_tile) {
         map[map_num][y][x] = new_tile;
     }
-    public void updataMapTile(int x, int y, int new_tile) {
+    public void updateTileSwitch(int x, int y, int new_tile) {
         if(this.x == x && this.y == y) return;
         this.x = x;
         this.y = y;
         map[active_map_num][y][x] = new_tile;
+    }
+    public void switchedTileReset() {
+        x = 0;
+        y = 0;
     }
     public int readMapKinds() {
         return map.length;

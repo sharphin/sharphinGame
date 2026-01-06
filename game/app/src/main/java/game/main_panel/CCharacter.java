@@ -144,9 +144,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             BaseFrame.frame_generator().panel_change(new GameEnding("GAME OVER"), 1);
             return 0;
         }
-        if(ontile == 102 || ontile == 103) {
-            maps.updataMapTile(x, y,0b1111111 & (1 ^ (~(ontile ^ Integer.MAX_VALUE))));
-        }
         hit_tile = ontile;
         return ontile;
     }
@@ -164,6 +161,16 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if(y <= 2) this.y = GameUtil.TILE*32;
         if(x >= 33) this.x = 64;
         if(y >= 33) this.y = 96;
+    }
+    private void body_on_switch() {
+        int xxx = ((x+14)>>5);
+        int yyy = ((y+28)>>5);
+        int tmp = maps.map_tile(xxx, yyy);
+        if(tmp == 102 || tmp == 103) {
+            maps.updateTileSwitch(xxx, yyy,0b1111111 & (1 ^ (~(tmp ^ Integer.MAX_VALUE))));
+        } else {
+            maps.switchedTileReset();
+        }
     }
     private void char_move() {
         int tile = GameUtil.TILE-5;
@@ -188,6 +195,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     if(can_move(fx,fy) && can_move(fx1,fy))  y += speed;
                     break; 
         }
+        body_on_switch();
     }
     private int scroll_x() {
         return (width >> 1) - x;
@@ -238,7 +246,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     case 45 -> new Message("",1, 9,false);
                     case 46 -> new Message(Integer.toString(Game_states.getPCPassword()),1, 17,false);
                     case 47 -> new Message(Game_states.getName(),1, 13,false);
-
+                    case 48 -> new Message("",2, 0,false);
                     case 51 -> new Message("",1, 18,false);
                 }
             }
