@@ -39,7 +39,7 @@ public class PcAppFrame extends JFrame implements WindowListener{
                              break;
         }
         if(app_name.equals("mini map")) view_mini_map = true;
-        if(app_name.equals("truth")) view_truth = true;
+        if(app_name.equals("archive")) view_truth = true;
         if(app_name.equals("QR")) view_qr = true;
     }
     public static boolean ViewMiniMap(){
@@ -56,7 +56,7 @@ public class PcAppFrame extends JFrame implements WindowListener{
     public void windowClosing(WindowEvent e) {
         switch(app_name) {
             case "mini map" -> view_mini_map = false;
-            case "truth"    -> view_truth = false;
+            case "archive"    -> view_truth = false;
             case "QR"       -> view_qr = false;
         }
     }
