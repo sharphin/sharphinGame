@@ -35,6 +35,7 @@ public class Item {
             case 4194338: if(key == 7) return true; break;
             case 4194418: if(key == 15) return true; break;
             case 5999998: if(key == 13) return true; break;
+            case 4194360: if(key == 21) return true; break;
         }
         return false;
     }
@@ -72,7 +73,7 @@ public class Item {
             case 18 -> "カレンダー";
             case 19 -> "卒業アルバム";
             case 20 -> "卒業アルバムの切れ端";
-            case 21 -> "E";
+            case 21 -> "ROOMKEY_G";
             case 22 -> "F";
             case 23 -> "G";
             case 24 -> "H";

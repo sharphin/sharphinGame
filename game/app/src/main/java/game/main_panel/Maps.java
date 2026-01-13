@@ -145,6 +145,8 @@ private String[] map_list = {"/map0.csv",
                     case 101: x2 = 608;y2 = 32;  break;
                     case 102: x2 = 384;y2 = 32;  break;
                     case 103: x2 = 416;y2 = 32;  break;
+                    case 104: x2 = 384;y2 = 32;  break;
+                    case 105: x2 = 448;y2 = 32;  break;
                     case 32: x2 = 128; y2 = 32;  break;//ここから壁の紙
                     case 33: x2 = 192; y2 = 32;  break;
                     case 34: x2 = 256; y2 = 32;  break; 
@@ -253,6 +255,9 @@ private String[] map_list = {"/map0.csv",
     }
     public int map_number() {
         return active_map_num;
+    }
+    public int far_map_tile(int map_num, int x,int y) {
+        return map[map_num][y][x];
     }
     public int map_tile(int x ,int y) {
         return map[active_map_num][y][x];

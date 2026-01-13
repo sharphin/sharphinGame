@@ -14,6 +14,7 @@ import game.frame.BaseFrame;
 import game.logic.Game_CLock;
 import game.logic.Game_states;
 import game.logic.Message;
+import game.logic.Puzzle;
 import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
 import game.panel.Message_paint;
@@ -48,6 +49,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Inventory_paint ip = new Inventory_paint();
     Debug_paint dp = new Debug_paint();
     Message_paint mep = new Message_paint(); 
+    Puzzle puzzle1 = new Puzzle();
     public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock ,boolean prologue,boolean escaped) {
         this.x = x;
         this.y = y;
@@ -117,7 +119,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
         if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;
         int tmp = hit_tile(x, y);
-        if(tmp == 102 || tmp == 103) return true;
+        if(tmp == 102 || tmp == 103 || tmp == 104 || tmp == 105) return true;
         if(tmp >= 5) return false;
         return true;
     }
@@ -171,6 +173,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         } else {
             maps.switchedTileReset();
         }
+        puzzle1.puzzle1_check(maps);
     }
     private void char_move() {
         int tile = GameUtil.TILE-5;
