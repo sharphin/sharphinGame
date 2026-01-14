@@ -15,12 +15,14 @@ import game.logic.Game_CLock;
 import game.logic.Game_states;
 import game.logic.Message;
 import game.logic.Puzzle;
+import game.logic.TelePort;
 import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
 import game.panel.Message_paint;
 import game.panel.PC_paint;
 import game.panel.Pose_paint;
 import game.panel.Talk_paint;
+import game.panel.TelePort_paint;
 import game.panel.sub_panel.Debug_paint;
 import game.util.FontUtil;
 import game.util.FormatUtil;
@@ -41,15 +43,17 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
 
     private Game_CLock clock;
     Font font;
-    Maps maps = new Maps();
-    Talk_paint tp = new Talk_paint();
-    Pose_paint pp = new Pose_paint();
-    PC_paint pcp = new PC_paint();
-    Menu_paint mp = new Menu_paint();
-    Inventory_paint ip = new Inventory_paint();
-    Debug_paint dp = new Debug_paint();
-    Message_paint mep = new Message_paint(); 
-    Puzzle puzzle1 = new Puzzle();
+    Maps maps;
+    Talk_paint tp;
+    Pose_paint pp;
+    PC_paint pcp;
+    Menu_paint mp;
+    Inventory_paint ip;
+    Debug_paint dp;
+    Message_paint mep;
+    TelePort_paint tepp;
+    Puzzle puzzle1;
+    TelePort tep;
     public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock ,boolean prologue,boolean escaped) {
         this.x = x;
         this.y = y;
@@ -59,13 +63,22 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         this.clock = new Game_CLock(clock,play_time);
         Charactor_walk char_walk = new Charactor_walk(); 
         char_walk.start();
+        tep = new TelePort();
 
 
         mapnum = map_number;
-
-
-        maps.loadMap(map_number,escaped);
+        maps = new Maps();
+        maps.loadMap(map_number,escaped,tep);
+        tp = new Talk_paint();
+        pcp = new PC_paint();
+        mp = new Menu_paint();
+        ip = new Inventory_paint();
+        dp = new Debug_paint();
+        mep = new Message_paint();
+        pp = new Pose_paint();
+        tepp = new TelePort_paint();
         FontUtil fl = new FontUtil();
+        puzzle1 = new Puzzle();
         font = fl.setFontSize_Mplus1Code(20f);
         Thread th = new Thread(this);
         th.start();
@@ -112,6 +125,8 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             tp.paint_message(g);
         } else if((Game_states.getControll_state() & GameUtil.MESSAGE) == GameUtil.MESSAGE){
             mep.paint_message(g);
+        } else if((Game_states.getControll_state() & GameUtil.TELEP) == GameUtil.TELEP){
+            tepp.paint_teleport(g);
         }
         if(prologue) repaint();
     }
@@ -119,7 +134,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         if(x < 0 || x >= GameUtil.MAP_X_LEN) return false;
         if(y < 0 || y >= GameUtil.MAP_Y_LEN) return false;
         int tmp = hit_tile(x, y);
-        if(tmp == 102 || tmp == 103 || tmp == 104 || tmp == 105) return true;
+        if(tmp >= 102 && tmp <= 106) return true;
         if(tmp >= 5) return false;
         return true;
     }
@@ -225,6 +240,9 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             } else {
                 if(key == KeyEvent.VK_0) Game_states.updateControll_state(Game_states.getControll_state()+GameUtil.INVENTORY);
             }
+            if(key == KeyEvent.VK_T) {
+                Game_states.updateControll_state((Game_states.getControll_state() & ~GameUtil.PLAY)+GameUtil.TELEP);
+            }
             if(key == KeyEvent.VK_E)       speed = GameUtil.DASH;
             if((Game_states.getControll_state() & GameUtil.ITEM_DELETE) != GameUtil.ITEM_DELETE) {
                 if(key == KeyEvent.VK_LEFT)    dire = 1;
@@ -266,9 +284,11 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             mep.controll(key,0,0,hit_tile);
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
             pcp.controll(key,Game_states.getInventory(ip.getInventoryIndex()));
+        }else if((Game_states.getControll_state() & GameUtil.TELEP) == GameUtil.TELEP) {
+            tepp.controll(key);
         }
         if(key == KeyEvent.VK_P) {
-            maps.loadMap(mapnum,true);
+            maps.loadMap(mapnum,true,tep);
         }
         repaint();
     }

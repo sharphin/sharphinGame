@@ -28,6 +28,7 @@ public class GameUtil {
     public static final int MESSAGE =    0b00100000000;
     public static final int GAME_EXIT =  0b01000000000;
     public static final int DEBUG =     0b010000000000;
+    public static final int TELEP =     0b100000000000;
     public static final int GAME_END =0b010000000000000000;
 
     public static final int MAX_X = 20000;

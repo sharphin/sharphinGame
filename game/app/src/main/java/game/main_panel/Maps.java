@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import game.logic.Game_states;
+import game.logic.TelePort;
 import game.util.GameUtil;
 
 public class Maps {
@@ -84,21 +85,23 @@ private String[] map_list = {"/map0.csv",
     private int color_delta = 0;
     public Maps() {}
 
-    public void loadMap(int index,boolean escaped) {
+    public void loadMap(int index,boolean escaped,TelePort tep) {
         active_map_num = index;
         map = new int [map_list.length][GameUtil.MAP_Y_LEN][GameUtil.MAP_X_LEN];
         for(int i = 0; i < map.length;i++) {
-            map[i] = mapread(map[i],i);
+            map[i] = mapread(map[i],i,tep);
         }
         if(escaped) put_escaped_init();
     }
-    private int[][] mapread(int map[][],int index) {
+    private int[][] mapread(int map[][],int index,TelePort tep) {
         try (BufferedReader br = new BufferedReader(new FileReader(mapPathBuilder(Game_states.getMapDataPath(),index)))) {
             for(int i = 0; i < map.length;i++) {
                 String data = br.readLine();
                 String split_data[] = data.split(",");
                 for(int j = 0; j < map[i].length;j++) {
                     map[i][j] = Integer.parseInt(split_data[j]);
+                    //セーブデータ項目ににタグ名を追加。
+                    if(map[i][j] == 106) tep.markTeleportCoords(index, j, i,"");
                 }
             }
         } catch (IOException e) {
@@ -147,6 +150,7 @@ private String[] map_list = {"/map0.csv",
                     case 103: x2 = 416;y2 = 32;  break;
                     case 104: x2 = 384;y2 = 32;  break;
                     case 105: x2 = 448;y2 = 32;  break;
+                    case 106: x2 = 480;y2 = 32;  break;
                     case 32: x2 = 128; y2 = 32;  break;//ここから壁の紙
                     case 33: x2 = 192; y2 = 32;  break;
                     case 34: x2 = 256; y2 = 32;  break; 
