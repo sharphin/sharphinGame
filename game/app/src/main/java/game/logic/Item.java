@@ -36,6 +36,11 @@ public class Item {
             case 4194418: if(key == 15) return true; break;
             case 5999998: if(key == 13) return true; break;
             case 4194360: if(key == 21) return true; break;
+            case 4194330: if(key == 8) return true; break;
+            case 4194332: if(key == 9) return true; break;
+            case 4194328: if(key == 10) return true; break;
+            case 4194322: if(key == 11) return true; break;
+            case 4194320: if(key == 12) return true; break;
         }
         return false;
     }

@@ -99,7 +99,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         }
         if((Game_states.getControll_state() & GameUtil.POSE) == GameUtil.POSE) {
             pp.paint_pose(g);
-        } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) {
+        } else if((Game_states.getControll_state() & GameUtil.MENU) == GameUtil.MENU) { 
             mp.paint_items(g);
             repaint();
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC){
