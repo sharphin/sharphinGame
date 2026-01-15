@@ -100,8 +100,6 @@ private String[] map_list = {"/map0.csv",
                 String split_data[] = data.split(",");
                 for(int j = 0; j < map[i].length;j++) {
                     map[i][j] = Integer.parseInt(split_data[j]);
-                    //セーブデータ項目ににタグ名を追加。
-                    if(map[i][j] == 106) tep.markTeleportCoords(index, j, i,"");
                 }
             }
         } catch (IOException e) {
@@ -265,6 +263,9 @@ private String[] map_list = {"/map0.csv",
     }
     public int map_tile(int x ,int y) {
         return map[active_map_num][y][x];
+    }
+    public int map_tile(int map_num, int x ,int y) {
+        return map[map_num][y][x];
     }
     public void updataMapTile(int map_num,int x, int y, int new_tile) {
         map[map_num][y][x] = new_tile;

@@ -221,6 +221,11 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     private int scroll_y() {
         return (height >> 1) - y;
     }
+    public void coords_move(int map_num,int xx, int yy) {
+        maps.updateActiveMapNum(map_num);
+        x = xx;
+        y = yy;
+    }
     public void keyPressed(KeyEvent e) {
         if(prologue) return;
         int key = e.getKeyCode();
@@ -285,7 +290,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         } else if((Game_states.getControll_state() & GameUtil.PC) == GameUtil.PC) {
             pcp.controll(key,Game_states.getInventory(ip.getInventoryIndex()));
         }else if((Game_states.getControll_state() & GameUtil.TELEP) == GameUtil.TELEP) {
-            tepp.controll(key);
+            tepp.controll(key, maps.map_number(),x,y,maps,this);
         }
         if(key == KeyEvent.VK_P) {
             maps.loadMap(mapnum,true,tep);
