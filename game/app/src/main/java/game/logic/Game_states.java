@@ -26,7 +26,7 @@ public class Game_states {
         stamina = calc_stamina(sportsPerWeek, sportsPerDay);
         inventory = new int[8];
         item_dictionary = init_item_dict(newname);
-        today = LocalDateTime.now();
+        today = LocalDateTime.of(2024, 9, 24, 2, 17);
         route_branch = 0;
         controll_state = 17;
         map_data_path = "gamedata/map_data";
@@ -107,6 +107,7 @@ public class Game_states {
     static void updateHunger_level(int new_hunger_level) {
         hunger_level = new_hunger_level;
     }
+    
     public static int getMoney() {
         return money;
     }

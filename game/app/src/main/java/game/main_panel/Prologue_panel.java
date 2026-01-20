@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import game.frame.BaseFrame;
 import game.logic.Game_states;
+import game.logic.TelePort;
 import game.util.FontUtil;
 import game.util.GameUtil;
 
@@ -93,6 +94,7 @@ public class Prologue_panel extends JPanel implements KeyListener,Runnable{
             i = 0;
             v = 1;
             if(message_line+1 >= 18) {
+                new TelePort();
                 new Game_states(name, sportsPerWeek,sportsPerDay);
                 prologuefin = true;
                 String dirPath = System.getProperty("user.home")+ "/Documents/Revenge/fromcomputer.txt";

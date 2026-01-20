@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import game.logic.Game_states;
+import game.logic.TelePort;
 import game.util.GameUtil;
 
 public class Load {
@@ -27,19 +28,23 @@ public class Load {
         StringBuilder sb = new StringBuilder();
         String dirPath = System.getProperty("user.home")+ "/AppData/Local/Revenge/savedata/";
         sb.append(dirPath).append(filepath).append("/states.csv");
-        String data[][] = new String[2][];
+        String data[][] = new String[4][];
         try (BufferedReader br = new BufferedReader(new FileReader(sb.toString()))) {
             data[0] = br.readLine().split(",");
             data[1] = br.readLine().split(",");
+            data[2] = br.readLine().split(",");
+            data[3] = br.readLine().split(",");
         } catch (IOException e) {
             e.printStackTrace();
         }
         sb = new StringBuilder();
         sb.append(dirPath).append(filepath).append("/mask.csv");
-        String data_mask[][] = new String[2][];
+        String data_mask[][] = new String[4][];
         try (BufferedReader br = new BufferedReader(new FileReader(sb.toString()))) {
             data_mask[0] = br.readLine().split(",");
             data_mask[1] = br.readLine().split(",");
+            data_mask[2] = br.readLine().split(",");
+            data_mask[3] = br.readLine().split(",");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,6 +68,24 @@ public class Load {
             long tmp = Long.parseLong(data[1][i]);
             if(cheating(tmp, Long.parseLong(data_mask[1][i]))) return false;
             got_item_flags[i] = tmp;
+        }
+        new TelePort();
+        for(int i = 0;i < data[2].length; i++) {
+            String tmps1[] = data[2][i].split("_");
+            String tmps2[] = data_mask[2][i].split("_");
+            byte tmp1[] = new byte[tmps1.length];
+            int tmp2[] = new int[tmps2.length];
+            for(int j = 0; j< tmps1.length;j++) {
+                tmp1[j] = Byte.parseByte(tmps1[j]);
+                tmp2[j] = Integer.parseInt(tmps2[j]);
+                if(cheating(tmp1[j], tmp2[j])) return false;
+            }
+            tmps1 = data[3][i].split("_");
+            tmps2 = data_mask[3][i].split("_");
+            if(cheating(Integer.parseInt(tmps1[0]), Integer.parseInt(tmps2[0]))) return false;
+            if(cheating(Integer.parseInt(tmps1[1]), Integer.parseInt(tmps2[1]))) return false;
+            if(cheating(Integer.parseInt(tmps1[2]), Integer.parseInt(tmps2[2]))) return false;
+            TelePort.loadMarkTeleportCoords(Integer.parseInt(tmps1[0]), Integer.parseInt(tmps1[1]), Integer.parseInt(tmps1[2]), new String(tmp1));
         }
         new Game_states(name, filepath, intdataList, longdata, item_list, got_item_flags);
         return true;

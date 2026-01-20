@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import game.logic.Game_states;
-import game.logic.TelePort;
 import game.util.GameUtil;
 
 public class Maps {
@@ -85,15 +84,15 @@ private String[] map_list = {"/map0.csv",
     private int color_delta = 0;
     public Maps() {}
 
-    public void loadMap(int index,boolean escaped,TelePort tep) {
+    public void loadMap(int index,boolean escaped) {
         active_map_num = index;
         map = new int [map_list.length][GameUtil.MAP_Y_LEN][GameUtil.MAP_X_LEN];
         for(int i = 0; i < map.length;i++) {
-            map[i] = mapread(map[i],i,tep);
+            map[i] = mapread(map[i],i);
         }
         if(escaped) put_escaped_init();
     }
-    private int[][] mapread(int map[][],int index,TelePort tep) {
+    private int[][] mapread(int map[][],int index) {
         try (BufferedReader br = new BufferedReader(new FileReader(mapPathBuilder(Game_states.getMapDataPath(),index)))) {
             for(int i = 0; i < map.length;i++) {
                 String data = br.readLine();

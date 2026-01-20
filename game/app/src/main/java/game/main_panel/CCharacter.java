@@ -15,7 +15,6 @@ import game.logic.Game_CLock;
 import game.logic.Game_states;
 import game.logic.Message;
 import game.logic.Puzzle;
-import game.logic.TelePort;
 import game.panel.Inventory_paint;
 import game.panel.Menu_paint;
 import game.panel.Message_paint;
@@ -53,7 +52,6 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     Message_paint mep;
     TelePort_paint tepp;
     Puzzle puzzle1;
-    TelePort tep;
     public CCharacter(int x, int y, int map_number,Long play_time, LocalDateTime clock ,boolean prologue,boolean escaped) {
         this.x = x;
         this.y = y;
@@ -63,12 +61,13 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
         this.clock = new Game_CLock(clock,play_time);
         Charactor_walk char_walk = new Charactor_walk(); 
         char_walk.start();
-        tep = new TelePort();
 
 
         mapnum = map_number;
+
+
         maps = new Maps();
-        maps.loadMap(map_number,escaped,tep);
+        maps.loadMap(map_number,escaped);
         tp = new Talk_paint();
         pcp = new PC_paint();
         mp = new Menu_paint();
@@ -293,7 +292,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
             tepp.controll(key, maps.map_number(),x,y,maps,this);
         }
         if(key == KeyEvent.VK_P) {
-            maps.loadMap(mapnum,true,tep);
+            maps.loadMap(mapnum,true);
         }
         repaint();
     }
@@ -309,7 +308,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     public void run() {
         if(prologue){
             sleep(2000);
-            new Message("",0,18,false);
+            new Message("",0,18,true);
             prologue = false;
         }
         while(Game_states.getControll_state() != GameUtil.GAME_EXIT && Game_states.getControll_state() != GameUtil.GAME_END) {

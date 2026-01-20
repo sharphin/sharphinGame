@@ -6,11 +6,11 @@ public class Puzzle {
     private boolean resolved_puzzle[] = new boolean[5];
     private boolean puzzle1[][]  = new boolean[][]{
         {true,false,true,false,true,false},
+        {true,false,true,true,true,false},
         {true,false,true,false,true,false},
+        {true,true,true,false,true,false},
         {true,false,true,false,true,false},
-        {true,false,true,false,true,false},
-        {true,false,true,false,true,false},
-        {true,false,true,false,true,false}
+        {true,true,true,true,true,true}
     };
     public void puzzle1_check(Maps map) {
         if(resolved_puzzle[0]) return;

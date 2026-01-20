@@ -6,9 +6,14 @@ import java.util.List;
 import game.main_panel.Maps;
 
 public class TelePort {
-    private static List<int[]> toTeleportList = new ArrayList<>();
-    private static List<String> list_tag_name = new ArrayList<>();
+    private static List<int[]> toTeleportList = null;
+    private static List<String> list_tag_name = null;
+    public TelePort() {
+        toTeleportList = new ArrayList<>();
+        list_tag_name = new ArrayList<>();
+    }
     public static int markTeleportCoords(int map_num, int x, int y, String tag,Maps map) {
+        if(toTeleportList == null || list_tag_name == null) return -50;
         for(int[] tmp: toTeleportList) {
             if(tmp[1] == x>>5) return -3;
             if(tmp[2] == y>>5) return -3;
@@ -27,7 +32,18 @@ public class TelePort {
         map.updataMapTile(map_num,x>>5,y>>5,106);
         return 0;
     }
+    public static int loadMarkTeleportCoords(int map_num, int x, int y, String tag) {
+        if(toTeleportList == null || list_tag_name == null) return -50;
+        int coords[] = new int[3];
+        coords[0] = map_num;
+        coords[1] = x>>5;
+        coords[2] = y>>5;
+        toTeleportList.add(coords);
+        list_tag_name.add(tag);
+        return 0;
+    }
     public static int markUpdate(int i, int map_num, int x, int y, String tag ,Maps map) {
+        if(toTeleportList == null || list_tag_name == null) return -50;
         if(tag.isEmpty()) return -2;
         int coords[] = new int[3];
         coords[0] = map_num;
@@ -43,6 +59,7 @@ public class TelePort {
         return 0;
     }
     public static int markDelete(int i,Maps map) {
+        if(toTeleportList == null || list_tag_name == null) return -50;
         int fff[] = toTeleportList.get(i);
         map.updataMapTile(fff[0],fff[1],fff[2],0);
         toTeleportList.remove(i);
@@ -50,6 +67,7 @@ public class TelePort {
         return 0;
     }
     public void removeTeleportCoords(int index) {
+        if(toTeleportList == null || list_tag_name == null) return;
         toTeleportList.remove(index);
         list_tag_name.remove(index);
     }

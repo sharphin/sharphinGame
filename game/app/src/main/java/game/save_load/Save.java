@@ -13,6 +13,7 @@ import java.time.ZoneId;
 import java.util.HexFormat;
 
 import game.logic.Game_states;
+import game.logic.TelePort;
 import game.main_panel.Maps;
 
 public class Save {
@@ -95,6 +96,27 @@ public class Save {
             sb.append(Game_states.getAllItemDictionary()[2]).append(",");
             sb.append(Game_states.getAllItemDictionary()[3]).append(",");
             bw.write(sb.toString());
+            sb.delete(0, sb.length());
+            bw.newLine();
+            for(int i = 0 ; i < TelePort.size(); i++) {
+                byte[] def = TelePort.getTagName(i).getBytes();
+                for(int j = 0;j < def.length;j++) {
+                    sb.append(def[j]);
+                    if(j+1 < def.length)sb.append("_");
+                }
+                sb.append(",");
+            }
+            bw.write(sb.toString());
+            sb.delete(0, sb.length());
+            bw.newLine();
+            for(int i = 0 ; i < TelePort.size(); i++) {
+                int tmp[] = TelePort.getToTeleportCoords(i);
+                sb.append(tmp[0]).append("_");
+                sb.append(tmp[1]).append("_");
+                sb.append(tmp[2]).append("_");
+                if(i+1 < TelePort.size()) sb.append(",");
+            }
+            bw.write(sb.toString());
             bw.close();
         } catch (IOException e) {
             System.out.println(e);
@@ -118,6 +140,27 @@ public class Save {
             sb.append(makeDataProtect(Game_states.getAllItemDictionary()[1])).append(",");
             sb.append(makeDataProtect(Game_states.getAllItemDictionary()[2])).append(",");
             sb.append(makeDataProtect(Game_states.getAllItemDictionary()[3])).append(",");
+            bw.write(sb.toString());
+            sb.delete(0, sb.length());
+            bw.newLine();
+            for(int i = 0 ; i < TelePort.size(); i++) {
+                byte[] def = TelePort.getTagName(i).getBytes();
+                for(int j = 0;j < def.length;j++) {
+                    sb.append(makeDataProtect(def[j]));
+                    if(j+1 < def.length)sb.append("_");
+                }
+                sb.append(",");
+            }
+            bw.write(sb.toString());
+            sb.delete(0, sb.length());
+            bw.newLine();
+            for(int i = 0 ; i < TelePort.size(); i++) {
+                int tmp[] = TelePort.getToTeleportCoords(i);
+                sb.append(makeDataProtect(tmp[0])).append("_");
+                sb.append(makeDataProtect(tmp[1])).append("_");
+                sb.append(makeDataProtect(tmp[2])).append("_");
+                if(i+1 < TelePort.size()) sb.append(",");
+            }
             bw.write(sb.toString());
             bw.close();
         } catch (IOException e) {

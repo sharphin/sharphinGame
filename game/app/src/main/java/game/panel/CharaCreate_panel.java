@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import game.frame.BaseFrame;
 import game.logic.Game_states;
+import game.logic.TelePort;
 import game.main_panel.CCharacter;
 import game.main_panel.Prologue_panel;
 import game.util.FontUtil;
@@ -164,11 +165,12 @@ public class CharaCreate_panel extends JPanel implements KeyListener{
                 ERROR = "DON'T EMPTY";
             } else {
                 if(name.toString().equals("COMPLETE") || name.toString().equals("skip")) {
+                    new TelePort();
                     new Game_states(name.toString(),1,1);
                     String dirPath = System.getProperty("user.home")+ "/Documents/Revenge/fromcomputer.txt";
                     File f = new File(dirPath);
                     //BaseFrame.frame_generator().panel_change(new CCharacter(66, 288,38,(long)0,Game_states.getTodayTime(),false,f.exists()),1);
-                    BaseFrame.frame_generator().panel_change(new CCharacter(600, 600,18,(long)0,Game_states.getTodayTime(),false,f.exists()),1);
+                    BaseFrame.frame_generator().panel_change(new CCharacter(400, 600,18,(long)0,Game_states.getTodayTime(),false,f.exists()),1);
                 } else {
                     BaseFrame.frame_generator().panel_change(new Prologue_panel(name.toString(),false),1);
                 }
