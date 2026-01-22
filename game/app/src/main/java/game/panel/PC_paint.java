@@ -33,6 +33,7 @@ public class PC_paint{
         charImage[3] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/lock.png");
         charImage[4] = Toolkit.getDefaultToolkit().getImage(GameUtil.FILE_PATH+"gamedata/image/open.png");
         password = new StringBuilder();
+        door_opened = false;
     }
     public void paint_pc(Graphics g,JPanel panel) {
         g.setColor(new Color(109,168,59));

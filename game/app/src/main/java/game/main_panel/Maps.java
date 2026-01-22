@@ -152,10 +152,10 @@ private String[] map_list = {"/map0.csv",
                     case 33: x2 = 192; y2 = 32;  break;
                     case 34: x2 = 256; y2 = 32;  break; 
                     case 35: x2 = 320; y2 = 32;  break;
-                    case 36,40,44,48: x2 = 160; y2 = 32;  break;
-                    case 37,41,45: x2 = 224; y2 = 32;  break;
-                    case 38,42,46: x2 = 288; y2 = 32;  break;
-                    case 39,43,47,51: x2 = 352; y2 = 32;  break;
+                    case 36,40,44,48,52: x2 = 160; y2 = 32;  break;
+                    case 37,41,45,49,53: x2 = 224; y2 = 32;  break;
+                    case 38,42,46,50,54: x2 = 288; y2 = 32;  break;
+                    case 39,43,47,51,55: x2 = 352; y2 = 32;  break;
                     case 4095: x2 = 864; break;
                     default: continue;
                 }

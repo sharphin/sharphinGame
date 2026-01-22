@@ -273,6 +273,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
                     case 47 -> new Message(Game_states.getName(),1, 13,false);
                     case 48 -> new Message("",2, 0,false);
                     case 51 -> new Message("",1, 18,false);
+                    case 52 -> new Message("",1, 21,false);
                 }
             }
             if(key == KeyEvent.VK_BACK_QUOTE) {

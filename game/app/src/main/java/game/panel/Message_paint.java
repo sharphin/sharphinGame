@@ -20,7 +20,7 @@ public class Message_paint {
     }
     public void paint_message(Graphics g) {
         g.setColor(Color.WHITE);
-        g.fillRect(100, 70, 500, 400);
+        g.fillRect(100, 70, 500, 300);
         g.setFont(font1);
         g.setColor(Color.BLACK);
         String messagestr[] = {"","","","","","",""};
