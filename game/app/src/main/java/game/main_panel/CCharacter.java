@@ -299,7 +299,7 @@ public class CCharacter extends JPanel implements KeyListener,Runnable{
     }
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        if(key == KeyEvent.VK_E)   {
+        if(key == KeyEvent.VK_E) {
             speed = GameUtil.WALK;
         } else {
             dire = 0;
