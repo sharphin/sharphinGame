@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import game.main_panel.Maps;
 import game.util.GameUtil;
 
-public class BlackDye implements Runnable{
+public class BlackDye implements Runnable {
     private Maps map = new Maps();
     private ThreadLocalRandom rand  = ThreadLocalRandom.current();
     public BlackDye() {

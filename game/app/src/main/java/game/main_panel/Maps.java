@@ -164,7 +164,7 @@ private String[] map_list = {"/map0.csv",
                 if((~map[active_map_num][i][j] & key_item_mask) != key_item_mask) {  
                 } else {
                     g.setColor(new Color(255,255,255,color_delta()));
-                    g.fillOval(x1, y1, 5, 5);
+                    g.fillOval(x1+18, y1+18, 5, 5);
                 }
             }
         }
