@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>あいつを探せ</title>
+<title>強盗を探せ</title>
 <style>
 body{
     margin:0;
@@ -25,9 +25,17 @@ canvas{
 <body>
 
 <div id="ui">
-    <h1>あいつを探せ！</h1>
+    <h1>強盗を探せ！</h1>
     <div>ステージ: <span id="stage">1</span></div>
     <div>スコア: <span id="score">0</span></div>
+</div>
+<div>
+    探すキャラ
+    <br>
+    <img
+        id="targetPreview"
+        width="100"
+        height="100">
 </div>
 
 <canvas id="game" width="1000" height="700"></canvas>

@@ -3,7 +3,18 @@ const ctx = canvas.getContext("2d");
 
 const stageText = document.getElementById("stage");
 const scoreText = document.getElementById("score");
+let currentTargetImage = 0;
+const targetPreview =
+    document.getElementById(
+        "targetPreview"
+    );
+const images = [];
 
+for(let i = 44; i <= 47; i++){
+    const img = new Image();
+    img.src =  `イラスト${i}.png`;
+    images.push(img);
+}
 let people = [];
 
 let stage = 1;
@@ -14,14 +25,14 @@ const HEIGHT = canvas.height;
 
 class Person {
 
-    constructor(x, y, target = false) {
+    constructor(x, y, imageIndex,target = false) {
 
         this.x = x;
         this.y = y;
 
         this.tx = x;
         this.ty = y;
-
+        this.imageIndex = imageIndex;
         this.target = target;
         
         this.radius = target ? 20 : 18;
@@ -83,26 +94,14 @@ class Person {
 
     draw() {
 
-        ctx.beginPath();
+        const img = images[this.imageIndex];
 
-        ctx.arc(
-            this.x,
-            this.y,
-            this.radius,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-
-        ctx.font = "20px sans-serif";
-        ctx.textAlign = "center";
-
-        ctx.fillText(
-            this.target ? "😎" : "🙂",
-            this.x,
-            this.y + 7
+        ctx.drawImage(
+            img,
+            this.x - this.radius,
+            this.y - this.radius,
+            this.radius * 2,
+            this.radius * 2
         );
     }
 }
@@ -159,6 +158,7 @@ function randomPosition(minDist) {
 }
 
 function createGrid(count) {
+
     stageType = "grid";
     people = [];
 
@@ -172,6 +172,12 @@ function createGrid(count) {
             Math.random() * count
         );
 
+    currentTargetImage =
+        Math.floor(
+            Math.random() *
+            images.length
+        );
+
     for (let i = 0; i < count; i++) {
 
         const x =
@@ -183,47 +189,99 @@ function createGrid(count) {
             Math.floor(i / cols) *
             spacing;
 
+        let imageIndex;
+
+        if(i === targetIndex){
+
+            imageIndex =
+                currentTargetImage;
+
+        }else{
+
+            do{
+
+                imageIndex =
+                    Math.floor(
+                        Math.random() *
+                        images.length
+                    );
+
+            }while(
+                imageIndex === currentTargetImage
+            );
+        }
+
         people.push(
             new Person(
                 x,
                 y,
+                imageIndex,
                 i === targetIndex
             )
         );
     }
 }
 
-function createRandom(count) {
+function createRandom(count){
+
     stageType = "random";
     people = [];
+
+    currentTargetImage =
+        Math.floor(
+            Math.random() *
+            images.length
+        );
 
     const targetIndex =
         Math.floor(
             Math.random() * count
         );
 
-    for (let i = 0; i < count; i++) {
+    for(let i = 0; i < count; i++){
 
         const pos =
-            randomPosition(42);
+            randomPosition(35);
+
+        let imageIndex;
+
+        if(i === targetIndex){
+
+            imageIndex =
+                currentTargetImage;
+
+        }else{
+
+            do{
+
+                imageIndex =
+                    Math.floor(
+                        Math.random() *
+                        images.length
+                    );
+
+            }while(
+                imageIndex === currentTargetImage
+            );
+        }
 
         people.push(
             new Person(
                 pos.x,
                 pos.y,
+                imageIndex,
                 i === targetIndex
             )
         );
     }
 }
-
 function createMoving(count){
     createRandom(count);
     stageType = "moving";
 }
 
 function createShuffle(count) {
-    stageType = "suffle";
+    stageType = "shuffle";
     createGrid(count);
 
     setTimeout(() => {
@@ -282,7 +340,9 @@ function createMovingTarget(count){
             p => p.target
         );
 
-    target.moveTarget = true;
+    if(target){
+        target.moveTarget = true;
+    }
 }
 
 function createStage() {
@@ -318,8 +378,11 @@ function createStage() {
             createMovingTarget(count);
             break;
     }
-
     stageText.textContent = stage;
+    targetPreview.src =
+        images[
+            currentTargetImage
+        ].src;
 }
 
 function draw() {
